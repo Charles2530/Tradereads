@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="login">
     <div
       class="login__container p-8 bg-white rounded shadow-lg max-w-md w-full"
@@ -30,4 +30,19 @@
       </form>
     </div>
   </div>
+</template> -->
+<template>
+  <el-input v-model="input" placeholder="Please input" />
 </template>
+
+<script>
+import { ref } from "vue";
+export default {
+  setup() {
+    const input = ref("");
+    return {
+      input,
+    };
+  },
+};
+</script>
