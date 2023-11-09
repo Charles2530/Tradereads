@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :products
   scope "api" do
     resources :users
     resources :user_details
