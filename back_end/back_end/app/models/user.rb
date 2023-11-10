@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_one :user_detail
   has_many :products
+  has_many :carts
 
   # phone must be series of number
   validates :phone, presence: true, length: { in: 3..20 } ,

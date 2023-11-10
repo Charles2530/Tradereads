@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :user
   has_one :product_detail
+  has_many :carts
 
   validates :price, presence: true, massage: "Price must exist."
   validates :price, numericality: { :greater_than_or_equal_to => 0 }, massage: "Price must be non-negative."
