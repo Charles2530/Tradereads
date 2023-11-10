@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_160840) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_10_180804) do
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "product_id", null: false
+    t.integer "number"
+    t.datetime "addTime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_carts_on_product_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "product_details", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "product_name"
+    t.string "product_image"
+    t.text "product_press"
+    t.string "product_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_details_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.integer "user_id", null: false
     t.decimal "price"
@@ -40,6 +62,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_160840) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "carts", "products"
+  add_foreign_key "carts", "users"
+  add_foreign_key "product_details", "products"
   add_foreign_key "products", "users"
   add_foreign_key "user_details", "Users"
 end
