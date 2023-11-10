@@ -8,6 +8,13 @@
         >登录</router-link
       >
     </p>
+    <p>
+      <router-link
+        to="/personalCenter"
+        class="register_button w-48 font-bold text-2xl text-red-600"
+        >个人中心</router-link
+      >
+    </p>
   </div>
 </template>
 

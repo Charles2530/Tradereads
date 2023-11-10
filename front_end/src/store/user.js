@@ -6,7 +6,7 @@ export const userStore = defineStore({
   state: () => {
     return {
       token: localStorage.getItem("token") || "",
-      userInfo: JSON.parse(localStorage.getItem("userInfo")) || {},
+      userInfo: localStorage.getItem("userInfo") || {},
     };
   },
   // 方法

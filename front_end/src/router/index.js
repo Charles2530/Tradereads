@@ -9,7 +9,17 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/login.vue"),
+    component: () => import("../views/personalCenter/login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/personalCenter/register.vue"),
+  },
+  {
+    path: "/personalCenter",
+    name: "PersonalCenter",
+    component: () => import("../views/personalCenter/index.vue"),
   },
 ];
 
@@ -23,7 +33,12 @@ router.beforeEach((to, from, next) => {
   if (store.token) {
     next();
   } else {
-    if (to.path === "/login" || to.path === "/") {
+    if (
+      to.path === "/login" ||
+      to.path === "/" ||
+      to.path === "/register" ||
+      to.path === "/personalCenter"
+    ) {
       next();
     } else {
       next("/");

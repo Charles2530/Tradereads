@@ -30,6 +30,9 @@
             Login
           </button>
         </div>
+        <div class="registerUrl">
+          <router-link to="/register">没有账号?点击注册!</router-link>
+        </div>
       </form>
     </div>
   </div>
@@ -37,48 +40,24 @@
 
 <script>
 import { ref } from "vue";
+import { userStore } from "../../store/user.js";
 export default {
   data: () => ({
     loginInfo: {
       username: ref(""),
       password: ref(""),
+      email: userStore().$state.userInfo.email,
     },
   }),
   methods: {
-    printLogin() {
-      console.log(this.loginInfo.username);
-      console.log(this.loginInfo.password);
-    },
     Login() {
-      const vm = this;
-      const valid = this.$refs.loginForm.validate();
-      if (!valid) return;
-      this.$axios({
-        method: "post",
-        url: "/login",
-        data: {
-          username: this.loginInfo.username,
-          password: this.loginInfo.password,
-        },
-      })
-        .then(function (response) {
-          console.log(response);
-          if (response.data.status == 200) {
-            vm.$message({
-              message: "登录成功",
-              type: "success",
-            });
-            vm.$router.push("/home");
-          } else {
-            vm.$message({
-              message: "登录失败",
-              type: "error",
-            });
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const store = userStore();
+      store.setUserInfo({
+        token: "123456789",
+        userInfo: this.loginInfo,
+      });
+      store.setUserInfo(this.loginInfo);
+      this.$router.push("/personalCenter");
     },
   },
 };
