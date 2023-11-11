@@ -2,8 +2,10 @@
 
 one:
   user_id: 1
-  user_password: MyString
+  phone: "123123"
+  right: 1
 
 two:
-  user_id: 1
-  user_password: MyString
+  user_id: 2
+  phone: "123123asd"
+  right: 0

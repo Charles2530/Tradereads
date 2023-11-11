@@ -1,8 +1,8 @@
 class User < ApplicationRecord
-  has_one :user_detail
-  has_many :products
-  has_many :carts
-  has_many :orders
+  has_one :user_detail, dependent: :destroy
+  has_many :products, dependent: :destroy
+  has_many :carts, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   # phone must be series of number
   validates :phone, presence: true, length: { in: 3..20 } ,
