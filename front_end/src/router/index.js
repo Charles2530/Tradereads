@@ -21,6 +21,16 @@ const routes = [
     name: "PersonalCenter",
     component: () => import("../views/personalCenter/index.vue"),
   },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("../views/cart/index.vue"),
+  },
+  {
+    path: "/products",
+    name: "Products",
+    component: () => import("../views/productsCenter/index.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -37,7 +47,9 @@ router.beforeEach((to, from, next) => {
       to.path === "/login" ||
       to.path === "/" ||
       to.path === "/register" ||
-      to.path === "/personalCenter"
+      to.path === "/personalCenter" ||
+      to.path === "/products" ||
+      to.path === "/cart"
     ) {
       next();
     } else {

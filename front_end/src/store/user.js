@@ -19,5 +19,35 @@ export const userStore = defineStore({
       //   localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       localStorage.setItem("userInfo", this.userInfo);
     },
+    clearUserInfo() {
+      this.token = "";
+      this.userInfo = {};
+      localStorage.removeItem("token");
+      localStorage.removeItem("userInfo");
+    },
+  },
+  // mutations
+  mutations: {
+    setName(name) {
+      this.loginInfo.username = name;
+      localStorage.setItem("userInfo", this.userInfo);
+    },
+    setEmail(email) {
+      this.loginInfo.email = email;
+      localStorage.setItem("userInfo", this.userInfo);
+    },
+    setAvatar(avatar) {
+      this.loginInfo.avatar = avatar;
+      localStorage.setItem("userInfo", tshis.userInfo);
+    },
+  },
+  // getters
+  getters: {
+    getToken() {
+      return this.token;
+    },
+    getUserInfo() {
+      return this.userInfo;
+    },
   },
 });
