@@ -12,7 +12,6 @@
         <div><strong>邮箱:</strong> {{ loginInfo.email }}</div>
       </div>
     </div>
-
     <!-- 订单列表展开按钮 -->
     <div class="mb-4">
       <button
@@ -27,13 +26,14 @@
     <div v-if="showOrders" class="mb-8">
       <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
       <div class="bg-white p-4 rounded-lg shadow-md">
-        <ul>
-          <li>订单 #1</li>
-          <li>订单 #2</li>
-        </ul>
+        <order-item
+          v-for="order in orders"
+          :key="order.id"
+          :order-id="order.id"
+          :items="order.items"
+        ></order-item>
       </div>
     </div>
-
     <!-- 商品列表展开按钮 -->
     <div class="mb-4">
       <button
@@ -58,7 +58,11 @@
 </template>
 
 <script>
+import OrderItem from "../../components/OrderItem.vue";
 export default {
+  components: {
+    OrderItem,
+  },
   data: () => ({
     loginInfo: {
       username: "charles",
@@ -66,6 +70,36 @@ export default {
     },
     showOrders: false,
     showProducts: false,
+    orders: [
+      {
+        id: "order1",
+        items: [
+          {
+            id: 1,
+            title: "书名一",
+            price: "$39.99",
+            quantity: 2,
+            shippingAddress: "123 主街, 任城, 美国",
+            stockStatus: "有货",
+          },
+        ],
+        currentStatus: "待付款",
+      },
+      {
+        id: "order2",
+        items: [
+          {
+            id: 2,
+            title: "书名二",
+            price: "$29.99",
+            quantity: 1,
+            shippingAddress: "123 主街, 任城, 美国",
+            stockStatus: "售完",
+          },
+        ],
+        currentStatus: "待发货",
+      },
+    ],
   }),
   methods: {
     toggleOrders() {
