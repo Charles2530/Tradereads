@@ -1,18 +1,22 @@
 <template>
-  <div class="login">
-    <div
-      class="login__container p-8 bg-white rounded shadow-lg max-w-md w-full"
-    >
-      <h1 class="login__title text-2xl font-bold mb-6 bg-black">Login</h1>
-      <form class="login__form">
-        <div class="login__text mb-4">
+  <div
+    class="min-h-screen bg-login-background bg-cover bg-center bg-no-repeat flex justify-end items-center p-10"
+  >
+    <div class="w-full max-w-xs bg-white p-8 rounded shadow-lg">
+      <h1
+        class="login_container text-2xl font-bold mb-6 bg-blue-500 text-white p-3 rounded text-center"
+      >
+        用户登录
+      </h1>
+      <form class="login__form space-y-4">
+        <div>
           <el-input
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             v-model="loginInfo.username"
             placeholder="Username"
           />
         </div>
-        <div class="login__password mb-4">
+        <div>
           <el-input
             v-model="loginInfo.password"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
@@ -21,18 +25,16 @@
             show-password
           />
         </div>
-        <div class="login__button">
-          <button
-            type="submit"
-            class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
-            @click.prevent="Login"
-          >
-            Login
-          </button>
-        </div>
-        <div class="registerUrl">
-          <router-link to="/register">没有账号?点击注册!</router-link>
-        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
+          @click.prevent="Login"
+        >
+          Login
+        </button>
+        <router-link to="/register" class="inline-block mt-4"
+          >没有账号?点击注册!</router-link
+        >
       </form>
     </div>
   </div>

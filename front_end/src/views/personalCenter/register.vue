@@ -1,10 +1,14 @@
 <template>
-  <div class="register">
-    <div
-      class="register__container p-8 bg-white rounded shadow-lg max-w-md w-full"
-    >
-      <h1 class="register__title text-2xl font-bold mb-6 bg-black">register</h1>
-      <form class="register__form">
+  <div
+    class="min-h-screen bg-login-background bg-cover bg-center bg-no-repeat flex justify-end items-center p-10"
+  >
+    <div class="w-full max-w-xs bg-white p-8 rounded shadow-lg">
+      <h1
+        class="register__title text-2xl font-bold mb-6 bg-blue-500 text-white p-3 rounded text-center"
+      >
+        注册用户
+      </h1>
+      <form class="register__form space-y-4">
         <div class="register__text mb-4">
           <el-input
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
