@@ -12,14 +12,14 @@
         <div class="register__text mb-4">
           <el-input
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            v-model="registerInfo.username"
+            v-model="username"
             placeholder="Username"
             clearable
           />
         </div>
         <div class="register__password mb-4">
           <el-input
-            v-model="registerInfo.password"
+            v-model="password"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             type="password"
             placeholder="Password"
@@ -28,7 +28,7 @@
         </div>
         <div class="register__email mb-4">
           <el-input
-            v-model="registerInfo.email"
+            v-model="email"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             type="email"
             placeholder="Email"
@@ -40,6 +40,7 @@
             type="submit"
             class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
             @click.prevent="register"
+            @click="open"
           >
             register
           </button>
@@ -51,25 +52,55 @@
 
 <script>
 import { ref } from "vue";
-import { userStore } from "@/store/user.js";
+import { userStore } from "@/store/user.js"; // Make sure the path is correct
+import { useRouter } from "vue-router";
+
 export default {
-  data: () => ({
-    registerInfo: {
-      username: ref(""),
-      password: ref(""),
-      email: ref(""),
-    },
-  }),
-  methods: {
-    register() {
-      const store = userStore();
+  setup() {
+    // Reactive state properties
+    const username = ref("");
+    const password = ref("");
+    const email = ref(""); // Initialize with an empty string or fetch from the store
+
+    // Store and Router instances
+    const store = userStore();
+    const router = useRouter();
+
+    // If email should be initialized from the store, you can do so after store initialization
+    email.value = store.$state.userInfo.email; // Assuming store.state.userInfo.email is reactive
+
+    // Login method
+    const register = () => {
       store.setUserInfo({
         token: "123456789",
-        userInfo: this.registerInfo,
+        userInfo: {
+          username: username.value,
+          password: password.value,
+          email: email.value,
+        },
       });
-      store.setUserInfo(this.registerInfo);
-      this.$router.push("/personalCenter");
-    },
+
+      // Redirect after setting user info
+      router.push("/personalCenter");
+    };
+
+    // Open notification
+    const open = () => {
+      ElMessage({
+        showClose: true,
+        message: "注册成功",
+        type: "success",
+      });
+    };
+
+    // Return the reactive state and methods to the template
+    return {
+      username,
+      password,
+      email,
+      register,
+      open,
+    };
   },
 };
 </script>

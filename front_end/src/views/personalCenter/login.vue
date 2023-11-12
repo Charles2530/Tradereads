@@ -31,10 +31,13 @@
           type="submit"
           class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
           @click.prevent="Login"
+          @click="open"
         >
           Login
         </button>
-        <router-link to="/register" class="inline-block mt-4"
+        <router-link
+          to="/register"
+          class="inline-block mt-4 underline text-red-600"
           >没有账号?点击注册!</router-link
         >
       </form>
@@ -46,7 +49,6 @@
 import { ref } from "vue";
 import { userStore } from "@/store/user.js"; // Make sure the path is correct
 import { useRouter } from "vue-router";
-import { ElNotification } from "element-plus";
 
 export default {
   setup() {
@@ -79,10 +81,10 @@ export default {
 
     // Open notification
     const open = () => {
-      ElNotification({
-        title: "Success",
-        message: "This is a success message",
-        offset: 100,
+      ElMessage({
+        showClose: true,
+        message: "登录成功",
+        type: "success",
       });
     };
 

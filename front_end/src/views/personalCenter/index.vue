@@ -13,12 +13,14 @@
       </div>
       <!-- 订单列表展开按钮 -->
       <div class="mb-4">
-        <button
+        <el-button
+          type="primary"
           class="text-white font-semibold hover:underline"
           @click="toggleOrders"
+          plain
         >
           {{ showOrders ? "收起订单列表" : "展开订单列表" }}
-        </button>
+        </el-button>
       </div>
 
       <!-- 订单列表 -->
@@ -35,12 +37,14 @@
       </div>
       <!-- 商品列表展开按钮 -->
       <div class="mb-4">
-        <button
+        <el-button
+          type="success"
           class="text-white font-semibold hover:underline"
           @click="toggleProducts"
+          plain
         >
           {{ showProducts ? "收起商品列表" : "展开商品列表" }}
-        </button>
+        </el-button>
       </div>
 
       <!-- 商品列表 -->
