@@ -32,11 +32,13 @@
         <label for="productName" class="block text-sm font-medium text-gray-700"
           >商品名称</label
         >
-        <input
+        <el-input
           type="text"
           id="productName"
-          v-model="editableProduct.title"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          v-model="editableProduct.title"
+          placeholder="Please input"
+          clearable
         />
       </div>
       <div class="mb-4">
@@ -45,7 +47,7 @@
           class="block text-sm font-medium text-gray-700"
           >价格</label
         >
-        <input
+        <el-input
           type="number"
           id="productPrice"
           v-model.number="editableProduct.price"
@@ -58,7 +60,7 @@
           class="block text-sm font-medium text-gray-700"
           >发货地址</label
         >
-        <input
+        <el-input
           type="text"
           id="shippingAddress"
           v-model="editableProduct.shippingAddress"
@@ -71,7 +73,7 @@
           class="block text-sm font-medium text-gray-700"
           >库存</label
         >
-        <input
+        <el-input
           type="number"
           id="productStock"
           v-model.number="editableProduct.stock"

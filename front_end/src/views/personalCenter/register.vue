@@ -6,7 +6,7 @@
       <h1
         class="register__title text-2xl font-bold mb-6 bg-blue-500 text-white p-3 rounded text-center"
       >
-        注册用户
+        注册用户<el-icon class="text-cyan-400"><User /></el-icon>
       </h1>
       <form class="register__form space-y-4">
         <div class="register__text mb-4">
@@ -14,6 +14,7 @@
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             v-model="registerInfo.username"
             placeholder="Username"
+            clearable
           />
         </div>
         <div class="register__password mb-4">
@@ -31,6 +32,7 @@
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             type="email"
             placeholder="Email"
+            clearable
           />
         </div>
         <div class="register__button">

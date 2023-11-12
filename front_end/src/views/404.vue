@@ -8,11 +8,12 @@
         Sorry, the page you're looking for cannot be found
       </p>
       <router-link to="/">
-        <button
-          class="mt-8 bg-white text-gray-800 font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-200"
+        <el-button
+          class="mt-8 font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transition duration-200"
+          type="primary"
+          round
+          >Go Home</el-button
         >
-          Go Home
-        </button>
       </router-link>
     </div>
   </div>
