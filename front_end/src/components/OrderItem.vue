@@ -2,16 +2,13 @@
   <div class="p-4">
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
       <div class="pb-4 border-b border-gray-200 mb-4">
-        <h2 class="text-2xl font-bold">订单 #{{ orderId }}</h2>
+        <h2 class="text-2xl font-bold">订单:{{ orderId }}</h2>
         <div class="mt-2">
-          <div>
-            当前状态: <span class="text-blue-500">{{ currentStatus }}</span>
-          </div>
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
             @click="updateStatus"
           >
-            下一个状态
+            当前状态: <span class="text-white">{{ currentStatus }}</span>
           </button>
         </div>
       </div>

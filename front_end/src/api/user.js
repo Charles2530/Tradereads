@@ -1,4 +1,4 @@
-import request from "../utils/require";
+import request from "@/utils/require";
 
 //get
 export function getUser(params) {

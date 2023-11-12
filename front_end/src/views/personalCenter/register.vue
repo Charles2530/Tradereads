@@ -49,7 +49,7 @@
 
 <script>
 import { ref } from "vue";
-import { userStore } from "../../store/user.js";
+import { userStore } from "@/store/user.js";
 export default {
   data: () => ({
     registerInfo: {
