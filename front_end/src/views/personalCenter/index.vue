@@ -2,7 +2,7 @@
   <div
     class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
   >
-    <div class="headBar bg-gray-600/30">
+    <div class="headBar bg-gradient-to-r from-blue-400/50 to-red-500/50">
       <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
       <div class="mb-8">
         <h2 class="text-white text-2xl font-semibold mb-4">个人信息</h2>
