@@ -47,10 +47,11 @@
       <div v-if="showProducts">
         <h2 class="text-white text-2xl font-semibold mb-4">商品列表</h2>
         <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-          <ul>
-            <li>商品 #1</li>
-            <li>商品 #2</li>
-          </ul>
+          <product-item
+            v-for="product in products"
+            :key="product.id"
+            :product="product"
+          ></product-item>
         </div>
       </div>
     </div>
@@ -59,9 +60,11 @@
 
 <script>
 import OrderItem from "@c/OrderItem.vue";
+import ProductItem from "@c/ProductItem.vue";
 export default {
   components: {
     OrderItem,
+    ProductItem,
   },
   data: () => ({
     loginInfo: {
@@ -98,6 +101,22 @@ export default {
           },
         ],
         currentStatus: "待发货",
+      },
+    ],
+    products: [
+      {
+        id: 1,
+        title: "书名一",
+        price: "$39.99",
+        shippingAddress: "123 主街, 任城, 美国",
+        stock: 2,
+      },
+      {
+        id: 2,
+        title: "书名二",
+        price: "$29.99",
+        shippingAddress: "123 主街, 任城, 美国",
+        stock: 0,
       },
     ],
   }),
