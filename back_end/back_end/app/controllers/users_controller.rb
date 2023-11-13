@@ -81,6 +81,67 @@ class UsersController < ApplicationController
     )
   end
 
+  # POST /api/users/<user_id>/modify_username
+  def modify_username
+    user = User.find_by(id: params[:id])
+    user_detail = UserDetail.find_by(user: user)
+    user_detail.user_name = params[:user_name]
+    if user_detail.save
+      render status: 200, json: response_json(
+        true,
+        message: ModifyUserError::MODIFY_USERNAME_SUCCEED
+      )
+    else
+      render json: response_json(
+        false,
+        message: ModifyUserError::MODIFY_USERNAME_FAIL
+      )
+    end
+  end
+
+  # POST /api/users/<user_id>/modify_address
+  def modify_address
+    user = User.find_by(id: params[:id])
+    user_detail = UserDetail.find_by(user: user)
+    user_detail.buy_address = params[:new_address]
+    if user_detail.save
+      render status: 200, json: response_json(
+        true,
+        message: ModifyUserError::MODIFY_ADDRESS_SUCCEED
+      )
+    else
+      render json: response_json(
+        false,
+        message: ModifyUserError::MODIFY_ADDRESS_FAIL
+      )
+    end
+  end
+
+  # POST /api/users/<user_id>/modify_password
+  def modify_password
+    user = User.find_by(id: params[:id])
+    user_detail = UserDetail.find_by(user: user)
+    if user_detail.password != params[:old_password]
+      render json: response_json(
+        false,
+        message: ModifyUserError::MODIFY_PASSWORD_WRONG_PASSWORD
+      )
+    else
+      user_detail.password = params[:new_password]
+      if user_detail.save
+        render status: 200, json: response_json(
+          true,
+          message: ModifyUserError::MODIFY_PASSWORD_SUCCEED
+        )
+      else
+        render json: response_json(
+          false,
+          message: ModifyUserError::MODIFY_PASSWORD_FAIL
+        )
+      end
+    end
+  end
+
   # GET /api/users
   def index
     @users = User.all
@@ -91,9 +152,16 @@ class UsersController < ApplicationController
   # GET /api/users/1
   def show
     user = User.find_by(params[:id])
+    unless user
+      render json: response_json(
+        false,
+        message: ShowError::SHOW_FAIL
+      )
+    end
     user_detail = UserDetail.find_by(user: user)
     render status: 200, json: response_json(
       true,
+      message: ShowError::SHOW_SUCCEED,
       data: {
         phone: user.phone,
         user_name: user_detail.username,
