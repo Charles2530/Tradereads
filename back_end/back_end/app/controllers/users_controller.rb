@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
+  before_action :login_only, except: %i[ show register login ]
+  before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
 
@@ -83,7 +85,7 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_username
   def modify_username
-    user = User.find_by(id: params[:id])
+    user = @user
     user_detail = UserDetail.find_by(user: user)
     user_detail.user_name = params[:user_name]
     if user_detail.save
@@ -101,7 +103,7 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_address
   def modify_address
-    user = User.find_by(id: params[:id])
+    user = @user
     user_detail = UserDetail.find_by(user: user)
     user_detail.buy_address = params[:new_address]
     if user_detail.save
@@ -119,7 +121,7 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_password
   def modify_password
-    user = User.find_by(id: params[:id])
+    user = @user
     user_detail = UserDetail.find_by(user: user)
     if user_detail.password != params[:old_password]
       render json: response_json(
@@ -142,21 +144,56 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /api/show_cart
+  def show_cart
+    user = current_user
+    total_price = 0
+    user.carts.collect do |cart|
+      product = cart.product
+      price = product.price
+      total_price += price * cart.number
+    end
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        total_price: total_price,
+        products: user.carts.collect do |cart|
+          product = cart.product
+          product_detail = ProductDetail.find_by(product: product)
+          {
+            product_id: product.id,
+            product_name: product_detail.product_name,
+            seller_name: product.user_id,
+            product_number: cart.number
+          }
+        end
+      }
+    )
+  end
+
   # GET /api/users
   def index
+    unless is_admin
+      render json: response_json(
+        success: false
+      ) and return
+    end
     @users = User.all
-
-    render json: @users
+    render status: 200, json: response_json(
+      true,
+      data: @users
+    )
   end
 
   # GET /api/users/1
   def show
-    user = User.find_by(params[:id])
+    user = @user
     unless user
       render json: response_json(
         false,
         message: ShowError::SHOW_FAIL
-      )
+      ) and return
     end
     user_detail = UserDetail.find_by(user: user)
     render status: 200, json: response_json(
@@ -208,6 +245,10 @@ class UsersController < ApplicationController
       # Only allow a list of trusted parameters through.
       def user_params
         params.require(:user).permit(:user_id, :user_password)
+      end
+
+      def is_admin
+        current_user && current_user.right == 1
       end
 
       # def _to_i(param, default_no = 1)

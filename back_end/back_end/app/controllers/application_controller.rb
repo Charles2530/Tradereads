@@ -14,6 +14,7 @@ class ApplicationController < ActionController::API
         false,
         message: "Please login firstly!"
       )
+      false
     end
   end
 

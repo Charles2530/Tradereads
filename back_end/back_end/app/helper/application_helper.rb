@@ -45,6 +45,32 @@ module ApplicationHelper
     MODIFY_PASSWORD_FAIL = "Modify password failed."
   end
 
+  module ProductError
+    extend Global
+
+    SHOW_PRODUCT_SUCCEED = "Show product succeeded."
+    SHOW_PRODUCT_FAIL = "Show product failed."
+
+    MODIFY_UNAVAILABLE = "Only the seller of the product can modify."
+
+    MODIFY_STORE_FAIL = "Modify store failed."
+    MODIFY_STORE_SUCCEED = "Modify store succeeded."
+
+    MODIFY_PRICE_FAIL = "Modify price failed."
+    MODIFY_PRICE_SUCCEED = "Modify price succeeded."
+
+    MODIFY_ADDRESS_FAIL = "Modify sell address failed."
+    MODIFY_ADDRESS_SUCCEED = "Modify sell address succeeded."
+  end
+
+  module CartError
+    extend Global
+
+    NOT_ENOUGH_STORE = "There are not enough products in store."
+    ADD_FAIL = "Add fails."
+    ADD_SUCCEED = "Products have been added to cart."
+  end
+
   def response_json(success, message: nil, data: nil)
     {
       success: success,

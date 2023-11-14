@@ -17,11 +17,12 @@ class CartsController < ApplicationController
   # POST /carts
   def create
     @cart = Cart.new(cart_params)
+    @cart.user = current_user
 
     if @cart.save
-      render json: @cart, status: :created, location: @cart
+      true
     else
-      render json: @cart.errors, status: :unprocessable_entity
+      false
     end
   end
 
