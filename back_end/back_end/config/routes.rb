@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :modify_username, to: 'users#modify_username', as: :user_modify_username
       post :modify_address, to: 'users#modify_address', as: :user_modify_address
       post :modify_password, to: 'users#modify_password', as: :user_modify_password
+      post :show_product_list, to: 'users#show_product_list', as: :user_show_product_list
     end
     resources :user_details
     resources :order_items

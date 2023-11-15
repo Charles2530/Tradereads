@@ -48,8 +48,14 @@ module ApplicationHelper
   module ProductError
     extend Global
 
+    CREATE_FAIL = "Create product failed."
+    CREATE_SUCCEED = "Create product succeeded."
+
     SHOW_PRODUCT_SUCCEED = "Show product succeeded."
     SHOW_PRODUCT_FAIL = "Show product failed."
+
+    SHOW_PRODUCT_LIST_SUCCEED = "Show product list succeeded."
+    SHOW_PRODUCT_LIST_FAIL = "Show product list failed."
 
     MODIFY_UNAVAILABLE = "Only the seller of the product can modify."
 

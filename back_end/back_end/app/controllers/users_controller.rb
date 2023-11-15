@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
-  before_action :login_only, except: %i[ show register login ]
+  before_action :login_only, except: %i[ show register login show_product_list ]
   before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
@@ -166,6 +166,31 @@ class UsersController < ApplicationController
             product_name: product_detail.product_name,
             seller_name: product.user_id,
             product_number: cart.number
+          }
+        end
+      }
+    )
+  end
+
+  # GET /api/users/<user_id>/show_product_list
+  def show_product_list
+    user = @user
+    unless user
+      render json: response_json(
+        success: false,
+        message: ProductError::SHOW_PRODUCT_LIST_FAIL
+      ) and return
+    end
+    render status: 200, json: response_json(
+      true,
+      message: ProductError::SHOW_PRODUCT_LIST_SUCCEED,
+      data: {
+        products: user.products.collect do |product|
+          product_detail = ProductDetail.find_by(product: product)
+          {
+            product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
+            price: product.price
           }
         end
       }

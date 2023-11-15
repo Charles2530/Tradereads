@@ -155,10 +155,39 @@ class ProductsController < ApplicationController
 
   # POST /api/products
   def create
-    @product = Product.new(product_params)
+    seller = current_user
 
-    if @product.save
-      render json: @product, status: :created, location: @product
+    price, sell_address, store = params[:price], params[:sell_address], params[:store]
+    unless price || sell_address || store
+      render json: response_json(
+        false,
+        message: ProductError::CREATE_FAIL
+      ) and return
+    end
+
+    product = Product.new(user: seller,
+                          price: price,
+                          sell_address: sell_address,
+                          store: store,
+                          state: store == 0 ? "StockOut" : "Available")
+    name, image, press, type = params[:product_name], params[:product_image], params[:product_press], params[:product_type]
+    product_detail = ProductDetail.new(product: product,
+                                       product_name: name,
+                                       product_image: image,
+                                       product_press: press,
+                                       product_type: type)
+
+    if product.valid? && product_detail.valid?
+      product.save
+      product_detail.save
+      render status: 200, json: response_json(
+        true,
+        message: ProductError::CREATE_SUCCEED,
+        data: {
+          product_id: product.id,
+          state: product.state
+        }
+      )
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -177,7 +206,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:user_id, :price, :sell_address, :store, :state)
+      params.require(:product).permit(:price, :sell_address, :store)
     end
 
     def is_seller
