@@ -12,8 +12,8 @@
         <div class="register__text mb-4">
           <el-input
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            v-model="username"
-            placeholder="Username"
+            v-model="user_name"
+            placeholder="user_name"
             clearable
           />
         </div>
@@ -26,12 +26,12 @@
             show-password
           />
         </div>
-        <div class="register__email mb-4">
+        <div class="register__gender mb-4">
           <el-input
-            v-model="email"
+            v-model="gender"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            type="email"
-            placeholder="Email"
+            type="gender"
+            placeholder="gender"
             clearable
           />
         </div>
@@ -54,31 +54,34 @@
 import { ref } from "vue";
 import { userStore } from "@/store/user.js"; // Make sure the path is correct
 import { useRouter } from "vue-router";
-
+import { registerUser } from "@/api/user.js";
 export default {
   setup() {
     // Reactive state properties
-    const username = ref("");
+    const user_name = ref("");
     const password = ref("");
-    const email = ref(""); // Initialize with an empty string or fetch from the store
+    const gender = ref(""); // Initialize with an empty string or fetch from the store
+    const phone = "13812345678";
 
     // Store and Router instances
     const store = userStore();
     const router = useRouter();
 
-    // If email should be initialized from the store, you can do so after store initialization
-    email.value = store.$state.userInfo.email; // Assuming store.state.userInfo.email is reactive
-
+    // If gender should be initialized from the store, you can do so after store initialization
+    gender.value = store.$state.userInfo.gender; // Assuming store.state.userInfo.gender is reactive
+    const userInfo = {
+      phone: phone,
+      user_name: user_name.value,
+      gender: gender.value,
+      password: password.value,
+    };
     // Login method
     const register = () => {
       store.setUserInfo({
         token: "123456789",
-        userInfo: {
-          username: username.value,
-          password: password.value,
-          email: email.value,
-        },
+        userInfo,
       });
+      registerUser(userInfo);
 
       // Redirect after setting user info
       router.push("/personalCenter");
@@ -95,9 +98,9 @@ export default {
 
     // Return the reactive state and methods to the template
     return {
-      username,
+      user_name,
       password,
-      email,
+      gender,
       register,
       open,
     };

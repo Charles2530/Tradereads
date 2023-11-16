@@ -16,6 +16,10 @@ const Cart = () => import("@/views/cart/index.vue");
 const Products = () => import("@/views/productsCenter/index.vue");
 // 404页面
 const Page404 = () => import("@/views/404.vue");
+//购物车页面
+const Shopping = () => import("@/views/shopping/shopping.vue");
+//商品购买中心
+const ProductBuy = () => import("@/views/productBuyCenter/productBuy.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -56,6 +60,16 @@ const routes = [
     path: "/404",
     name: "404Page",
     component: Page404,
+  },
+  {
+    path: "/shopping",
+    name: "Shopping",
+    component: Shopping,
+  },
+  {
+    path: "/ProductBuy",
+    name: "ProductBuy",
+    component: ProductBuy,
   },
 ];
 

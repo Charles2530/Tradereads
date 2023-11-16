@@ -17,3 +17,11 @@ export function editUser(params) {
     params,
   });
 }
+
+export function registerUser(params) {
+  return request({
+    url: "/api/register",
+    method: "post",
+    params,
+  });
+}
