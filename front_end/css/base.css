@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+em,
+i {
+    font-style: normal
+}
+
+
+li {
+    list-style: none;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+
+a:hover {
+    color: #c81623;
+}
+
+button,
+input {
+    font-family: Microsoft YaHei, Heiti SC;
+    /* 去除默认的灰色边框 */
+    border: 0;
+    outline: none;
+}
+
+body {
+
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC;
+    color: #666;
+}
+
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}

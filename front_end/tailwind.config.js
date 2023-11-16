@@ -2,7 +2,13 @@
 export default {
   content: ["./index.html", "./src/**/*.{vue,js}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "login-background": "url('/src/assets/img/login-background.jpg')",
+        "personalCenter-background":
+          "url('/src/assets/img/personalCenter-background.jpg')",
+      },
+    },
   },
   plugins: [],
 };

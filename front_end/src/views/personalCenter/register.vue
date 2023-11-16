@@ -1,0 +1,109 @@
+<template>
+  <div
+    class="min-h-screen bg-login-background bg-cover bg-center bg-no-repeat flex justify-end items-center p-10"
+  >
+    <div class="w-full max-w-xs bg-white p-8 rounded shadow-lg">
+      <h1
+        class="register__title text-2xl font-bold mb-6 bg-blue-500 text-white p-3 rounded text-center"
+      >
+        注册用户<el-icon class="text-cyan-400"><User /></el-icon>
+      </h1>
+      <form class="register__form space-y-4">
+        <div class="register__text mb-4">
+          <el-input
+            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            v-model="user_name"
+            placeholder="user_name"
+            clearable
+          />
+        </div>
+        <div class="register__password mb-4">
+          <el-input
+            v-model="password"
+            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            type="password"
+            placeholder="Password"
+            show-password
+          />
+        </div>
+        <div class="register__gender mb-4">
+          <el-input
+            v-model="gender"
+            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            type="gender"
+            placeholder="gender"
+            clearable
+          />
+        </div>
+        <div class="register__button">
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
+            @click.prevent="register"
+            @click="open"
+          >
+            register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import { userStore } from "@/store/user.js"; // Make sure the path is correct
+import { useRouter } from "vue-router";
+import { registerUser } from "@/api/user.js";
+export default {
+  setup() {
+    // Reactive state properties
+    const user_name = ref("");
+    const password = ref("");
+    const gender = ref(""); // Initialize with an empty string or fetch from the store
+    const phone = "13812345678";
+
+    // Store and Router instances
+    const store = userStore();
+    const router = useRouter();
+
+    // If gender should be initialized from the store, you can do so after store initialization
+    gender.value = store.$state.userInfo.gender; // Assuming store.state.userInfo.gender is reactive
+    const userInfo = {
+      phone: phone,
+      user_name: user_name.value,
+      gender: gender.value,
+      password: password.value,
+    };
+    // Login method
+    const register = () => {
+      store.setUserInfo({
+        token: "123456789",
+        userInfo,
+      });
+      registerUser(userInfo);
+
+      // Redirect after setting user info
+      router.push("/personalCenter");
+    };
+
+    // Open notification
+    const open = () => {
+      ElMessage({
+        showClose: true,
+        message: "注册成功",
+        type: "success",
+      });
+    };
+
+    // Return the reactive state and methods to the template
+    return {
+      user_name,
+      password,
+      gender,
+      register,
+      open,
+    };
+  },
+};
+</script>
