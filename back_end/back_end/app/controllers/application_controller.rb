@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
-  helper_mothod :current_user
+  # helper_mothod :current_user
+  # include ::ActionController::Cookies
 
   def current_user
     @current_user ||= User.find(session[:current_userid]) if session[:current_userid]

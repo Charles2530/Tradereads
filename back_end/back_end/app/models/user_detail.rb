@@ -6,8 +6,8 @@ class UserDetail < ApplicationRecord
 
   # TODO SecurePassword
 
-  validates :user_password, presence: true
-  validates :user_password,
+  validates :password, presence: true
+  validates :password,
             length: { in: 6..20, message: "The length of password must >=6 and <=20 ." }
 
   validates :gender, inclusion: { in: %w(male female), message: "%{value} is not available gender." }

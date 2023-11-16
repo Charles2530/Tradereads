@@ -15,10 +15,13 @@ class UsersController < ApplicationController
     end
 
     user = User.new(phone: params[:phone], right: 0)
+    gender = params[:gender] || "male"
+    pay_type = "Alipay"
     user_detail = UserDetail.new(user: user,
                                  password: params[:password],
                                  user_name: params[:user_name],
-                                 gender: params[:gender])
+                                 gender: gender,
+                                 pay_type: pay_type)
     if user.valid? and user_detail.valid?
       user.save
       user_detail.save
@@ -269,7 +272,7 @@ class UsersController < ApplicationController
 
       # Only allow a list of trusted parameters through.
       def user_params
-        params.require(:user).permit(:user_id, :user_password)
+        params.require(:user).permit(:user_id, :password)
       end
 
       def is_admin
