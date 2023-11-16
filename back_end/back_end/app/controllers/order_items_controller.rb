@@ -2,6 +2,8 @@ class OrderItemsController < ApplicationController
   before_action :login_only
   before_action :set_order_item, only: %i[ show update destroy ]
 
+  include ApplicationHelper
+
   # GET /order_items
   def index
     @order_items = OrderItem.all

@@ -2,6 +2,8 @@ class ProductsController < ApplicationController
   before_action :login_only, except: %i[ index show ]
   before_action :set_product, only: %i[ show update destroy ]
 
+  include ApplicationHelper
+
   # GET /api/products
   def index
     @products = Product.all

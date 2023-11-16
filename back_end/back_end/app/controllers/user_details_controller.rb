@@ -1,6 +1,8 @@
 class UserDetailsController < ApplicationController
   before_action :set_user_detail, only: %i[ show update destroy ]
 
+  include ApplicationHelper
+
   # GET /user_details
   def index
     @user_details = UserDetail.all

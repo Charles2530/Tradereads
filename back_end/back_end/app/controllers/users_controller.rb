@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
 
+  include ApplicationHelper
+
+  public
+
   # POST /api/register
   def register
     if User.find_by(phone: params[:phone])
