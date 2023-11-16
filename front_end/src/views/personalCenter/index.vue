@@ -111,7 +111,7 @@ export default {
   },
   data: () => ({
     loginInfo: {
-      username,
+      username: "Charles",
       email: "charles2530@163.com",
     },
     showOrders: false,
@@ -163,9 +163,9 @@ export default {
       },
     ],
   }),
-  mounted() {
-    this.created();
-  },
+  //   mounted() {
+  //     this.created();
+  //   },
   methods: {
     toggleOrders() {
       this.showOrders = !this.showOrders;
@@ -173,11 +173,11 @@ export default {
     toggleProducts() {
       this.showProducts = !this.showProducts;
     },
-    created() {
-      getUser(1).then((res) => {
-        this.loginInfo.username = res.data.user_name;
-      });
-    },
+    // created() {
+    //   //   getUser(1).then((res) => {
+    //   // this.loginInfo.username = res.data.user_name;
+    //   //   });
+    // },
   },
 };
 </script>
