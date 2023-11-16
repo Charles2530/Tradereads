@@ -20,6 +20,7 @@ export default defineConfig({
     alias: {
       "@": resolve(__dirname, "src"),
       "@c": resolve(__dirname, "src/components"),
+      "@css": resolve(__dirname, "css"),
     },
   },
   //线上接口

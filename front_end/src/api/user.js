@@ -1,11 +1,10 @@
 import request from "@/utils/require";
 
 //get
-export function getUser(params) {
+export function getUser(user_id) {
   return request({
-    url: "/user/list",
+    url: "/users/" + user_id,
     method: "get",
-    params,
   });
 }
 
