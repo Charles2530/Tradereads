@@ -69,14 +69,15 @@ export default {
 
     // If gender should be initialized from the store, you can do so after store initialization
     gender.value = store.$state.userInfo.gender; // Assuming store.state.userInfo.gender is reactive
-    const userInfo = {
-      phone: phone,
-      user_name: user_name.value,
-      gender: gender.value,
-      password: password.value,
-    };
+
     // Login method
     const register = () => {
+      const userInfo = {
+        phone: phone,
+        user_name: user_name.value,
+        gender: gender.value,
+        password: password.value,
+      };
       store.setUserInfo({
         token: "123456789",
         userInfo,

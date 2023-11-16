@@ -20,7 +20,7 @@ export function editUser(params) {
 
 export function registerUser(params) {
   return request({
-    url: "/api/register",
+    url: "/register",
     method: "post",
     params,
   });
