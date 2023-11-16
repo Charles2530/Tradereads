@@ -111,7 +111,7 @@ export default {
   },
   data: () => ({
     loginInfo: {
-      username: getUser(1).data.user_name,
+      username,
       email: "charles2530@163.com",
     },
     showOrders: false,
@@ -163,12 +163,20 @@ export default {
       },
     ],
   }),
+  mounted() {
+    this.created();
+  },
   methods: {
     toggleOrders() {
       this.showOrders = !this.showOrders;
     },
     toggleProducts() {
       this.showProducts = !this.showProducts;
+    },
+    created() {
+      getUser(1).then((res) => {
+        this.loginInfo.username = res.data.user_name;
+      });
     },
   },
 };
