@@ -3,7 +3,9 @@
 module ApplicationHelper
 
   module Global
-    SUCCESS = "success"
+    SUCCESS = "Succeeded."
+    FAIL = "Failed."
+    UNAUTHORIZED = "Unauthorized."
     PORT = 9000
   end
 

@@ -1,8 +1,8 @@
 class Product < ApplicationRecord
   belongs_to :user
   has_one :product_detail, dependent: :destroy
-  has_many :carts
-  has_many :order_items
+  has_many :carts, dependent: :destroy
+  has_many :order_items, dependent: :destroy
 
   validates :price,
             :presence => { massage: "Price must exist." }

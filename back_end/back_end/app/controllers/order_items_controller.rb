@@ -38,6 +38,10 @@ class OrderItemsController < ApplicationController
 
   # DELETE /order_items/1
   def destroy
+    order_item = @order_item
+    product = order_item.product
+    product.store += order_item.number
+    product.save
     @order_item.destroy
   end
 

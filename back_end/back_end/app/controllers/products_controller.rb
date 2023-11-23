@@ -191,13 +191,26 @@ class ProductsController < ApplicationController
         }
       )
     else
-      render json: @product.errors, status: :unprocessable_entity
+      render json: response_json(
+        false,
+        message: ProductError::CREATE_FAIL
+      )
     end
   end
 
   # DELETE /api/products/1
   def destroy
-    @product.destroy
+    if @product.destroy
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
   end
 
   private

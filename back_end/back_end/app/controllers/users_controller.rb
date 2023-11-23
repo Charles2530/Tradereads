@@ -155,7 +155,7 @@ class UsersController < ApplicationController
   def show_cart
     user = current_user
     total_price = 0
-    user.carts.collect do |cart|
+    user.carts.each do |cart|
       product = cart.product
       price = product.price
       total_price += price * cart.number
@@ -165,7 +165,7 @@ class UsersController < ApplicationController
       message: ShowError::SHOW_SUCCEED,
       data: {
         total_price: total_price,
-        products: user.carts.collect do |cart|
+        products: user.carts.each do |cart|
           product = cart.product
           product_detail = ProductDetail.find_by(product: product)
           {
@@ -184,7 +184,7 @@ class UsersController < ApplicationController
     user = @user
     unless user
       render json: response_json(
-        success: false,
+        false,
         message: ProductError::SHOW_PRODUCT_LIST_FAIL
       ) and return
     end
@@ -192,7 +192,7 @@ class UsersController < ApplicationController
       true,
       message: ProductError::SHOW_PRODUCT_LIST_SUCCEED,
       data: {
-        products: user.products.collect do |product|
+        products: user.products.each do |product|
           product_detail = ProductDetail.find_by(product: product)
           {
             product_name: product_detail.product_name,
@@ -204,11 +204,87 @@ class UsersController < ApplicationController
     )
   end
 
+  def carts_to_orders
+    user = current_user
+    carts = []
+    orders = []
+    order_items = []
+    user.carts.each do |cart|
+      carts << cart
+      order = Order.new(user: current_user)
+      order_item = OrderItem.new(product: cart.product, number: cart.number, state: "toPay", order: order)
+      if order.valid? and order_item.valid?
+        orders << order
+        order_items << order_items
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        ) and return
+      end
+    end
+    
+    orders.length.times do |i|
+      carts[i].destroy
+      orders[i].save
+      order_items[i].save
+    end
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS
+    )
+  end
+
+  def show_current_orders
+    user = current_user
+    total_prices = []
+    orders = []
+    user.orders.each do |order|
+      orders << order
+      total_price = 0
+      order.order_items.each do |item|
+        product = item.product
+        price = product.price
+        total_price += price * item.number
+      end
+      total_prices << total_price
+    end
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        orders: total_prices.length.times do |i|
+          order = orders[i]
+          {
+            order_id: order.id,
+            total_price: total_prices[i],
+            items: order.order_items.each do |item|
+              product = item.product
+              product_detail = ProductDetail.find_by(product: product)
+              seller = product.user
+              seller_detail = UserDetail.find_by(user: seller)
+              {
+                product_image: product_detail.product_image,
+                product_name: product_detail.product_name,
+                sell_address: product.sell_address,
+                seller_name: seller_detail.user_name,
+                buy_num: item.number,
+                product_price: product.price * item.number,
+                state: item.state
+              }
+            end
+          }
+        end
+      }
+    )
+  end
+
+
   # GET /api/users
   def index
     unless is_admin
       render json: response_json(
-        success: false
+        false
       ) and return
     end
     @users = User.all
