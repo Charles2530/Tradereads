@@ -1,0 +1,1 @@
+import{_ as e,t as r}from"./index-0c230e3f.js";const n={name:"ProductsCenter",data:()=>({productsCenter:"ProductsCenter"})};function s(t,o,a,c,d,p){return r(t.productsCenter)}const _=e(n,[["render",s]]);export{_ as default};

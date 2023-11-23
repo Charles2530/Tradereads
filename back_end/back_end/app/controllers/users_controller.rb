@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
   before_action :login_only, except: %i[ show register login show_product_list ]
-  before_action :unlogin_only, only: %i[ register ]
+  # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
 
@@ -312,7 +312,7 @@ class UsersController < ApplicationController
       message: ShowError::SHOW_SUCCEED,
       data: {
         phone: user.phone,
-        user_name: user_detail.username,
+        user_name: user_detail.user_name,
         buy_address: user_detail.buy_address,
         gender: user_detail.gender,
         pay_type: user_detail.pay_type
