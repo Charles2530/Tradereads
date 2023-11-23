@@ -32,7 +32,10 @@ class UsersController < ApplicationController
       session[:current_userid] = user.id
       render status: 200, json: response_json(
         true,
-        message: RegisterError::REGISTER_SUCCESS
+        message: RegisterError::REGISTER_SUCCESS,
+        data:{
+            user_id: user.id
+        }
       )
     else
       render json: response_json(
