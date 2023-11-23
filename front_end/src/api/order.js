@@ -17,7 +17,7 @@ export function showAllOrders() {
   });
 }
 
-//delete
+//delete（admin only）
 export function deleteOrder(order_id) {
   return request({
     url: "/orders/" + order_id,
