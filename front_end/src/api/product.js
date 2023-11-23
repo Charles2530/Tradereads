@@ -42,9 +42,23 @@ export function addProductToCart(product_id, params) {
 }
 
 //get
+export function showAllProducts() {
+  return request({
+    url: "/products",
+    method: "get",
+  });
+}
+
 export function getProduct(product_id) {
   return request({
     url: "/products/" + product_id,
+    method: "get",
+  });
+}
+
+export function showProductsList(user_id) {
+  return request({
+    url: "/users/" + user_id + "/show_product_list",
     method: "get",
   });
 }
