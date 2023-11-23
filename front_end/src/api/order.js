@@ -1,5 +1,8 @@
 import request from "@/utils/require";
 
+//post
+
+//get
 export function showCurrentUserOrders() {
   return request({
     url: "/show_current_orders",
@@ -14,6 +17,7 @@ export function showAllOrders() {
   });
 }
 
+//delete
 export function deleteOrder(order_id) {
   return request({
     url: "/orders/" + order_id,

@@ -1,17 +1,11 @@
 import request from "@/utils/require";
 
+//post
 export function addProduct(params) {
   return request({
     url: "/products",
     method: "post",
     params,
-  });
-}
-
-export function getProduct(product_id) {
-  return request({
-    url: "/products/" + product_id,
-    method: "get",
   });
 }
 
@@ -47,6 +41,15 @@ export function addProductToCart(product_id, params) {
   });
 }
 
+//get
+export function getProduct(product_id) {
+  return request({
+    url: "/products/" + product_id,
+    method: "get",
+  });
+}
+
+//delete
 export function deleteProduct(product_id) {
   return request({
     url: "/products/" + product_id,
