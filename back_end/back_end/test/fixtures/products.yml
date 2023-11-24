@@ -7,9 +7,4 @@ one:
   store: 1
   state: MyString
 
-two:
-  user: two
-  price: 1
-  sell_address: MyText
-  store: 1
-  state: MyString
+

@@ -1,11 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 1
-  phone: "123123"
+  id: 1
+  phone: "12312123"
   right: 1
-
-two:
-  user_id: 2
-  phone: "123123asd"
-  right: 0

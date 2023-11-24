@@ -35,26 +35,11 @@
 </style>
 
 <script>
-import shoppingItem from "../../components/shoppingItem.vue";
-
 export default {
-  components: {
-    "shooping-item": shoppingItem,
-  },
   data() {
     return {
-      shoopingUser: [],
       project_title: "DataBase Project",
     };
-  },
-  methods: {
-    generate(event) {
-      addCartsToOrders();
-      location.reload();
-    },
-  },
-  mourt() {
-    showCurrentUserCart(this.shoopingUser);
   },
 };
 </script>

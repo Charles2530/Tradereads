@@ -7,9 +7,3 @@ one:
   product_press: MyText
   product_type: MyString
 
-two:
-  product: two
-  product_name: MyText
-  product_image: MyString
-  product_press: MyText
-  product_type: MyString

@@ -30,7 +30,6 @@
 </style>
 
 <script>
-import buyProductItem from "../../components/buyProductItem.vue";
 export default {
   data() {
     return {
