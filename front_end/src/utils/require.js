@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ElNotification } from "element-plus";
 /* Mock 使用 */
 let baseURL = "http://127.0.0.1:4523/m1/3606851-0-default/api";
 // let baseURL = "/api";
@@ -25,18 +26,14 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    const res = response.data;
     if (response.status !== 200) {
-      return Promise.reject(new Error(res.success || "error"));
-    } else {
-      if (res.code === 200) {
-        return res.result;
-      } else {
-        alert(res.success);
-      }
+      return Promise.reject(new Error(response.statusText || "error"));
     }
+    return response.data;
   },
   (error) => {
+    // 处理响应错误
+    console.log(error);
     return Promise.reject(error);
   }
 );
