@@ -39,16 +39,7 @@ export default defineConfig({
   //本地接口
   server: {
     proxy: {
-      "/api": "http://localhost:5000",
+      "/api": "http://localhost:3000",
     },
   },
-  build: {
-    sourcemap: false, // 不生成 source map 
-    terserOptions: { 
-      compress: { // 打包时清除 console 和 debug 相关代码
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-  }
 });

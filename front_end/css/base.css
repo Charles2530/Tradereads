@@ -4,6 +4,18 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?e5ecp4');
+    src: url('fonts/icomoon.eot?e5ecp4#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?e5ecp4') format('truetype'),
+        url('fonts/icomoon.woff?e5ecp4') format('woff'),
+        url('fonts/icomoon.svg?e5ecp4#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
 em,
 i {
     font-style: normal
