@@ -1,24 +1,39 @@
-# README
+# 北航二手书网站
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+任务：简易电子商务系统
 
-Things you may want to cover:
+设计文档
 
-* Ruby version
+部署和使用手册
 
-* System dependencies
+## 系统设计
 
-* Configuration
+### 主体架构
 
-* Database creation
+**技术层面**
 
-* Database initialization
+本项目采用的是**前后端分离**的方式
 
-* How to run the test suite
+- 前端：Vite + Vue 提供组件以及视图渲染
+- 后端：Rails 提供访问数据库的接口
+- 利用 `json` 格式数据通过 `http` 协议进行前后端的交互
 
-* Services (job queues, cache servers, search engines, etc.)
+前后端整合：利用 Rails7 推荐的 Asset Pipeline + ImportMap gem 包处理 js 文件 以及 Sprockets 处理 css 文件
 
-* Deployment instructions
+**需求层面**
 
-* ...
+鉴于二手书市场中，卖家与买家更多都是个体用户，故不区分商家与买家，而是所有用户都能够独立购买商品或售出商品
+
+除此以外，管理员可对已在书架上售卖的书籍进行一系列操作，也可对订单进行一系列操作
+
+### 实现功能
+
+**用户模块**
+
+- 注册
+- 登录
+- 注销
+- 获取用户个人信息
+- 更改密码、用户名、邮寄地址
+
+**二手书商品模块**
