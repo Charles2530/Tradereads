@@ -1,26 +1,18 @@
-import request from "@/utils/require";
+import service from "@/utils/require";
 
 //post
 
 //get
-export function showCurrentUserOrders() {
-  return request({
-    url: "/show_current_orders",
+export async function addCartsToOrders() {
+  return await service({
+    url: "/carts_to_orders",
     method: "get",
   });
 }
 
-export function showAllOrders() {
-  return request({
-    url: "/orders",
+export async function showCurrentUserCart() {
+  return await service({
+    url: "/show_cart",
     method: "get",
-  });
-}
-
-//delete
-export function deleteOrder(order_id) {
-  return request({
-    url: "/orders/" + order_id,
-    method: "delete",
   });
 }
