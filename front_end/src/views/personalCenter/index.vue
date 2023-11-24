@@ -163,9 +163,9 @@ export default {
       },
     ],
   }),
-  //   mounted() {
-  //     this.created();
-  //   },
+  mounted() {
+    this.created();
+  },
   methods: {
     toggleOrders() {
       this.showOrders = !this.showOrders;
@@ -173,11 +173,16 @@ export default {
     toggleProducts() {
       this.showProducts = !this.showProducts;
     },
-    // created() {
-    //   //   getUser(1).then((res) => {
-    //   // this.loginInfo.username = res.data.user_name;
-    //   //   });
-    // },
+    created() {
+      getUser(1)
+        .then((res) => {
+          // this.loginInfo.username = res.data.user_name;
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("An error occurred:", error.message);
+        });
+    },
   },
 };
 </script>

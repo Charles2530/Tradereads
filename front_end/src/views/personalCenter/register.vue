@@ -61,7 +61,7 @@ export default {
     const user_name = ref("");
     const password = ref("");
     const gender = ref(""); // Initialize with an empty string or fetch from the store
-    const phone = "13812345678";
+    const phone = "13812330078";
 
     // Store and Router instances
     const store = userStore();
@@ -82,7 +82,9 @@ export default {
         token: "123456789",
         userInfo,
       });
-      registerUser(userInfo);
+      registerUser(userInfo).then((res) => {
+        console.log(res);
+      });
 
       // Redirect after setting user info
       router.push("/personalCenter");
