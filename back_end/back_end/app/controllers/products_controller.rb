@@ -7,8 +7,26 @@ class ProductsController < ApplicationController
   # GET /api/products
   def index
     @products = Product.all
-
-    render json: @products
+    products = @products
+    render json: response_json(
+      false,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        products: products.each do |product|
+          product_detail = ProductDetail.find_by(product: product)
+          seller = product.user
+          {
+            product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
+            price: product.price,
+            product_press: product_detail.product_press,
+            product_type: product_detail.type,
+            seller_name: seller.user_name,
+            sell_address: product.sell_address
+          }
+        end
+      }
+    )
   end
 
   # GET /api/products/<product_id>
@@ -200,11 +218,18 @@ class ProductsController < ApplicationController
 
   # DELETE /api/products/1
   def destroy
-    if @product.destroy
-      render status: 200, json: response_json(
-        true,
-        message: Global::SUCCESS
-      )
+    if @product.user == current_user or current_user.right == 1
+      if @product.destroy
+        render status: 200, json: response_json(
+          true,
+          message: Global::SUCCESS
+        )
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        )
+      end
     else
       render json: response_json(
         false,

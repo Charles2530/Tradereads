@@ -19,22 +19,13 @@
                 </div>
             </div>
             <div class="button">
-                <div class="item">
-
+                <shopping-item></shopping-item>
+                <div v-for="{ p, index } in shoopingUser" :key="index">
+                    <shopping-item :shoppinglist="p.data.products"></shopping-item>
                 </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="generate"></div>
+                <!-- {{ shoopingUser.data.total_price }} -->
+                <p class="money">商品总额：￥100</p>
+                <button class="generate" @click="generate()"></button>
             </div>
 
         </div>
@@ -47,13 +38,27 @@
 </style>
 
 <script>
+
+import shoppingItem from '../../components/shoppingItem.vue';
+
 export default {
+    components: {
+        'shooping-item': shoppingItem
+    },
     data() {
         return {
+            shoopingUser: [],
             project_title: "DataBase Project",
         };
     },
+    methods: {
+        generate(event) {
+            addCartsToOrders();
+            location.reload();
+        }
+    },
+    mourt() {
+        showCurrentUserCart(this.shoopingUser);
+    }
 };
-
-
 </script>

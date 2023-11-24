@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
-#   before_action :login_only, except: %i[ show register login show_product_list ]
-#   before_action :unlogin_only, only: %i[ register ]
+  before_action :login_only, except: %i[ index show register login show_product_list ]
+  # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         true,
         message: RegisterError::REGISTER_SUCCESS,
         data:{
-            user_id: user.id
+          user_id: user.id
         }
       )
     else
@@ -285,16 +285,6 @@ class UsersController < ApplicationController
 
   # GET /api/users
   def index
-    unless is_admin
-      render json: response_json(
-        false
-      ) and return
-    end
-    @users = User.all
-    render status: 200, json: response_json(
-      true,
-      data: @users
-    )
   end
 
   # GET /api/users/1

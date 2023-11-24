@@ -1,17 +1,17 @@
-import service from "@/utils/require";
+import request from "@/utils/require";
 
 //post
 
-//get
-export async function addCartsToOrders() {
-  return await service({
+export function addCartsToOrders() {
+  return request({
     url: "/carts_to_orders",
-    method: "get",
+    method: "post",
   });
 }
 
-export async function showCurrentUserCart() {
-  return await service({
+//get
+export function showCurrentUserCart() {
+  return request({
     url: "/show_cart",
     method: "get",
   });

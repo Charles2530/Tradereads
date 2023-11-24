@@ -19,26 +19,7 @@
                 </div>
             </div>
             <div class="button">
-                <div class="item">
-                    <div class="choose">
-                        
-                    </div>
-                    <div class="buy">
-                        
-                    </div>
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
+                <buyProductItem></buyProductItem>
 
             </div>
 
@@ -53,6 +34,7 @@
 </style>
 
 <script>
+import buyProductItem from '../../components/buyProductItem.vue';
 export default {
     data() {
         return {

@@ -6,8 +6,3 @@ one:
   state: MyString
   order: one
 
-two:
-  product: two
-  number: 1
-  state: MyString
-  order: two

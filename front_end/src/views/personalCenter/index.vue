@@ -31,9 +31,7 @@
         </div>
       </div>
     </section>
-    <div
-      class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
-    >
+    <div class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen">
       <div class="headBar bg-gradient-to-r from-blue-400/50 to-red-500/50">
         <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
         <div class="mb-8">
@@ -45,12 +43,7 @@
         </div>
         <!-- 订单列表展开按钮 -->
         <div class="mb-4">
-          <el-button
-            type="primary"
-            class="text-white font-semibold hover:underline"
-            @click="toggleOrders"
-            plain
-          >
+          <el-button type="primary" class="text-white font-semibold hover:underline" @click="toggleOrders" plain>
             {{ showOrders ? "收起订单列表" : "展开订单列表" }}
           </el-button>
         </div>
@@ -59,22 +52,12 @@
         <div v-if="showOrders" class="mb-8">
           <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-            <order-item
-              v-for="order in orders"
-              :key="order.id"
-              :order-id="order.id"
-              :items="order.items"
-            ></order-item>
+            <order-item v-for="order in orders" :key="order.id" :order-id="order.id" :items="order.items"></order-item>
           </div>
         </div>
         <!-- 商品列表展开按钮 -->
         <div class="mb-4">
-          <el-button
-            type="success"
-            class="text-white font-semibold hover:underline"
-            @click="toggleProducts"
-            plain
-          >
+          <el-button type="success" class="text-white font-semibold hover:underline" @click="toggleProducts" plain>
             {{ showProducts ? "收起商品列表" : "展开商品列表" }}
           </el-button>
         </div>
@@ -83,11 +66,7 @@
         <div v-if="showProducts">
           <h2 class="text-white text-2xl font-semibold mb-4">商品列表</h2>
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-            <product-item
-              v-for="product in products"
-              :key="product.id"
-              :product="product"
-            ></product-item>
+            <product-item v-for="product in products" :key="product.id" :product="product"></product-item>
           </div>
         </div>
       </div>
@@ -163,9 +142,9 @@ export default {
       },
     ],
   }),
-  mounted() {
-    this.created();
-  },
+  //   mounted() {
+  //     this.created();
+  //   },
   methods: {
     toggleOrders() {
       this.showOrders = !this.showOrders;
@@ -173,16 +152,11 @@ export default {
     toggleProducts() {
       this.showProducts = !this.showProducts;
     },
-    created() {
-      getUser(1)
-        .then((res) => {
-          // this.loginInfo.username = res.data.user_name;
-          console.log(res);
-        })
-        .catch((error) => {
-          console.error("An error occurred:", error.message);
-        });
-    },
+    // created() {
+    //   //   getUser(1).then((res) => {
+    //   // this.loginInfo.username = res.data.user_name;
+    //   //   });
+    // },
   },
 };
 </script>
