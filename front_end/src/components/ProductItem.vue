@@ -16,6 +16,9 @@
         <span class="text-gray-600">商品库存: {{ product.product_store }}</span>
       </div>
       <div>
+        <span class="text-gray-600">发货地址: {{ product.sell_address }}</span>
+      </div>
+      <div>
         <span :class="stockClass">{{ stockStatus }}</span>
       </div>
       <button
@@ -82,6 +85,19 @@
           type="number"
           id="product_store"
           v-model.number="editableProduct.product_store"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+        />
+      </div>
+      <div class="mb-4">
+        <label
+          for="sell_address"
+          class="block text-sm font-medium text-gray-700"
+          >发货地址</label
+        >
+        <el-input
+          type="text"
+          id="sell_address"
+          v-model="editableProduct.sell_address"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
@@ -159,19 +175,19 @@ export default {
         }
       });
 
-      //   modifySellAddress(editableProduct.product_id, editableProduct.sell_address).then(
-      //     (res) => {
-      //       console.log(res);
-      //       if (res.success) {
-      //         console.log("修改地址成功");
-      //       } else {
-      //         ElMessage({
-      //           message: res.message,
-      //           type: "error",
-      //         });
-      //       }
-      //     }
-      //   );
+      modifySellAddress(editableProduct.product_id, {
+        new_address: editableProduct.sell_address,
+      }).then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log("修改地址成功");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
 
       modifyStorage(editableProduct.product_id, {
         new_store: editableProduct.product_store,
