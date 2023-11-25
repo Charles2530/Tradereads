@@ -45,6 +45,40 @@
             <div><strong>性别:</strong> {{ loginInfo.gender }}</div>
             <div><strong>支付方式:</strong> {{ loginInfo.pay_type }}</div>
           </div>
+          <div class="mb-4">
+            <el-button
+              type="info"
+              class="text-white font-semibold hover:underline"
+              @click="openDialog = true"
+              plain
+            >
+              修改个人信息
+            </el-button>
+          </div>
+          <!-- <el-dialog
+            title="修改个人信息"
+            :visible.sync="openDialog"
+            width="30%"
+          >
+            <div>
+              <el-input
+                v-model="newUserName"
+                placeholder="新用户名"
+                clearable
+              ></el-input>
+              <el-input
+                v-model="newUserAddress"
+                placeholder="新购买地址"
+                clearable
+              ></el-input>
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="openDialog = false">取 消</el-button>
+              <el-button type="primary" @click="updateUserInfo"
+                >确 定</el-button
+              >
+            </span>
+          </el-dialog> -->
         </div>
         <!-- 订单列表展开按钮 -->
         <div class="mb-4">
@@ -107,7 +141,12 @@
 import { ref, onMounted, reactive } from "vue";
 import OrderItem from "@c/OrderItem.vue";
 import ProductItem from "@c/ProductItem.vue";
-import { getUser, logout } from "@/api/user.js";
+import {
+  getUser,
+  logout,
+  modify_username,
+  modify_address,
+} from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
 // Reactive state
@@ -171,6 +210,9 @@ const products = ref([
     stock: 0,
   },
 ]);
+const openDialog = ref(false);
+const newUserName = ref("");
+const newUserAddress = ref("");
 
 // Methods
 const toggleOrders = () => {
@@ -218,6 +260,48 @@ const Logout = () => {
       router.push("/");
     }
   });
+};
+
+const updateUserInfo = () => {
+  // Call API functions here (modify_username and modify_address)
+  // Update loginInfo after successful API calls
+  // Close the dialog and reset input fields
+  openDialog.value = false;
+  // Implement actual API calls and update logic
+  updateUserAddress();
+  updateUserName();
+};
+
+const updateUserName = () => {
+  modify_username({ newUserName: newUserName.value })
+    .then((res) => {
+      if (res.success) {
+        loginInfo.user_name = newUserName.value;
+        ElMessage({ message: "用户名更新成功", type: "success" });
+      } else {
+        ElMessage({ message: "用户名更新失败", type: "error" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      ElMessage({ message: "用户名更新出错", type: "error" });
+    });
+};
+
+const updateUserAddress = () => {
+  modify_address({ newUserAddress: newUserAddress.value })
+    .then((res) => {
+      if (res.success) {
+        loginInfo.buy_address = newUserAddress.value;
+        ElMessage({ message: "购买地址更新成功", type: "success" });
+      } else {
+        ElMessage({ message: "购买地址更新失败", type: "error" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      ElMessage({ message: "购买地址更新出错", type: "error" });
+    });
 };
 
 // Lifecycle hook
