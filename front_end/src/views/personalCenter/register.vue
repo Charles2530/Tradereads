@@ -35,12 +35,20 @@
             clearable
           />
         </div>
+        <div class="register__phone mb-4">
+          <el-input
+            v-model="phone"
+            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            type="phone"
+            placeholder="phone"
+            clearable
+          />
+        </div>
         <div class="register__button">
           <button
             type="submit"
             class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
             @click.prevent="register"
-            @click="open"
           >
             register
           </button>
@@ -61,31 +69,41 @@ export default {
     const user_name = ref("");
     const password = ref("");
     const gender = ref(""); // Initialize with an empty string or fetch from the store
-    const phone = "13812345678";
+    const phone = ref("");
 
     // Store and Router instances
     const store = userStore();
     const router = useRouter();
 
-    // If gender should be initialized from the store, you can do so after store initialization
-    gender.value = store.$state.userInfo.gender; // Assuming store.state.userInfo.gender is reactive
-
     // Login method
     const register = () => {
       const userInfo = {
-        phone: phone,
+        phone: phone.value,
         user_name: user_name.value,
         gender: gender.value,
         password: password.value,
       };
-      store.setUserInfo({
-        token: "123456789",
-        userInfo,
+      registerUser(userInfo).then((res) => {
+        console.log(res);
+        if (res.success) {
+          ElMessage({
+            showClose: true,
+            message: "注册成功",
+            type: "success",
+          });
+          store.setUserInfo({
+            token: res.data.user_id,
+          });
+          router.push("/personalCenter");
+        } else {
+          ElMessage({
+            showClose: true,
+            message: res.message,
+            type: "error",
+          });
+        }
       });
-      registerUser(userInfo);
-
       // Redirect after setting user info
-      router.push("/personalCenter");
     };
 
     // Open notification
@@ -102,6 +120,7 @@ export default {
       user_name,
       password,
       gender,
+      phone,
       register,
       open,
     };
