@@ -154,8 +154,31 @@ import {
   modify_address,
   modify_password,
 } from "@/api/user.js";
+import { showCurrentUserOrders } from "@/api/order.js";
+import { showProductsList } from "@/api/product.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
+// Lifecycle hook
+onMounted(() => {
+  createdUserInformation();
+  showCurrentUserOrders().then((res) => {
+    if (res.success) {
+      orders.value = res.data.orders;
+    }
+  });
+  showProductsList().then((res) => {
+    if (res.success) {
+      products.value = res.data.products;
+    } else {
+      ElMessage({
+        showClose: true,
+        message: res.message,
+        type: "error",
+      });
+    }
+  });
+});
+
 // Reactive state
 const loginInfo = reactive({
   phone: "",
@@ -187,7 +210,7 @@ const toggleProducts = () => {
   showProducts.value = !showProducts.value;
 };
 
-const created = () => {
+const createdUserInformation = () => {
   getUser(store.getToken)
     .then((res) => {
       console.log(res);
@@ -285,9 +308,4 @@ const updateUserPassword = () => {
       console.error(err);
     });
 };
-
-// Lifecycle hook
-onMounted(() => {
-  created();
-});
 </script>
