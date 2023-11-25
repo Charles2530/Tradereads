@@ -26,21 +26,21 @@
             show-password
           />
         </div>
-        <div class="register__gender mb-4">
-          <el-input
-            v-model="gender"
-            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            type="gender"
-            placeholder="gender"
-            clearable
-          />
-        </div>
         <div class="register__phone mb-4">
           <el-input
             v-model="phone"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             type="phone"
             placeholder="phone"
+            clearable
+          />
+        </div>
+        <div class="register__gender mb-4">
+          <el-input
+            v-model="gender"
+            class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
+            type="gender"
+            placeholder="gender"
             clearable
           />
         </div>
@@ -68,8 +68,8 @@ export default {
     // Reactive state properties
     const user_name = ref("");
     const password = ref("");
-    const gender = ref(""); // Initialize with an empty string or fetch from the store
     const phone = ref("");
+    const gender = ref("male"); // Initialize with an empty string or fetch from the store
 
     // Store and Router instances
     const store = userStore();

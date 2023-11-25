@@ -41,15 +41,23 @@
           <el-card class="box-card">
             <el-row>
               <el-col :span="12">
-                <div><strong>用户名:</strong> {{ loginInfo.user_name }}</div>
-                <div><strong>用户电话:</strong> {{ loginInfo.phone }}</div>
-                <div>
+                <div class="user text-xl">
+                  <strong>用户名:</strong> {{ loginInfo.user_name }}
+                </div>
+                <div class="phone text-xl">
+                  <strong>用户电话:</strong> {{ loginInfo.phone }}
+                </div>
+                <div class="address text-xl">
                   <strong>用户地址:</strong> {{ loginInfo.buy_address }}
                 </div>
               </el-col>
               <el-col :span="12">
-                <div><strong>性别:</strong> {{ loginInfo.gender }}</div>
-                <div><strong>支付方式:</strong> {{ loginInfo.pay_type }}</div>
+                <div class="gender text-xl">
+                  <strong>性别:</strong> {{ loginInfo.gender }}
+                </div>
+                <div class="pay_type text-xl">
+                  <strong>支付方式:</strong> {{ loginInfo.pay_type }}
+                </div>
               </el-col>
             </el-row>
           </el-card>
