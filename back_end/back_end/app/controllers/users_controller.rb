@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
-  before_action :login_only, except: %i[ index show register login show_product_list ]
+before_action :login_only, except: %i[ register login ]
   # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
@@ -30,6 +29,7 @@ class UsersController < ApplicationController
       user.save
       user_detail.save
       session[:current_userid] = user.id
+      puts "register ------------------------------ #{session[:current_userid]}"
       render status: 200, json: response_json(
         true,
         message: RegisterError::REGISTER_SUCCESS,
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
 
   # GET /api/logout
   def logout
-    session.delete(:current_userid)
+    reset_session
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS
@@ -95,6 +95,7 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_username
   def modify_username
+    @user = User.find(params[:user_id])
     user = @user
     user_detail = UserDetail.find_by(user: user)
     user_detail.user_name = params[:user_name]
@@ -113,9 +114,12 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_address
   def modify_address
+    @user = User.find(params[:user_id])
     user = @user
     user_detail = UserDetail.find_by(user: user)
-    user_detail.buy_address = params[:new_address]
+    if params[:new_address]
+      user_detail.buy_address = params[:new_address]
+    end
     if user_detail.save
       render status: 200, json: response_json(
         true,
@@ -131,7 +135,9 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_password
   def modify_password
+    @user = User.find(params[:user_id])
     user = @user
+    puts "modify_password-------------#{user.id}"
     user_detail = UserDetail.find_by(user: user)
     if user_detail.password != params[:old_password]
       render json: response_json(
@@ -185,6 +191,7 @@ class UsersController < ApplicationController
 
   # GET /api/users/<user_id>/show_product_list
   def show_product_list
+    @user = User.find(params[:user_id])
     user = @user
     unless user
       render json: response_json(
@@ -305,6 +312,7 @@ class UsersController < ApplicationController
 
   # GET /api/users/1
   def show
+    @user = User.find(params[:id])
     user = @user
     unless user
       render json: response_json(
@@ -355,9 +363,6 @@ class UsersController < ApplicationController
 
   private
       # Use callbacks to share common setup or constraints between actions.
-      def set_user
-        @user = User.find(params[:id])
-      end
 
       # Only allow a list of trusted parameters through.
       def user_params
@@ -368,18 +373,4 @@ class UsersController < ApplicationController
         current_user && current_user.right == 1
       end
 
-      # def _to_i(param, default_no = 1)
-      #   param && param&.to_i > 0 ? param&.to_i : default_no.to_i
-      # end
-      #
-      # # api/users?page=1
-      # def set_page
-      #   @page      = _to_i(params[:page], 1)
-      #   @page      = set_per_page * (@page - 1)
-      # end
-      #
-      # # api/users?per_page=10
-      # def set_per_page
-      #   @per_page  = _to_i(params[:per_page], 10)
-      # end
 end

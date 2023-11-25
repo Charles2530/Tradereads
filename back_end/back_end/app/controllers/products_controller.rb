@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :login_only, except: %i[ index show ]
-  before_action :set_product, only: %i[ show update destroy ]
 
   include ApplicationHelper
 
@@ -32,6 +31,7 @@ class ProductsController < ApplicationController
 
   # GET /api/products/<product_id>
   def show
+    @product = Product.find(params[:id])
     product = @product
     unless product
       render json: response_json(
@@ -57,6 +57,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_store
   def modify_store
+    @product = Product.find(params[:product_id])
     product = @product
     unless is_seller
       render json: response_json(
@@ -86,6 +87,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_price
   def modify_price
+    @product = Product.find(params[:product_id])
     product = @product
     unless is_seller
       render json: response_json(
@@ -110,6 +112,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_sell_address
   def modify_sell_address
+    @product = Product.find(params[:product_id])
     product = @product
     unless is_seller
       render json: response_json(
@@ -135,6 +138,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/add_product_to_cart
   def add_product_to_cart
+    @product = Product.find(params[:product_id])
     product = @product
     count = params[:count]
     unless count >= 0 && count.is_a?(Integer)
@@ -219,6 +223,7 @@ class ProductsController < ApplicationController
 
   # DELETE /api/products/1
   def destroy
+    @product = Product.find(params[:id])
     if @product.user == current_user or current_user.right == 1
       if @product.destroy
         render status: 200, json: response_json(
@@ -241,9 +246,6 @@ class ProductsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def product_params

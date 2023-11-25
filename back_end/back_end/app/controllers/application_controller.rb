@@ -2,12 +2,13 @@ class ApplicationController < ActionController::API
   # helper_mothod :current_user
   # include ::ActionController::Cookies
 
+  public
+
   def current_user
     @current_user ||= User.find(session[:current_userid]) if session[:current_userid]
   end
 
   def login_only
-    puts session[:user_id]
     if current_user
       true
     else
