@@ -215,8 +215,9 @@ onMounted(() => {
     }
   });
 
-  showProductsList().then((res) => {
+  showProductsList(store.getToken).then((res) => {
     if (res.success) {
+      console.log(store.getToken);
       console.log(res.data.products);
       products.value = res.data.products;
     } else {
