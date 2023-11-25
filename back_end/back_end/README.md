@@ -101,8 +101,6 @@ bundle add cssbundling-rails
 rails css:install:tailwind
 ```
 
-
-
 ## 系统设计
 
 ### 主体架构

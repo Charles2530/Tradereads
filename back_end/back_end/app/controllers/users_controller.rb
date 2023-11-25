@@ -264,6 +264,7 @@ class UsersController < ApplicationController
           {
             order_id: order.id,
             total_price: total_prices[i],
+            order_time: order.created_at.to_s,
             items: order.order_items.each do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
