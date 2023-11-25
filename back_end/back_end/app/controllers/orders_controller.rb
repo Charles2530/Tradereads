@@ -35,12 +35,14 @@ class OrdersController < ApplicationController
             order_id: order.id,
             buyer_id: order.user_id,
             total_price: total_prices[i],
+            order_time: order.created_at.to_s,
             items: order.order_items.each do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
               seller_detail = UserDetail.find_by(user: seller)
               {
+                order_item_id: item.id,
                 product_image: product_detail.product_image,
                 product_name: product_detail.product_name,
                 sell_address: product.sell_address,

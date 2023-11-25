@@ -16,6 +16,7 @@ class ProductsController < ApplicationController
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
+            product_id: product.id,
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
             price: product.price,

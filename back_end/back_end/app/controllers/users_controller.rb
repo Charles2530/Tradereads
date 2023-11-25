@@ -175,6 +175,7 @@ class UsersController < ApplicationController
             product_id: product.id,
             product_name: product_detail.product_name,
             seller_name: product.user_id,
+            product_price: product.price,
             product_number: cart.number
           }
         end
@@ -198,8 +199,11 @@ class UsersController < ApplicationController
         products: user.products.each do |product|
           product_detail = ProductDetail.find_by(product: product)
           {
+            product_id: product.id,
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
+            product_store: product.store,
+            sell_address: product.sell_address,
             price: product.price
           }
         end
@@ -261,12 +265,14 @@ class UsersController < ApplicationController
           {
             order_id: order.id,
             total_price: total_prices[i],
+            order_time: order.created_at.to_s,
             items: order.order_items.each do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
               seller_detail = UserDetail.find_by(user: seller)
               {
+                order_item_id: item.id,
                 product_image: product_detail.product_image,
                 product_name: product_detail.product_name,
                 sell_address: product.sell_address,
@@ -285,6 +291,16 @@ class UsersController < ApplicationController
 
   # GET /api/users
   def index
+    unless is_admin
+      render json: response_json(
+        false
+      ) and return
+    end
+    @users = User.all
+    render status: 200, json: response_json(
+      true,
+      data: @users
+    )
   end
 
   # GET /api/users/1

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-
-  root 'users#index'
   scope "api" do
     post :register, to: 'users#register', as: :user_register
     post :login, to: 'users#login', as: :user_login
