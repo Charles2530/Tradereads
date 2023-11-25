@@ -13,8 +13,8 @@
         <div>
           <el-input
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
-            v-model="username"
-            placeholder="Username"
+            v-model="phone"
+            placeholder="Phone"
             clearable
           />
         </div>
@@ -31,7 +31,6 @@
           type="submit"
           class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
           @click.prevent="Login"
-          @click="open"
         >
           Login
         </button>
@@ -49,34 +48,44 @@
 import { ref } from "vue";
 import { userStore } from "@/store/user.js"; // Make sure the path is correct
 import { useRouter } from "vue-router";
+import { loginUser } from "@/api/user.js";
 
 export default {
   setup() {
     // Reactive state properties
-    const username = ref("");
+    const phone = ref("");
     const password = ref("");
-    const email = ref(""); // Initialize with an empty string or fetch from the store
 
     // Store and Router instances
     const store = userStore();
     const router = useRouter();
 
-    // If email should be initialized from the store, you can do so after store initialization
-    email.value = store.$state.userInfo.email; // Assuming store.state.userInfo.email is reactive
-
     // Login method
     const Login = () => {
-      store.setUserInfo({
-        token: "123456789",
-        userInfo: {
-          username: username.value,
-          password: password.value,
-          email: email.value,
-        },
+      const userInfo = {
+        phone: phone.value,
+        password: password.value,
+      };
+      loginUser(userInfo).then((res) => {
+        console.log(res);
+        if (res.success) {
+          ElMessage({
+            showClose: true,
+            message: res.message,
+            type: "success",
+          });
+          store.setUserInfo({
+            token: res.data.user_id,
+          });
+          router.push("/personalCenter");
+        } else {
+          ElMessage({
+            showClose: true,
+            message: res.message,
+            type: "error",
+          });
+        }
       });
-
-      // Redirect after setting user info
-      router.push("/personalCenter");
     };
 
     // Open notification
@@ -90,9 +99,8 @@ export default {
 
     // Return the reactive state and methods to the template
     return {
-      username,
+      phone,
       password,
-      email,
       Login,
       open,
     };
