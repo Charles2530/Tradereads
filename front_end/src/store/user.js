@@ -31,6 +31,7 @@ export const userStore = defineStore({
     getToken() {
       return this.token;
     },
+    // 0: 普通用户 1: 管理员
     getRight() {
       return this.right;
     },
