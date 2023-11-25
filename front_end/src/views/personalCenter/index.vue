@@ -130,7 +130,7 @@
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
             <product-item
               v-for="product in products"
-              :key="product.id"
+              :key="product.product_id"
               :product="product"
             ></product-item>
           </div>
@@ -163,14 +163,17 @@ import { useRouter } from "vue-router";
 // Lifecycle hook
 onMounted(() => {
   createdUserInformation();
+
   showCurrentUserOrders().then((res) => {
     if (res.success) {
       console.log(res.data.orders);
       orders.value = res.data.orders;
     }
   });
+
   showProductsList().then((res) => {
     if (res.success) {
+      console.log(res.data.products);
       products.value = res.data.products;
     } else {
       ElMessage({
@@ -246,7 +249,7 @@ const Logout = () => {
         message: "退出登录成功",
         type: "success",
       });
-      store.setUserInfo({ token: "" });
+      store.clearUserInfo();
       router.push("/");
     }
   });

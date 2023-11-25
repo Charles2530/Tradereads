@@ -93,6 +93,7 @@ export default {
           });
           store.setUserInfo({
             token: res.data.user_id,
+            right: 0,
           });
           router.push("/personalCenter");
         } else {

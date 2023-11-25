@@ -6,6 +6,7 @@ export const userStore = defineStore({
   state: () => {
     return {
       token: localStorage.getItem("token") || "",
+      right: localStorage.getItem("right") || 0,
     };
   },
   // 方法
@@ -13,10 +14,14 @@ export const userStore = defineStore({
     setUserInfo(data) {
       this.token = data.token;
       localStorage.setItem("token", this.token);
+      this.right = data.right;
+      localStorage.setItem("right", this.right);
     },
     clearUserInfo() {
       this.token = "";
       localStorage.removeItem("token");
+      this.right = 0;
+      localStorage.removeItem("right");
     },
   },
   // mutations
@@ -25,6 +30,9 @@ export const userStore = defineStore({
   getters: {
     getToken() {
       return this.token;
+    },
+    getRight() {
+      return this.right;
     },
     isLogin() {
       return this.token !== "";
