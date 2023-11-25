@@ -42,6 +42,7 @@ class OrdersController < ApplicationController
               seller = product.user
               seller_detail = UserDetail.find_by(user: seller)
               {
+                order_item_id: item.id,
                 product_image: product_detail.product_image,
                 product_name: product_detail.product_name,
                 sell_address: product.sell_address,
