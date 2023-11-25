@@ -316,8 +316,7 @@ const updateUserPasswordInfo = () => {
 };
 
 const updateUserName = () => {
-  modify_username({
-    user_id: store.getToken,
+  modify_username(store.getToken, {
     new_username: new_username.value,
   })
     .then((res) => {
@@ -334,8 +333,7 @@ const updateUserName = () => {
 };
 
 const updateUserAddress = () => {
-  modify_address({
-    user_id: store.getToken,
+  modify_address(store.getToken, {
     new_address: new_address.value,
   })
     .then((res) => {
@@ -352,8 +350,7 @@ const updateUserAddress = () => {
 };
 
 const updateUserPassword = () => {
-  modify_password({
-    user_id: store.getToken,
+  modify_password(store.getToken, {
     old_password: old_password.value,
     new_password: new_password.value,
   })
