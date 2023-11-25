@@ -10,10 +10,6 @@ const Login = () => import("@/views/personalCenter/login.vue");
 const Register = () => import("@/views/personalCenter/register.vue");
 // 个人中心
 const PersonalCenter = () => import("@/views/personalCenter/index.vue");
-// 购物车
-const Cart = () => import("@/views/cart/index.vue");
-// 商品中心
-const Products = () => import("@/views/productsCenter/index.vue");
 // 404页面
 const Page404 = () => import("@/views/404.vue");
 //购物车页面
@@ -45,16 +41,6 @@ const routes = [
     path: "/personalCenter",
     name: "PersonalCenter",
     component: PersonalCenter,
-  },
-  {
-    path: "/cart",
-    name: "Cart",
-    component: Cart,
-  },
-  {
-    path: "/products",
-    name: "Products",
-    component: Products,
   },
   {
     path: "/404",
