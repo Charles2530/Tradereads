@@ -203,6 +203,7 @@ class UsersController < ApplicationController
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
             product_store: product.store,
+            sell_address: product.sell_address,
             price: product.price
           }
         end
