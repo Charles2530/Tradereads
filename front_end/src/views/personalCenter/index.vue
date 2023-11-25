@@ -104,8 +104,10 @@
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
             <order-item
               v-for="order in orders"
-              :key="order.id"
-              :order-id="order.id"
+              :key="order.order_id"
+              :order_id="order.order_id"
+              :total_price="order.total_price"
+              :order_time="order.order_time"
               :items="order.items"
             ></order-item>
           </div>
@@ -163,6 +165,7 @@ onMounted(() => {
   createdUserInformation();
   showCurrentUserOrders().then((res) => {
     if (res.success) {
+      console.log(res.data.orders);
       orders.value = res.data.orders;
     }
   });
