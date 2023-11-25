@@ -55,20 +55,26 @@
               修改个人信息
             </el-button>
           </div>
-          <!-- <el-dialog
-            title="修改个人信息"
-            :visible.sync="openDialog"
-            width="30%"
-          >
+          <el-dialog title="修改个人信息" v-model="openDialog" width="30%">
             <div>
               <el-input
-                v-model="newUserName"
+                v-model="new_username"
                 placeholder="新用户名"
                 clearable
               ></el-input>
               <el-input
-                v-model="newUserAddress"
+                v-model="new_address"
                 placeholder="新购买地址"
+                clearable
+              ></el-input>
+              <el-input
+                v-model="old_password"
+                placeholder="请输入旧密码"
+                clearable
+              ></el-input>
+              <el-input
+                v-model="new_password"
+                placeholder="新密码"
                 clearable
               ></el-input>
             </div>
@@ -78,7 +84,7 @@
                 >确 定</el-button
               >
             </span>
-          </el-dialog> -->
+          </el-dialog>
         </div>
         <!-- 订单列表展开按钮 -->
         <div class="mb-4">
@@ -146,6 +152,7 @@ import {
   logout,
   modify_username,
   modify_address,
+  modify_password,
 } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -163,56 +170,13 @@ const showProducts = ref(false);
 const store = userStore();
 const router = useRouter();
 
-const orders = ref([
-  {
-    id: "order1",
-    items: [
-      {
-        id: 1,
-        title: "书名一",
-        price: "$39.99",
-        quantity: 2,
-        shippingAddress: "123 主街, 任城, 美国",
-        stockStatus: "有货",
-      },
-    ],
-    currentStatus: "待付款",
-  },
-  {
-    id: "order2",
-    items: [
-      {
-        id: 2,
-        title: "书名二",
-        price: "$29.99",
-        quantity: 1,
-        shippingAddress: "123 主街, 任城, 美国",
-        stockStatus: "售完",
-      },
-    ],
-    currentStatus: "待发货",
-  },
-]);
-
-const products = ref([
-  {
-    id: 1,
-    title: "书名一",
-    price: "$39.99",
-    shippingAddress: "123 主街, 任城, 美国",
-    stock: 2,
-  },
-  {
-    id: 2,
-    title: "书名二",
-    price: "$29.99",
-    shippingAddress: "123 主街, 任城, 美国",
-    stock: 0,
-  },
-]);
+const orders = ref([]);
+const products = ref([]);
 const openDialog = ref(false);
-const newUserName = ref("");
-const newUserAddress = ref("");
+const new_username = ref("");
+const new_address = ref("");
+const old_password = ref("");
+const new_password = ref("");
 
 // Methods
 const toggleOrders = () => {
@@ -270,37 +234,55 @@ const updateUserInfo = () => {
   // Implement actual API calls and update logic
   updateUserAddress();
   updateUserName();
+  updateUserPassword();
 };
 
 const updateUserName = () => {
-  modify_username({ newUserName: newUserName.value })
+  modify_username({
+    new_username: new_username.value,
+  })
     .then((res) => {
       if (res.success) {
-        loginInfo.user_name = newUserName.value;
-        ElMessage({ message: "用户名更新成功", type: "success" });
+        loginInfo.user_name = new_username.value;
+        ElMessage({ message: res.message, type: "success" });
       } else {
-        ElMessage({ message: "用户名更新失败", type: "error" });
+        ElMessage({ message: res.message, type: "error" });
       }
     })
     .catch((err) => {
       console.error(err);
-      ElMessage({ message: "用户名更新出错", type: "error" });
     });
 };
 
 const updateUserAddress = () => {
-  modify_address({ newUserAddress: newUserAddress.value })
+  modify_address({ new_address: new_address.value })
     .then((res) => {
       if (res.success) {
-        loginInfo.buy_address = newUserAddress.value;
-        ElMessage({ message: "购买地址更新成功", type: "success" });
+        loginInfo.buy_address = new_address.value;
+        ElMessage({ message: res.message, type: "success" });
       } else {
-        ElMessage({ message: "购买地址更新失败", type: "error" });
+        ElMessage({ message: res.message, type: "error" });
       }
     })
     .catch((err) => {
       console.error(err);
-      ElMessage({ message: "购买地址更新出错", type: "error" });
+    });
+};
+
+const updateUserPassword = () => {
+  modify_password({
+    old_password: old_password.value,
+    new_password: new_password.value,
+  })
+    .then((res) => {
+      if (res.success) {
+        ElMessage({ message: res.message, type: "success" });
+      } else {
+        ElMessage({ message: res.message, type: "error" });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
     });
 };
 
