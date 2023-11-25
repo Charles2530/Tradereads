@@ -11,7 +11,7 @@ export async function addProduct(params) {
 
 export async function modifyStorage(product_id, params) {
   return await service({
-    url: "/products/" + product_id + "modify_store",
+    url: "/products/" + product_id + "/modify_store",
     method: "post",
     params,
   });
@@ -19,7 +19,7 @@ export async function modifyStorage(product_id, params) {
 
 export async function modifyPrice(product_id, params) {
   return await service({
-    url: "/products/" + product_id + "modify_price",
+    url: "/products/" + product_id + "/modify_price",
     method: "post",
     params,
   });
@@ -27,7 +27,7 @@ export async function modifyPrice(product_id, params) {
 
 export async function modifySellAddress(product_id, params) {
   return await service({
-    url: "/products/" + product_id + "modify_sell_address",
+    url: "/products/" + product_id + "/modify_sell_address",
     method: "post",
     params,
   });
@@ -35,7 +35,7 @@ export async function modifySellAddress(product_id, params) {
 
 export async function addProductToCart(product_id, params) {
   return await service({
-    url: "/products/" + product_id + "add_product_to_cart",
+    url: "/products/" + product_id + "/add_product_to_cart",
     method: "post",
     params,
   });
