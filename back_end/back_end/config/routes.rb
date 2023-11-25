@@ -4,13 +4,13 @@ Rails.application.routes.draw do
     post :login, to: 'users#login', as: :user_login
     get :logout, to: 'users#logout', as: :user_logout
     get :show_cart, to: 'users#show_cart', as: :user_show_cart
-    post :show_current_orders, to: 'users#show_current_orders', as: :user_show_current_orders
+    get :show_current_orders, to: 'users#show_current_orders', as: :user_show_current_orders
     get :carts_to_orders, to: 'users#carts_to_orders', as: :user_carts_to_orders
     resources :users do
       post :modify_username, to: 'users#modify_username', as: :user_modify_username
       post :modify_address, to: 'users#modify_address', as: :user_modify_address
       post :modify_password, to: 'users#modify_password', as: :user_modify_password
-      post :show_product_list, to: 'users#show_product_list', as: :user_show_product_list
+      get :show_product_list, to: 'users#show_product_list', as: :user_show_product_list
     end
     resources :user_details
     resources :order_items
