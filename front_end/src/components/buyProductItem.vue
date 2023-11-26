@@ -41,7 +41,7 @@
   position: absolute;
   height: 400px;
   width: 100%;
-  background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+  background: aliceblue url(../../public/math.jpg) no-repeat center 0px;
   top: 0px;
   
 }
@@ -207,7 +207,10 @@ export default {
         type: String,
         required: true,
       },
-      
+      product_image: {
+        type: String,
+        required: true,
+      },
       sell_address: {
         type: String,
         required: true,
