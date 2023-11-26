@@ -26,7 +26,27 @@
               <router-link to="/MyItem">我的商品</router-link>
             </li>
             <li></li>
-            <li>客服服务</li>
+            <li>
+              <button @click="showAllOrderList">查看所有订单</button>
+              <el-dialog
+                title="查看所有订单"
+                v-model="openOrderLists"
+                width="90%"
+              >
+                <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
+                <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
+                  <order-item
+                    v-for="order in all_orders"
+                    :key="order.order_id"
+                    :buyer_id="order.buyer_id"
+                    :order_id="order.order_id"
+                    :total_price="order.total_price"
+                    :order_time="order.order_time"
+                    :items="order.items"
+                  ></order-item>
+                </div>
+              </el-dialog>
+            </li>
             <li></li>
             <li>网站导航</li>
           </ul>
@@ -106,7 +126,7 @@
           <el-button
             type="warning"
             class="text-white font-semibold hover:underline"
-            @click="openUserPassword = true"
+            @click="openUserPassword = store.getRight === 1"
             plain
           >
             修改用户密码
@@ -152,7 +172,8 @@
               v-for="order in orders"
               :key="order.order_id"
               :order_id="order.order_id"
-              :total_price="order.total_price"
+              :buyer_id="parseInt(store.getToken)"
+              :total_price="parseInt(order.total_price)"
               :order_time="order.order_time"
               :items="order.items"
             ></order-item>
@@ -202,7 +223,7 @@ import {
   modify_address,
   modify_password,
 } from "@/api/user.js";
-import { showCurrentUserOrders } from "@/api/order.js";
+import { showCurrentUserOrders, showAllOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -219,8 +240,8 @@ onMounted(() => {
 
   showProductsList(store.getToken).then((res) => {
     if (res.success) {
-      console.log(store.getToken);
-      console.log(res.data.products);
+      //   console.log(store.getToken);
+      //   console.log(res.data.products);
       products.value = res.data.products;
     } else {
       ElMessage({
@@ -247,9 +268,11 @@ const store = userStore();
 const router = useRouter();
 
 const orders = ref([]);
+const all_orders = ref([]);
 const products = ref([]);
 const openUserInformation = ref(false);
 const openUserPassword = ref(false);
+const openOrderLists = ref(false);
 const new_username = ref("");
 const new_address = ref("");
 const old_password = ref("");
@@ -262,6 +285,21 @@ const toggleOrders = () => {
 
 const toggleProducts = () => {
   showProducts.value = !showProducts.value;
+};
+const showAllOrderList = () => {
+  showAllOrders().then((res) => {
+    if (res.success) {
+      console.log(res.data.orders);
+      all_orders.value = res.data.orders;
+      openOrderLists.value = true;
+    } else {
+      ElMessage({
+        showClose: true,
+        message: res.message,
+        type: "error",
+      });
+    }
+  });
 };
 
 const createdUserInformation = () => {
