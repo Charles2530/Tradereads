@@ -22,7 +22,9 @@
               <router-link to="/ProductBuy">商品中心</router-link>
             </li>
             <li></li>
-            <li>我的关注</li>
+            <li>
+              <router-link to="/MyItem">我的商品</router-link>
+            </li>
             <li></li>
             <li>客服服务</li>
             <li></li>
