@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
-  before_action :login_only, except: %i[ index show register login show_product_list ]
+before_action :login_only, except: %i[ register login ]
   # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
@@ -30,6 +29,7 @@ class UsersController < ApplicationController
       user.save
       user_detail.save
       session[:current_userid] = user.id
+      puts "register ------------------------------ #{session[:current_userid]}"
       render status: 200, json: response_json(
         true,
         message: RegisterError::REGISTER_SUCCESS,
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
 
   # GET /api/logout
   def logout
-    session.delete(:current_userid)
+    reset_session
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS
@@ -95,9 +95,12 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_username
   def modify_username
+    @user = User.find(params[:user_id])
     user = @user
     user_detail = UserDetail.find_by(user: user)
-    user_detail.user_name = params[:user_name]
+    if params[:new_username]
+      user_detail.user_name = params[:new_username]
+    end
     if user_detail.save
       render status: 200, json: response_json(
         true,
@@ -113,9 +116,12 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_address
   def modify_address
+    @user = User.find(params[:user_id])
     user = @user
     user_detail = UserDetail.find_by(user: user)
-    user_detail.buy_address = params[:new_address]
+    if params[:new_address]
+      user_detail.buy_address = params[:new_address]
+    end
     if user_detail.save
       render status: 200, json: response_json(
         true,
@@ -131,7 +137,9 @@ class UsersController < ApplicationController
 
   # POST /api/users/<user_id>/modify_password
   def modify_password
+    @user = User.find(params[:user_id])
     user = @user
+    puts "modify_password-------------#{user.id}"
     user_detail = UserDetail.find_by(user: user)
     if user_detail.password != params[:old_password]
       render json: response_json(
@@ -168,13 +176,14 @@ class UsersController < ApplicationController
       message: ShowError::SHOW_SUCCEED,
       data: {
         total_price: total_price,
-        products: user.carts.each do |cart|
+        products: user.carts.collect do |cart|
           product = cart.product
           product_detail = ProductDetail.find_by(product: product)
           {
             product_id: product.id,
             product_name: product_detail.product_name,
             seller_name: product.user_id,
+            product_price: product.price,
             product_number: cart.number
           }
         end
@@ -184,6 +193,7 @@ class UsersController < ApplicationController
 
   # GET /api/users/<user_id>/show_product_list
   def show_product_list
+    @user = User.find(params[:user_id])
     user = @user
     unless user
       render json: response_json(
@@ -195,11 +205,14 @@ class UsersController < ApplicationController
       true,
       message: ProductError::SHOW_PRODUCT_LIST_SUCCEED,
       data: {
-        products: user.products.each do |product|
+        products: user.products.collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           {
+            product_id: product.id,
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
+            product_store: product.store,
+            sell_address: product.sell_address,
             price: product.price
           }
         end
@@ -210,15 +223,19 @@ class UsersController < ApplicationController
   def carts_to_orders
     user = current_user
     carts = []
-    orders = []
+    order = Order.new(user: current_user)
+    unless order.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
     order_items = []
     user.carts.each do |cart|
       carts << cart
-      order = Order.new(user: current_user)
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: "toPay", order: order)
-      if order.valid? and order_item.valid?
-        orders << order
-        order_items << order_items
+      if order_item.valid?
+        order_items << order_item
       else
         render json: response_json(
           false,
@@ -226,10 +243,10 @@ class UsersController < ApplicationController
         ) and return
       end
     end
-    
-    orders.length.times do |i|
+
+    order.save
+    order_items.length.times do |i|
       carts[i].destroy
-      orders[i].save
       order_items[i].save
     end
     render status: 200, json: response_json(
@@ -241,9 +258,7 @@ class UsersController < ApplicationController
   def show_current_orders
     user = current_user
     total_prices = []
-    orders = []
     user.orders.each do |order|
-      orders << order
       total_price = 0
       order.order_items.each do |item|
         product = item.product
@@ -252,21 +267,24 @@ class UsersController < ApplicationController
       end
       total_prices << total_price
     end
+    i = 0
     render status: 200, json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        orders: total_prices.length.times do |i|
-          order = orders[i]
+        orders: user.orders.collect do |order|
+          i += 1
           {
             order_id: order.id,
-            total_price: total_prices[i],
-            items: order.order_items.each do |item|
+            total_price: total_prices[i-1],
+            order_time: order.created_at.to_s,
+            items: order.order_items.collect do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
               seller_detail = UserDetail.find_by(user: seller)
               {
+                order_item_id: item.id,
                 product_image: product_detail.product_image,
                 product_name: product_detail.product_name,
                 sell_address: product.sell_address,
@@ -285,10 +303,21 @@ class UsersController < ApplicationController
 
   # GET /api/users
   def index
+    unless is_admin
+      render json: response_json(
+        false
+      ) and return
+    end
+    @users = User.all
+    render status: 200, json: response_json(
+      true,
+      data: @users
+    )
   end
 
   # GET /api/users/1
   def show
+    @user = User.find(params[:id])
     user = @user
     unless user
       render json: response_json(
@@ -339,9 +368,6 @@ class UsersController < ApplicationController
 
   private
       # Use callbacks to share common setup or constraints between actions.
-      def set_user
-        @user = User.find(params[:id])
-      end
 
       # Only allow a list of trusted parameters through.
       def user_params
@@ -352,18 +378,4 @@ class UsersController < ApplicationController
         current_user && current_user.right == 1
       end
 
-      # def _to_i(param, default_no = 1)
-      #   param && param&.to_i > 0 ? param&.to_i : default_no.to_i
-      # end
-      #
-      # # api/users?page=1
-      # def set_page
-      #   @page      = _to_i(params[:page], 1)
-      #   @page      = set_per_page * (@page - 1)
-      # end
-      #
-      # # api/users?per_page=10
-      # def set_per_page
-      #   @per_page  = _to_i(params[:per_page], 10)
-      # end
 end

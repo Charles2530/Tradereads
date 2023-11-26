@@ -1,8 +1,8 @@
 import axios from "axios";
-import { ElNotification } from "element-plus";
+import { ElMessage } from "element-plus";
 /* Mock 使用 */
-// let baseURL = "http://127.0.0.1:4523/m1/3606851-0-default/api";
-let baseURL = "/api";
+let baseURL = "http://127.0.0.1:4523/m1/3606851-0-default/api";
+// let baseURL = "/api";
 
 const service = axios.create({
   baseURL,
@@ -15,6 +15,12 @@ service.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       config.headers["x-access-token"] = token;
+    } else {
+      /*       ElMessage({
+        showClose: true,
+        type: "success",
+        message: "使用应用前请先登录",
+      }); */
     }
     return config;
   },

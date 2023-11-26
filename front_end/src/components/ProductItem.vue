@@ -2,16 +2,24 @@
   <div class="product-item bg-white border rounded-lg p-4 flex flex-col">
     <div v-if="!isEditing">
       <div class="mb-2">
-        <span class="text-lg font-bold">商品名称: {{ product.title }}</span>
+        <span class="text-lg font-bold"
+          >商品名称: {{ product.product_name }}</span
+        >
+      </div>
+      <div class="mb-2">
+        <span class="text-gray-600">商品图片: {{ product.product_image }}</span>
       </div>
       <div class="mb-2">
         <span class="text-gray-600">价格: {{ product.price }}</span>
       </div>
       <div class="mb-2">
-        <span>发往: {{ product.shippingAddress }}</span>
+        <span class="text-gray-600">商品库存: {{ product.product_store }}</span>
       </div>
-      <div class="mb-2">
-        <p :class="stockClass">{{ stockStatus }}</p>
+      <div>
+        <span class="text-gray-600">发货地址: {{ product.sell_address }}</span>
+      </div>
+      <div>
+        <span :class="stockClass">{{ stockStatus }}</span>
       </div>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
@@ -36,7 +44,7 @@
           type="text"
           id="productName"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-          v-model="editableProduct.title"
+          v-model="editableProduct.product_name"
           placeholder="Please input"
           clearable
         />
@@ -56,27 +64,40 @@
       </div>
       <div class="mb-4">
         <label
-          for="shippingAddress"
+          for="product_image"
           class="block text-sm font-medium text-gray-700"
-          >发货地址</label
+          >商品图片</label
         >
         <el-input
           type="text"
-          id="shippingAddress"
-          v-model="editableProduct.shippingAddress"
+          id="product_image"
+          v-model="editableProduct.product_image"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
       <div class="mb-4">
         <label
-          for="productStock"
+          for="product_store"
           class="block text-sm font-medium text-gray-700"
           >库存</label
         >
         <el-input
           type="number"
-          id="productStock"
-          v-model.number="editableProduct.stock"
+          id="product_store"
+          v-model.number="editableProduct.product_store"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+        />
+      </div>
+      <div class="mb-4">
+        <label
+          for="sell_address"
+          class="block text-sm font-medium text-gray-700"
+          >发货地址</label
+        >
+        <el-input
+          type="text"
+          id="sell_address"
+          v-model="editableProduct.sell_address"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
@@ -99,6 +120,11 @@
 
 <script>
 import { ref, reactive, computed } from "vue";
+import {
+  modifyStorage,
+  modifyPrice,
+  modifySellAddress,
+} from "@/api/product.js";
 
 export default {
   name: "ProductItem",
@@ -108,15 +134,15 @@ export default {
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const isEditing = ref(false);
     const editableProduct = reactive({ ...props.product });
     const stockClass = computed(() => ({
-      "text-red-500": editableProduct.stock === 0,
-      "text-green-500": editableProduct.stock > 0,
+      "text-red-500": editableProduct.product_store === 0,
+      "text-green-500": editableProduct.product_store > 0,
     }));
     const stockStatus = computed(() =>
-      editableProduct.stock > 0 ? "有货" : "售完"
+      editableProduct.product_store > 0 ? "有货" : "售完"
     );
 
     const goToProductDetails = (productId) => {
@@ -134,7 +160,48 @@ export default {
 
     const saveEdits = () => {
       // Emit an event with the updated product info
-      props.$emit("update-product", editableProduct);
+      console.log(editableProduct);
+      modifyPrice(editableProduct.product_id, {
+        new_price: editableProduct.price,
+      }).then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log("修改价格成功");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
+
+      modifySellAddress(editableProduct.product_id, {
+        new_address: editableProduct.sell_address,
+      }).then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log("修改地址成功");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
+
+      modifyStorage(editableProduct.product_id, {
+        new_store: editableProduct.product_store,
+      }).then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log("修改库存成功");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
       isEditing.value = false; // Exit editing mode
     };
 

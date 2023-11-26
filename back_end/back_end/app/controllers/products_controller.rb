@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :login_only, except: %i[ index show ]
-  before_action :set_product, only: %i[ show update destroy ]
 
   include ApplicationHelper
 
@@ -9,19 +8,20 @@ class ProductsController < ApplicationController
     @products = Product.all
     products = @products
     render json: response_json(
-      false,
+      true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        products: products.each do |product|
+        products: products.collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
+            product_id: product.id,
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
             price: product.price,
             product_press: product_detail.product_press,
-            product_type: product_detail.type,
-            seller_name: seller.user_name,
+            product_type: product_detail.product_type,
+            seller_name: seller.user_detail.user_name,
             sell_address: product.sell_address
           }
         end
@@ -31,6 +31,7 @@ class ProductsController < ApplicationController
 
   # GET /api/products/<product_id>
   def show
+    @product = Product.find(params[:id])
     product = @product
     unless product
       render json: response_json(
@@ -56,6 +57,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_store
   def modify_store
+    @product = Product.find(params[:product_id])
     product = @product
     unless is_seller
       render json: response_json(
@@ -85,6 +87,7 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_price
   def modify_price
+    @product = Product.find(params[:product_id])
     product = @product
     unless is_seller
       render json: response_json(
@@ -109,14 +112,16 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_sell_address
   def modify_sell_address
+    @product = Product.find(params[:product_id])
     product = @product
+    puts is_seller
     unless is_seller
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
       ) and return
     end
-    new_address = params[:new_sell_address]
+    new_address = params[:new_address]
 
     product.sell_address = new_address
     if product.save
@@ -134,8 +139,9 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/add_product_to_cart
   def add_product_to_cart
+    @product = Product.find(params[:product_id])
     product = @product
-    count = params[:count]
+    count = params[:count].to_i
     unless count >= 0 && count.is_a?(Integer)
       render json: response_json(
         false,
@@ -218,6 +224,7 @@ class ProductsController < ApplicationController
 
   # DELETE /api/products/1
   def destroy
+    @product = Product.find(params[:id])
     if @product.user == current_user or current_user.right == 1
       if @product.destroy
         render status: 200, json: response_json(
@@ -240,9 +247,6 @@ class ProductsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def product_params

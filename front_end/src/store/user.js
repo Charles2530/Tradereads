@@ -6,48 +6,37 @@ export const userStore = defineStore({
   state: () => {
     return {
       token: localStorage.getItem("token") || "",
-      //   userInfo: JSON.parse(localStorage.getItem("userInfo")) || {},
-      userInfo: localStorage.getItem("userInfo") || {},
+      right: localStorage.getItem("right") || 0,
     };
   },
   // 方法
   actions: {
     setUserInfo(data) {
       this.token = data.token;
-      this.userInfo = data.userInfo;
       localStorage.setItem("token", this.token);
-      //   localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-      localStorage.setItem("userInfo", this.userInfo);
+      this.right = data.right;
+      localStorage.setItem("right", this.right);
     },
     clearUserInfo() {
       this.token = "";
-      this.userInfo = {};
       localStorage.removeItem("token");
-      localStorage.removeItem("userInfo");
+      this.right = 0;
+      localStorage.removeItem("right");
     },
   },
   // mutations
-  mutations: {
-    setName(name) {
-      this.loginInfo.username = name;
-      localStorage.setItem("userInfo", this.userInfo);
-    },
-    setEmail(email) {
-      this.loginInfo.email = email;
-      localStorage.setItem("userInfo", this.userInfo);
-    },
-    setAvatar(avatar) {
-      this.loginInfo.avatar = avatar;
-      localStorage.setItem("userInfo", tshis.userInfo);
-    },
-  },
+  mutations: {},
   // getters
   getters: {
     getToken() {
       return this.token;
     },
-    getUserInfo() {
-      return this.userInfo;
+    // 0: 普通用户 1: 管理员
+    getRight() {
+      return this.right;
+    },
+    isLogin() {
+      return this.token !== "";
     },
   },
 });
