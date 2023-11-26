@@ -8,10 +8,10 @@ class ProductsController < ApplicationController
     @products = Product.all
     products = @products
     render json: response_json(
-      false,
+      true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        products: products.each do |product|
+        products: products.collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
@@ -20,8 +20,8 @@ class ProductsController < ApplicationController
             product_image: product_detail.product_image,
             price: product.price,
             product_press: product_detail.product_press,
-            product_type: product_detail.type,
-            seller_name: seller.user_name,
+            product_type: product_detail.product_type,
+            seller_name: seller.user_detail.user_name,
             sell_address: product.sell_address
           }
         end
@@ -114,13 +114,14 @@ class ProductsController < ApplicationController
   def modify_sell_address
     @product = Product.find(params[:product_id])
     product = @product
+    puts is_seller
     unless is_seller
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
       ) and return
     end
-    new_address = params[:new_sell_address]
+    new_address = params[:new_address]
 
     product.sell_address = new_address
     if product.save
@@ -140,7 +141,7 @@ class ProductsController < ApplicationController
   def add_product_to_cart
     @product = Product.find(params[:product_id])
     product = @product
-    count = params[:count]
+    count = params[:count].to_i
     unless count >= 0 && count.is_a?(Integer)
       render json: response_json(
         false,
