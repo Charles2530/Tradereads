@@ -98,7 +98,9 @@ before_action :login_only, except: %i[ register login ]
     @user = User.find(params[:user_id])
     user = @user
     user_detail = UserDetail.find_by(user: user)
-    user_detail.user_name = params[:user_name]
+    if params[:new_username]
+      user_detail.user_name = params[:new_username]
+    end
     if user_detail.save
       render status: 200, json: response_json(
         true,
@@ -174,7 +176,7 @@ before_action :login_only, except: %i[ register login ]
       message: ShowError::SHOW_SUCCEED,
       data: {
         total_price: total_price,
-        products: user.carts.each do |cart|
+        products: user.carts.collect do |cart|
           product = cart.product
           product_detail = ProductDetail.find_by(product: product)
           {
@@ -203,7 +205,7 @@ before_action :login_only, except: %i[ register login ]
       true,
       message: ProductError::SHOW_PRODUCT_LIST_SUCCEED,
       data: {
-        products: user.products.each do |product|
+        products: user.products.collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           {
             product_id: product.id,
@@ -221,15 +223,19 @@ before_action :login_only, except: %i[ register login ]
   def carts_to_orders
     user = current_user
     carts = []
-    orders = []
+    order = Order.new(user: current_user)
+    unless order.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
     order_items = []
     user.carts.each do |cart|
       carts << cart
-      order = Order.new(user: current_user)
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: "toPay", order: order)
-      if order.valid? and order_item.valid?
-        orders << order
-        order_items << order_items
+      if order_item.valid?
+        order_items << order_item
       else
         render json: response_json(
           false,
@@ -237,10 +243,10 @@ before_action :login_only, except: %i[ register login ]
         ) and return
       end
     end
-    
-    orders.length.times do |i|
+
+    order.save
+    order_items.length.times do |i|
       carts[i].destroy
-      orders[i].save
       order_items[i].save
     end
     render status: 200, json: response_json(
@@ -252,9 +258,7 @@ before_action :login_only, except: %i[ register login ]
   def show_current_orders
     user = current_user
     total_prices = []
-    orders = []
     user.orders.each do |order|
-      orders << order
       total_price = 0
       order.order_items.each do |item|
         product = item.product
@@ -263,17 +267,18 @@ before_action :login_only, except: %i[ register login ]
       end
       total_prices << total_price
     end
+    i = 0
     render status: 200, json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        orders: total_prices.length.times do |i|
-          order = orders[i]
+        orders: user.orders.collect do |order|
+          i += 1
           {
             order_id: order.id,
-            total_price: total_prices[i],
+            total_price: total_prices[i-1],
             order_time: order.created_at.to_s,
-            items: order.order_items.each do |item|
+            items: order.order_items.collect do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
