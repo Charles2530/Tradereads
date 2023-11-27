@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-before_action :login_only, except: %i[ register login ]
+  before_action :login_only, except: %i[ register login ]
+  before_action :setAdmin
   # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]

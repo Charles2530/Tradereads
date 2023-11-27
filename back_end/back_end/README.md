@@ -28,11 +28,13 @@ gem "bootsnap", require: false
 
 ```json
 {
-	"phone": "13812345678",
+	"phone": "13612345678",
 	"user_name": "admin",
 	"password": "adminadmin"
 }
 ```
+
+普通用户，可自行注册，默认无管理权限
 
 **整合**
 
