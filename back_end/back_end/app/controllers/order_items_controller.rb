@@ -1,6 +1,7 @@
 class OrderItemsController < ApplicationController
   before_action :login_only
   before_action :set_order_item, only: %i[ show update destroy ]
+  before_action :setAdmin
 
   include ApplicationHelper
 

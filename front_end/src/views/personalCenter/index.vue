@@ -22,10 +22,10 @@
               <router-link to="/ProductBuy">商品中心</router-link>
             </li>
             <li></li>
-            <li>
+            <!-- <li>
               <router-link to="/MyItem">我的商品</router-link>
             </li>
-            <li></li>
+            <li></li> -->
             <li>
               <button @click="showAllOrderList">查看所有订单</button>
               <el-dialog
@@ -187,13 +187,13 @@
             @click="toggleProducts"
             plain
           >
-            {{ showProducts ? "收起商品列表" : "展开商品列表" }}
+            {{ showProducts ? "收起我的商品列表" : "展开我的商品列表" }}
           </el-button>
         </div>
 
         <!-- 商品列表 -->
         <div v-if="showProducts">
-          <h2 class="text-white text-2xl font-semibold mb-4">商品列表</h2>
+          <h2 class="text-white text-2xl font-semibold mb-4">我的商品列表</h2>
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
             <product-item
               v-for="product in products"
