@@ -214,8 +214,8 @@
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import OrderItem from "@c/OrderItem.vue";
-import ProductItem from "@c/ProductItem.vue";
+import OrderItem from "@c/order/OrderItem.vue";
+import ProductItem from "@c/product/ProductItem.vue";
 import {
   getUser,
   logout,
