@@ -1,12 +1,12 @@
 <template>
   <div class="item1">
     <div class="img" :style="imgg"></div>
-    <div class="seller">seller:{{ seller_name }}</div>
-    <div class="price">price:￥{{ price }}</div>
-    <div class="name">name:{{ product_name }}</div>
-    <div class="num">sell_address:{{ sell_address }}</div>
-    <div class="press">product_press:{{ product_press }}</div>
-    <div class="type">product_type:{{ product_type }}</div>
+    <div class="seller">卖家:{{ seller_name }}</div>
+    <div class="price">价格:￥{{ price }}</div>
+    <div class="name">书名:{{ product_name }}</div>
+    <div class="num">发货地址:{{ sell_address }}</div>
+    <div class="press">出版社:{{ product_press }}</div>
+    <div class="type">类型:{{ product_type }}</div>
 
 
     <div class="add" @click="count++">
