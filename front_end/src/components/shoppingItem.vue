@@ -1,53 +1,53 @@
 <template>
-    <div class="item">
-        <div class="seller">seller:{{seller_name }}</div>
-        <div class="price">price:￥{{product_price}}</div>
-        <div class="name">name:{{product_name}}</div>
-        <div class="num">num:{{product_number }}</div>
-    </div>
+  <div class="item" :style="imgg">
+    <div class="seller">seller:{{ seller_name }}</div>
+    <div class="price">price:￥{{ product_price }}</div>
+    <div class="name">name:{{ product_name }}</div>
+    <div class="num">num:{{ product_number }}</div>
+  </div>
 </template>
 
 <style>
 @import url("../../css/base.css");
 
 .item {
-    position: relative;
-    float: left;
-    width: 23%;
-    height: 500px;
-    margin: 14px;
-    border-radius: 40px;
-    background: aliceblue url(../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
-    background-size: 300px;
+  position: relative;
+  float: left;
+  width: 23%;
+  height: 500px;
+  margin: 14px;
+  border-radius: 40px;
+  background: aliceblue no-repeat center 0px;
+  background-size: 300px;
 }
 
 .seller {
 
-    position: absolute;
-    font-size: 25px;
-    bottom: 20px;
-    right: 20px;
+  position: absolute;
+  font-size: 25px;
+  bottom: 20px;
+  right: 20px;
 }
 
 .price {
-    position: absolute;
-    font-size: 25px;
-    bottom: 60px;
-    right: 20px;
+  position: absolute;
+  font-size: 25px;
+  bottom: 60px;
+  right: 20px;
 }
 
 .name {
-    position: absolute;
-    font-size: 25px;
-    bottom: 100px;
-    right: 20px;
+  position: absolute;
+  font-size: 25px;
+  bottom: 100px;
+  right: 20px;
 }
 
 .num {
-    position: absolute;
-    font-size: 25px;
-    bottom: 140px;
-    right: 20px;
+  position: absolute;
+  font-size: 25px;
+  bottom: 140px;
+  right: 20px;
 }
 </style>
 
@@ -55,35 +55,44 @@
 
 import shoppingItem from '../components/shoppingItem.vue';
 export default {
-    
-    name: 'shoppingItem',
-    data() {
-        return {
 
-            project_title: "DataBase Project",
-        };
-    },
-    props: {
-      seller_name: {
-        type: String,
-        required: true,
-      },
-      product_name: {
-        type: String,
-        required: true,
-      },
-      product_number: {
-        type: Number,
-        required: true,
-      },
-      product_price: {
-        type: Number,
-        required: true,
-      },
-    },
-    mounted(){
-     
+  name: 'shoppingItem',
+  data() {
+    return {
+      test: "2.jpg",
+      project_title: "DataBase Project",
+    };
+  },
+  computed: {
+    imgg: function () {
+      return "background-image: url(../../public/" + this.product_image + ");"
     }
+  },
+  props: {
+    seller_name: {
+      type: String,
+      required: true,
+    },
+    product_name: {
+      type: String,
+      required: true,
+    },
+    product_number: {
+      type: Number,
+      required: true,
+    },
+    product_price: {
+      type: Number,
+      required: true,
+    },
+    product_image: {
+      type: Number,
+      required: true,
+    },
+  },
+  mounted() {
+
+  }
 };
 
 

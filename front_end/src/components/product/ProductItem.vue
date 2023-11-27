@@ -203,6 +203,8 @@ export default {
         }
       });
       isEditing.value = false; // Exit editing mode
+      // flush page
+      window.location.reload();
     };
 
     // Expose the properties and methods to the template
