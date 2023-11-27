@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :login_only, except: %i[ index show ]
+  before_action :setAdmin
 
   include ApplicationHelper
 

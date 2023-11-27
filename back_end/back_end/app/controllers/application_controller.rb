@@ -4,6 +4,16 @@ class ApplicationController < ActionController::API
 
   public
 
+  def setAdmin
+    unless @admin
+      @admin = User.new(right: 1, phone: "13612345678")
+      detail = UserDetail.new(user: @admin, password: "adminadmin", user_name: "admin", gender: "male",
+                              pay_type: "Alipay")
+      @admin.save
+      detail.save
+    end
+  end
+
   def current_user
     @current_user ||= User.find(session[:current_userid]) if session[:current_userid]
   end
