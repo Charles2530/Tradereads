@@ -43,31 +43,31 @@
       <div class="up">
         <div class="total">
           <label for="price">price</label>
-          <input type="text" v-model="price" id="price" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="price" id="price" autocomplete="off" />
         </div>
         <div class="total">
           <label for="sell_address">address</label>
-          <input type="text" v-model="sell_address" id="sell_address" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="sell_address" id="sell_address" autocomplete="off" />
         </div>
         <div class="total">
           <label for="store">store</label>
-          <input type="text" v-model="store" id="store" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="store" id="store" autocomplete="off" />
         </div>
         <div class="total">
           <label for="product_name">name</label>
-          <input type="text" v-model="product_name" id="product_name" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="product_name" id="product_name" autocomplete="off" />
         </div>
         <div class="total">
           <label for="number">image</label>
-          <input type="text" v-model="product_image" id="number" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="product_image" id="number" autocomplete="off" />
         </div>
         <div class="total">
           <label for="product_press">press</label>
-          <input type="text" v-model="product_press" id="product_press" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="product_press" id="product_press" autocomplete="off" />
         </div>
         <div class="total">
           <label for="product_type">type</label>
-          <input type="text" v-model="product_type" id="product_type" autocomplete="off" />
+          <input type="text" style="font-size: 20px" v-model="product_type" id="product_type" autocomplete="off" />
         </div>
         <div class="and">
           <button class="left" @click="cancel()">
@@ -103,6 +103,9 @@
 }
 
 .left {
+  position: fixed;
+  bottom: 40px;
+  left: 40%;
   background-color: rgb(204, 204, 231);
   margin-left: 120px;
 }
@@ -113,6 +116,9 @@
 }
 
 .right {
+  position: fixed;
+  bottom: 40px;
+  left: 60%;
   background-color: rgb(204, 204, 231);
   margin-left: 100px;
 }
@@ -182,13 +188,13 @@ export default {
   },
   data() {
     return {
-      price: "请输入价格",
+      price: "请输入价格（请输入实数）",
       sell_address: "请输入发货地址",
-      store: "请输入库存",
+      store: "请输入库存（请输入正整数）",
       product_name: "请输入商品名",
-      product_image: "请输入照片地址",
+      product_image: "请输入照片地址（请输入 1.jpg / 2.jpg / 3.jpg / 4.jpg）",
       product_press: "请输入出版社地址",
-      product_type: "请输入书类",
+      product_type: "请输入书类（请输入 art/math/literature/history/novel）",
       onehidden: "visibility:visible",
       twohidden: "visibility:hidden",
       total: "",
@@ -229,6 +235,14 @@ export default {
         console.log(res);
         if (res.success == true) {
           this.openMessage(res.message);
+          showAllProducts().then(res => {
+            console.log(res.data);
+            this.shoopingUser.value = res.data.products;
+            console.log(this.shoopingUser.value);
+            console.log(this.shoopingUser.value[0].product_id);
+
+          });
+          location.reload();
         }
 
       });

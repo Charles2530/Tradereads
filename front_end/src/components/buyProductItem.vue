@@ -1,12 +1,12 @@
 <template>
   <div class="item1">
     <div class="img" :style="imgg"></div>
-    <div class="seller">卖家:{{ seller_name }}</div>
-    <div class="price">价格:￥{{ price }}</div>
-    <div class="name">书名:{{ product_name }}</div>
-    <div class="num">发货地址:{{ sell_address }}</div>
-    <div class="press">出版社:{{ product_press }}</div>
-    <div class="type">类型:{{ product_type }}</div>
+    <div class="seller">seller:{{ seller_name }}</div>
+    <div class="price">price:￥{{ price }}</div>
+    <div class="name">name:{{ product_name }}</div>
+    <div class="num">sell_address:{{ sell_address }}</div>
+    <div class="press">product_press:{{ product_press }}</div>
+    <div class="type">product_type:{{ product_type }}</div>
 
 
     <div class="add" @click="count++">
@@ -43,6 +43,7 @@
   width: 100%;
   background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
   top: 0px;
+  background-size: contain;
 
 }
 
@@ -51,41 +52,47 @@
   font-size: 20px;
   top: 420px;
   left: 20px;
+  line-height: 30px;
 }
 
 .price {
   position: absolute;
   font-size: 20px;
-  top: 460px;
+  top: 480px;
   left: 20px;
+  line-height: 30px;
 }
 
 .name {
   position: absolute;
   font-size: 20px;
-  top: 500px;
+  top: 540px;
   left: 20px;
+  line-height: 30px;
 }
 
 .num {
   position: absolute;
   font-size: 20px;
-  top: 540px;
+  top: 600px;
   left: 20px;
+  line-height: 30px;
 }
 
 .press {
   position: absolute;
   font-size: 20px;
-  top: 580px;
+  top: 660px;
   left: 20px;
+  line-height: 30px;
 }
 
 .type {
   position: absolute;
   font-size: 20px;
-  top: 620px;
+  top: 720px;
   left: 20px;
+  line-height: 30px;
 }
 
 .add {
@@ -167,6 +174,7 @@ export default {
   computed: {
     imgg: function () {
       return "background-image: url(../../public/" + this.product_image + ");"
+      // return "background-image: url(../../public/" + "4.jpg" + ");"
     }
   },
   methods: {

@@ -1,5 +1,6 @@
 <template>
-  <div class="item" :style="imgg">
+  <div class="item">
+    <div class="img" :style="imgg"></div>
     <div class="seller">卖家:{{ seller_name }}</div>
     <div class="price">价格:￥{{ product_price }}</div>
     <div class="name">书名:{{ product_name }}</div>
@@ -13,41 +14,55 @@
 .item {
   position: relative;
   float: left;
-  width: 23%;
+  width: 30%;
   height: 500px;
   margin: 14px;
   border-radius: 40px;
-  background: aliceblue no-repeat center 0px;
   background-size: 300px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.img {
+  position: absolute;
+  height: 400px;
+  width: 100%;
+  background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+  top: 0px;
+  background-size: contain;
+
 }
 
 .seller {
-
   position: absolute;
   font-size: 25px;
-  bottom: 20px;
+  top: 520px;
   right: 20px;
+  line-height: 30px;
 }
 
 .price {
   position: absolute;
   font-size: 25px;
-  bottom: 60px;
+  top: 560px;
   right: 20px;
+  line-height: 30px;
 }
 
 .name {
   position: absolute;
   font-size: 25px;
-  bottom: 100px;
+  top: 600px;
   right: 20px;
+  line-height: 30px;
 }
 
 .num {
   position: absolute;
   font-size: 25px;
-  bottom: 140px;
+  top: 640px;
   right: 20px;
+  line-height: 30px;
 }
 </style>
 
@@ -65,7 +80,8 @@ export default {
   },
   computed: {
     imgg: function () {
-      return "background-image: url(../../public/" + this.product_image + ");"
+      //return "background-image: url(../../public/" + this.product_image + ");"
+      return "background-image: url(../../public/" + "4.jpg" + ");"
     }
   },
   props: {
