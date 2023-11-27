@@ -182,6 +182,7 @@ before_action :login_only, except: %i[ register login ]
           {
             product_id: product.id,
             product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
             seller_name: product.user_id,
             product_price: product.price,
             product_number: cart.number
