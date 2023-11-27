@@ -1,9 +1,9 @@
 <template>
   <div class="item" :style="imgg">
-    <div class="seller">seller:{{ seller_name }}</div>
-    <div class="price">price:￥{{ product_price }}</div>
-    <div class="name">name:{{ product_name }}</div>
-    <div class="num">num:{{ product_number }}</div>
+    <div class="seller">卖家:{{ seller_name }}</div>
+    <div class="price">价格:￥{{ product_price }}</div>
+    <div class="name">书名:{{ product_name }}</div>
+    <div class="num">加入购物车数量:{{ product_number }}</div>
   </div>
 </template>
 

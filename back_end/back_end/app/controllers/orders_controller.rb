@@ -14,9 +14,7 @@ class OrdersController < ApplicationController
       ) and return
     end
     total_prices = []
-    @orders = Order.all
-    orders = @orders
-    orders.each do |order|
+    Order.all.each do |order|
       total_price = 0
       order.order_items.each do |item|
         product = item.product
@@ -25,18 +23,19 @@ class OrdersController < ApplicationController
       end
       total_prices << total_price
     end
+    i = 0
     render status: 200, json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        orders: total_prices.length.times do |i|
-          order = orders[i]
+        orders: Order.all.collect do |order|
+          i += 1
           {
             order_id: order.id,
             buyer_id: order.user_id,
-            total_price: total_prices[i],
+            total_price: total_prices[i-1],
             order_time: order.created_at.to_s,
-            items: order.order_items.each do |item|
+            items: order.order_items.collect do |item|
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
@@ -106,13 +105,13 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:user_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def order_params
+    params.require(:order).permit(:user_id)
+  end
 end
