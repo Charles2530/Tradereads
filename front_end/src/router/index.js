@@ -16,6 +16,8 @@ const Page404 = () => import("@/views/404.vue");
 const Shopping = () => import("@/views/shopping/shopping.vue");
 //商品购买中心
 const ProductBuy = () => import("@/views/productBuyCenter/productBuy.vue");
+//我的商品
+const MyItem = () => import("@/views/Item/MyItem.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -57,6 +59,12 @@ const routes = [
     name: "ProductBuy",
     component: ProductBuy,
   },
+  {
+    path: "/MyItem",
+    name: "MyItem",
+    component: MyItem,
+  },
+
 ];
 
 const router = createRouter({
