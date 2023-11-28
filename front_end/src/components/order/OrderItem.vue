@@ -2,11 +2,13 @@
   <div class="p-4">
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
       <div class="pb-4 border-b border-gray-200 mb-4">
-        <el-row :gutter="20">
+        <el-row :gutter="22">
           <el-col :span="4">
-            <h2 class="text-gray-600 text-2xl font-bold">
-              订单:{{ order_id }}
-            </h2>
+            <div class="mt-2">
+              <h2 class="text-gray-600 text-2xl font-bold">
+                订单:{{ order_id }}
+              </h2>
+            </div>
           </el-col>
           <el-col :span="4">
             <div class="mt-2">
@@ -22,7 +24,7 @@
               >
             </div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="10">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >下单时间: {{ order_time }}</span
@@ -31,28 +33,26 @@
           </el-col>
         </el-row>
       </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 gap-4"
-        v-for="item in items"
-        :key="item.order_item_id"
-      >
-        <div
-          class="border rounded-lg p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300"
-        >
-          <span class="text-lg font-semibold">{{ item.product_name }}</span>
-          <span class="text-gray-600">价格: {{ item.product_price }}</span>
-          <span class="text-gray-600">数量: {{ item.buy_num }}</span>
-          <span class="text-gray-600">发往: {{ item.sell_address }}</span>
-          <span
-            :class="{
-              'text-red-500': item.state === '待支付',
-              'text-yellow-500': item.state === '待发货',
-              'text-blue-500': item.state === '待收货',
-              'text-green-500': item.state === '已完成',
-            }"
+      <div class="order-container">
+        <div class="order-item" v-for="item in items" :key="item.order_item_id">
+          <div
+            class="border rounded-lg p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300"
           >
-            订单状态: {{ item.state }}
-          </span>
+            <span class="text-lg font-semibold">{{ item.product_name }}</span>
+            <span class="text-gray-600">价格: {{ item.product_price }}</span>
+            <span class="text-gray-600">数量: {{ item.buy_num }}</span>
+            <span class="text-gray-600">发往: {{ item.sell_address }}</span>
+            <span
+              :class="{
+                'text-red-500': item.state === '待支付',
+                'text-yellow-500': item.state === '待发货',
+                'text-blue-500': item.state === '待收货',
+                'text-green-500': item.state === '已完成',
+              }"
+            >
+              订单状态: {{ item.state }}
+            </span>
+          </div>
         </div>
       </div>
       <div>
@@ -120,3 +120,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* 调整间距，根据需要调整 */
+}
+
+.order-item {
+  width: calc(50% - 1rem); /* 计算 50% 宽度，并减去间距 */
+  box-sizing: border-box;
+}
+</style>
