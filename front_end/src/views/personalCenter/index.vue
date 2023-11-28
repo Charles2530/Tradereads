@@ -1,62 +1,21 @@
 <template>
   <div>
     <section class="shortcut">
-      <div class="w">
-        <div class="fl">
-          <ul>
-            <li>二手书网站欢迎您!&nbsp;</li>
-            <li>
-              <button @click="Logout">退出登录</button>
-            </li>
-          </ul>
-        </div>
-        <div class="fr">
-          <ul>
-            <li>订单信息</li>
-            <li></li>
-            <li>
-              <router-link to="/shopping">我的购物车</router-link>
-            </li>
-            <li></li>
-            <li>
-              <router-link to="/ProductBuy">商品中心</router-link>
-            </li>
-            <li></li>
-            <!-- <li>
-              <router-link to="/MyItem">我的商品</router-link>
-            </li>
-            <li></li> -->
-            <li>
-              <button @click="showAllOrderList">查看所有订单</button>
-              <el-dialog
-                title="查看所有订单"
-                v-model="openOrderLists"
-                width="90%"
-              >
-                <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
-                <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-                  <order-item
-                    v-for="order in all_orders"
-                    :key="order.order_id"
-                    :buyer_id="order.buyer_id"
-                    :order_id="order.order_id"
-                    :total_price="order.total_price"
-                    :order_time="order.order_time"
-                    :items="order.items"
-                  ></order-item>
-                </div>
-              </el-dialog>
-            </li>
-            <li></li>
-            <li>网站导航</li>
-          </ul>
-        </div>
+      <div class="w float-right">
+        <ul>
+          <li>二手书网站欢迎您!&nbsp;</li>
+          <li>
+            <button @click="Logout">退出登录</button>
+          </li>
+        </ul>
       </div>
     </section>
     <div
       class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
     >
-      <div class="headBar bg-gradient-to-r from-blue-400/50 to-red-500/50">
+      <div
+        class="headBar ml-250 bg-gradient-to-r from-blue-400/50 to-red-500/50"
+      >
         <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
         <div class="mb-8">
           <h2 class="text-white text-2xl font-semibold mb-4">个人信息</h2>
@@ -99,7 +58,7 @@
           <el-dialog
             title="修改个人信息"
             v-model="openUserInformation"
-            width="30%"
+            width="25%"
           >
             <div>
               <el-input
@@ -113,12 +72,16 @@
                 clearable
               ></el-input>
             </div>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="openUserInformation = false">取 消</el-button>
-              <el-button type="primary" @click="updateUserInfo"
-                >确 定</el-button
-              >
-            </span>
+            <template v-slot:footer>
+              <div style="display: flex; justify-content: space-between">
+                <el-button @click="openUserInformation = false"
+                  >取 消</el-button
+                >
+                <el-button type="primary" @click="updateUserInfo"
+                  >确 定</el-button
+                >
+              </div>
+            </template>
           </el-dialog>
         </div>
         <!-- 修改用户密码弹窗 -->
@@ -126,13 +89,13 @@
           <el-button
             type="warning"
             class="text-white font-semibold hover:underline"
-            @click="openUserPassword = store.getRight === 1"
+            @click="openUserPassword = true"
             plain
           >
             修改用户密码
           </el-button>
         </div>
-        <el-dialog title="修改用户密码" v-model="openUserPassword" width="30%">
+        <el-dialog title="修改用户密码" v-model="openUserPassword" width="25%">
           <div>
             <el-input
               v-model="old_password"
@@ -145,12 +108,14 @@
               clearable
             ></el-input>
           </div>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="openUserPassword = false">取 消</el-button>
-            <el-button type="primary" @click="updateUserPasswordInfo"
-              >确 定</el-button
-            >
-          </span>
+          <template v-slot:footer>
+            <div style="display: flex; justify-content: space-between">
+              <el-button @click="openUserPassword = false">取 消</el-button>
+              <el-button type="primary" @click="updateUserPasswordInfo"
+                >确 定</el-button
+              >
+            </div>
+          </template>
         </el-dialog>
         <!-- 订单列表展开按钮 -->
         <div class="mb-4">
@@ -205,6 +170,9 @@
       </div>
     </div>
   </div>
+  <div>
+    <personal-center-side-bar></personal-center-side-bar>
+  </div>
 </template>
 
 <style>
@@ -216,6 +184,7 @@
 import { ref, onMounted, reactive } from "vue";
 import OrderItem from "@c/order/OrderItem.vue";
 import ProductItem from "@c/product/ProductItem.vue";
+import personalCenterSideBar from "@c/user/personalCenterSideBar.vue";
 import {
   getUser,
   logout,
@@ -223,7 +192,7 @@ import {
   modify_address,
   modify_password,
 } from "@/api/user.js";
-import { showCurrentUserOrders, showAllOrders } from "@/api/order.js";
+import { showCurrentUserOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -240,8 +209,6 @@ onMounted(() => {
 
   showProductsList(store.getToken).then((res) => {
     if (res.success) {
-      //   console.log(store.getToken);
-      //   console.log(res.data.products);
       products.value = res.data.products;
     } else {
       ElMessage({
@@ -268,11 +235,9 @@ const store = userStore();
 const router = useRouter();
 
 const orders = ref([]);
-const all_orders = ref([]);
 const products = ref([]);
 const openUserInformation = ref(false);
 const openUserPassword = ref(false);
-const openOrderLists = ref(false);
 const new_username = ref("");
 const new_address = ref("");
 const old_password = ref("");
@@ -285,21 +250,6 @@ const toggleOrders = () => {
 
 const toggleProducts = () => {
   showProducts.value = !showProducts.value;
-};
-const showAllOrderList = () => {
-  showAllOrders().then((res) => {
-    if (res.success) {
-      console.log(res.data.orders);
-      all_orders.value = res.data.orders;
-      openOrderLists.value = true;
-    } else {
-      ElMessage({
-        showClose: true,
-        message: res.message,
-        type: "error",
-      });
-    }
-  });
 };
 
 const createdUserInformation = () => {
