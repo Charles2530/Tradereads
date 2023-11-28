@@ -8,6 +8,9 @@ export default {
         "personalCenter-background":
           "url('/src/assets/img/personalCenter-background.jpg')",
       },
+      margin: {
+        250: "250px",
+      },
     },
   },
   plugins: [],
