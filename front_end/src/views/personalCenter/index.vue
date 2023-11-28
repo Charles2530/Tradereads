@@ -99,7 +99,7 @@
           <el-dialog
             title="修改个人信息"
             v-model="openUserInformation"
-            width="30%"
+            width="25%"
           >
             <div>
               <el-input
@@ -113,12 +113,16 @@
                 clearable
               ></el-input>
             </div>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="openUserInformation = false">取 消</el-button>
-              <el-button type="primary" @click="updateUserInfo"
-                >确 定</el-button
-              >
-            </span>
+            <template v-slot:footer>
+              <div style="display: flex; justify-content: space-between">
+                <el-button @click="openUserInformation = false"
+                  >取 消</el-button
+                >
+                <el-button type="primary" @click="updateUserInfo"
+                  >确 定</el-button
+                >
+              </div>
+            </template>
           </el-dialog>
         </div>
         <!-- 修改用户密码弹窗 -->
@@ -126,13 +130,13 @@
           <el-button
             type="warning"
             class="text-white font-semibold hover:underline"
-            @click="openUserPassword = store.getRight === 1"
+            @click="openUserPassword = true"
             plain
           >
             修改用户密码
           </el-button>
         </div>
-        <el-dialog title="修改用户密码" v-model="openUserPassword" width="30%">
+        <el-dialog title="修改用户密码" v-model="openUserPassword" width="25%">
           <div>
             <el-input
               v-model="old_password"
@@ -145,12 +149,14 @@
               clearable
             ></el-input>
           </div>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="openUserPassword = false">取 消</el-button>
-            <el-button type="primary" @click="updateUserPasswordInfo"
-              >确 定</el-button
-            >
-          </span>
+          <template v-slot:footer>
+            <div style="display: flex; justify-content: space-between">
+              <el-button @click="openUserPassword = false">取 消</el-button>
+              <el-button type="primary" @click="updateUserPasswordInfo"
+                >确 定</el-button
+              >
+            </div>
+          </template>
         </el-dialog>
         <!-- 订单列表展开按钮 -->
         <div class="mb-4">
