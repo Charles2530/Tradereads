@@ -1,177 +1,191 @@
 <template>
   <div>
-    <section class="shortcut">
-      <div class="w float-right">
-        <ul>
-          <li>二手书网站欢迎您!&nbsp;</li>
-          <li>
-            <button @click="Logout">退出登录</button>
-          </li>
-        </ul>
-      </div>
-    </section>
-    <div
-      class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
-    >
+    <div>
+      <section class="shortcut">
+        <div class="w float-right">
+          <ul>
+            <li>二手书网站欢迎您!&nbsp;</li>
+            <li>
+              <button @click="Logout">退出登录</button>
+            </li>
+          </ul>
+        </div>
+      </section>
       <div
-        class="headBar ml-250 bg-gradient-to-r from-blue-400/50 to-red-500/50"
+        class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
       >
-        <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
-        <div class="mb-8">
-          <h2 class="text-white text-2xl font-semibold mb-4">个人信息</h2>
-          <el-card class="box-card">
-            <el-row>
-              <el-col :span="12">
-                <div class="user text-xl">
-                  <strong>用户名:</strong> {{ loginInfo.user_name }}
-                </div>
-                <div class="phone text-xl">
-                  <strong>用户电话:</strong> {{ loginInfo.phone }}
-                </div>
-                <div class="address text-xl">
-                  <strong>用户地址:</strong> {{ loginInfo.buy_address }}
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div class="gender text-xl">
-                  <strong>性别:</strong> {{ loginInfo.gender }}
-                </div>
-                <div class="pay_type text-xl">
-                  <strong>支付方式:</strong> {{ loginInfo.pay_type }}
-                </div>
-              </el-col>
-            </el-row>
-          </el-card>
-        </div>
-        <!-- 修改个人信息弹窗 -->
-        <div>
-          <div class="mb-4">
-            <el-button
-              type="info"
-              class="text-white font-semibold hover:underline"
-              @click="openUserInformation = true"
-              plain
-            >
-              修改个人信息
-            </el-button>
+        <div
+          class="headBar ml-250 bg-gradient-to-r from-blue-400/50 to-red-500/50"
+        >
+          <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
+          <div class="mb-8">
+            <h2 class="text-white text-2xl font-semibold mb-4">个人信息</h2>
+            <el-card class="box-card">
+              <el-row>
+                <el-col :span="12">
+                  <div class="user text-xl">
+                    <strong>用户名:</strong> {{ loginInfo.user_name }}
+                  </div>
+                  <div class="phone text-xl">
+                    <strong>用户电话:</strong> {{ loginInfo.phone }}
+                  </div>
+                  <div class="address text-xl">
+                    <strong>用户地址:</strong> {{ loginInfo.buy_address }}
+                  </div>
+                </el-col>
+                <el-col :span="12">
+                  <div class="gender text-xl">
+                    <strong>性别:</strong> {{ loginInfo.gender }}
+                  </div>
+                  <div class="pay_type text-xl">
+                    <strong>支付方式:</strong> {{ loginInfo.pay_type }}
+                  </div>
+                </el-col>
+              </el-row>
+            </el-card>
           </div>
-          <el-dialog
-            title="修改个人信息"
-            v-model="openUserInformation"
-            width="25%"
-          >
+          <!-- 修改个人信息弹窗 -->
+          <div class="button-container">
             <div>
-              <el-input
-                v-model="new_username"
-                placeholder="新用户名"
-                clearable
-              ></el-input>
-              <el-input
-                v-model="new_address"
-                placeholder="新购买地址"
-                clearable
-              ></el-input>
-            </div>
-            <template v-slot:footer>
-              <div style="display: flex; justify-content: space-between">
-                <el-button @click="openUserInformation = false"
-                  >取 消</el-button
+              <div class="mb-4">
+                <el-button
+                  type="info"
+                  class="text-white font-semibold hover:underline"
+                  @click="openUserInformation = true"
+                  plain
                 >
-                <el-button type="primary" @click="updateUserInfo"
-                  >确 定</el-button
-                >
+                  修改个人信息
+                </el-button>
               </div>
-            </template>
-          </el-dialog>
-        </div>
-        <!-- 修改用户密码弹窗 -->
-        <div class="mb-4">
-          <el-button
-            type="warning"
-            class="text-white font-semibold hover:underline"
-            @click="openUserPassword = true"
-            plain
-          >
-            修改用户密码
-          </el-button>
-        </div>
-        <el-dialog title="修改用户密码" v-model="openUserPassword" width="25%">
-          <div>
-            <el-input
-              v-model="old_password"
-              placeholder="请输入旧密码"
-              clearable
-            ></el-input>
-            <el-input
-              v-model="new_password"
-              placeholder="新密码"
-              clearable
-            ></el-input>
-          </div>
-          <template v-slot:footer>
-            <div style="display: flex; justify-content: space-between">
-              <el-button @click="openUserPassword = false">取 消</el-button>
-              <el-button type="primary" @click="updateUserPasswordInfo"
-                >确 定</el-button
+              <el-dialog
+                title="修改个人信息"
+                v-model="openUserInformation"
+                width="25%"
               >
+                <div>
+                  <el-input
+                    v-model="new_username"
+                    placeholder="新用户名"
+                    clearable
+                  ></el-input>
+                  <el-input
+                    v-model="new_address"
+                    placeholder="新购买地址"
+                    clearable
+                  ></el-input>
+                </div>
+                <template v-slot:footer>
+                  <div style="display: flex; justify-content: space-between">
+                    <el-button @click="openUserInformation = false"
+                      >取 消</el-button
+                    >
+                    <el-button type="primary" @click="updateUserInfo"
+                      >确 定</el-button
+                    >
+                  </div>
+                </template>
+              </el-dialog>
             </div>
-          </template>
-        </el-dialog>
-        <!-- 订单列表展开按钮 -->
-        <div class="mb-4">
-          <el-button
-            type="primary"
-            class="text-white font-semibold hover:underline"
-            @click="toggleOrders"
-            plain
-          >
-            {{ showOrders ? "收起订单列表" : "展开订单列表" }}
-          </el-button>
-        </div>
+            <!-- 修改用户密码弹窗 -->
+            <div class="mb-4">
+              <el-button
+                type="warning"
+                class="text-white font-semibold hover:underline"
+                @click="openUserPassword = true"
+                plain
+              >
+                修改用户密码
+              </el-button>
+            </div>
+            <el-dialog
+              title="修改用户密码"
+              v-model="openUserPassword"
+              width="25%"
+            >
+              <div>
+                <el-input
+                  v-model="old_password"
+                  placeholder="请输入旧密码"
+                  clearable
+                ></el-input>
+                <el-input
+                  v-model="new_password"
+                  placeholder="新密码"
+                  clearable
+                ></el-input>
+              </div>
+              <template v-slot:footer>
+                <div style="display: flex; justify-content: space-between">
+                  <el-button @click="openUserPassword = false">取 消</el-button>
+                  <el-button type="primary" @click="updateUserPasswordInfo"
+                    >确 定</el-button
+                  >
+                </div>
+              </template>
+            </el-dialog>
+            <!-- 订单列表展开按钮 -->
+            <div class="mb-4">
+              <el-button
+                type="primary"
+                class="text-white font-semibold hover:underline"
+                @click="toggleOrders"
+                plain
+              >
+                {{ showOrders ? "收起订单列表" : "展开订单列表" }}
+              </el-button>
+            </div>
 
-        <!-- 订单列表 -->
-        <div v-if="showOrders" class="mb-8">
-          <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
-          <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-            <order-item
-              v-for="order in orders"
-              :key="order.order_id"
-              :order_id="order.order_id"
-              :buyer_id="parseInt(store.getToken)"
-              :total_price="parseInt(order.total_price)"
-              :order_time="order.order_time"
-              :items="order.items"
-            ></order-item>
-          </div>
-        </div>
-        <!-- 商品列表展开按钮 -->
-        <div class="mb-4">
-          <el-button
-            type="success"
-            class="text-white font-semibold hover:underline"
-            @click="toggleProducts"
-            plain
-          >
-            {{ showProducts ? "收起我的商品列表" : "展开我的商品列表" }}
-          </el-button>
-        </div>
+            <!-- 订单列表 -->
+            <div v-if="showOrders" class="mb-8">
+              <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
+              <div
+                class="bg-gray-600/80 p-4 rounded-lg shadow-md order_container"
+              >
+                <order-item
+                  v-for="order in orders"
+                  :key="order.order_id"
+                  :order_id="order.order_id"
+                  :buyer_id="parseInt(store.getToken)"
+                  :total_price="parseInt(order.total_price)"
+                  :order_time="order.order_time"
+                  :items="order.items"
+                ></order-item>
+              </div>
+            </div>
+            <!-- 商品列表展开按钮 -->
+            <div class="mb-4">
+              <el-button
+                type="success"
+                class="text-white font-semibold hover:underline"
+                @click="toggleProducts"
+                plain
+              >
+                {{ showProducts ? "收起商品列表" : "展开商品列表" }}
+              </el-button>
+            </div>
 
-        <!-- 商品列表 -->
-        <div v-if="showProducts">
-          <h2 class="text-white text-2xl font-semibold mb-4">我的商品列表</h2>
-          <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-            <product-item
-              v-for="product in products"
-              :key="product.product_id"
-              :product="product"
-            ></product-item>
+            <!-- 商品列表 -->
+            <div v-if="showProducts">
+              <h2 class="text-white text-2xl font-semibold mb-4">
+                我的商品列表
+              </h2>
+              <div
+                class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container"
+              >
+                <product-item
+                  v-for="product in products"
+                  :key="product.product_id"
+                  :product="product"
+                ></product-item>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <personal-center-side-bar></personal-center-side-bar>
+    <div>
+      <personal-center-side-bar></personal-center-side-bar>
+    </div>
   </div>
 </template>
 
@@ -361,5 +375,18 @@ const updateUserPassword = () => {
 .box-card {
   margin-bottom: 20px;
   border-radius: 10px;
+}
+/* .button-container {
+  display: flex;
+  justify-content: space-between;
+} */
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.product-item {
+  width: calc(50% - 8px); /* 50% width with some spacing */
+  margin-bottom: 16px; /* Add some bottom margin for spacing */
 }
 </style>

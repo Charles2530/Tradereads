@@ -8,7 +8,7 @@
   >
     <el-sub-menu index="5">
       <template #title>
-        <el-icon :size="size" :color="color">
+        <el-icon>
           <Menu></Menu>
         </el-icon>
         <router-link to="/personalCenter">网站导航</router-link>
