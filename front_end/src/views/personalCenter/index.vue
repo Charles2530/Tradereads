@@ -2,7 +2,7 @@
   <div>
     <div>
       <section class="shortcut">
-        <div class="w float-right">
+        <div class="w fixed left-28">
           <ul>
             <li>二手书网站欢迎您!&nbsp;</li>
             <li>
@@ -15,7 +15,7 @@
         class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
       >
         <div
-          class="headBar ml-250 bg-gradient-to-r from-blue-400/50 to-red-500/50"
+          class="headBar ml-100 bg-gradient-to-r from-blue-400/50 to-red-500/50 rounded-lg shadow-md p-4"
         >
           <personal-info></personal-info>
           <div class="button-container">
