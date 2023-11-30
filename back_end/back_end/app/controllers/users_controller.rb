@@ -240,7 +240,7 @@ class UsersController < ApplicationController
     order_items = []
     user.carts.each do |cart|
       carts << cart
-      order_item = OrderItem.new(product: cart.product, number: cart.number, state: "toPay", order: order)
+      order_item = OrderItem.new(product: cart.product, number: cart.number, state: "待支付", order: order)
       if order_item.valid?
         order_items << order_item
       else
