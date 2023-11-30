@@ -7,27 +7,35 @@
     <el-card class="box-card">
       <el-row>
         <el-col :span="12">
-          <div class="user text-xl">
+          <div class="user info-item">
             <strong>用户名:</strong> {{ loginInfo.user_name }}
           </div>
-          <div class="phone text-xl">
+          <div class="phone info-item">
             <strong>用户电话:</strong> {{ loginInfo.phone }}
           </div>
-          <div class="address text-xl">
+          <div class="address info-item">
             <strong>用户地址:</strong> {{ loginInfo.buy_address }}
           </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="gender text-xl">
+          <div class="gender info-item">
             <strong>性别:</strong> {{ loginInfo.gender }}
           </div>
-          <div class="pay_type text-xl">
+          <div class="pay_type info-item">
             <strong>支付方式:</strong> {{ loginInfo.pay_type }}
           </div>
-          <div class="isRight text-xl">
+          <div class="isRight info-item">
             <strong>身份:</strong>
             {{ loginInfo.right === 1 ? "管理员" : "用户" }}
           </div>
+        </el-col>
+        <el-col :span="12" class="float-right">
+          <img
+            :src="loginInfo.avatar"
+            class="my-avatar rounded-full"
+            alt="avatar"
+          />
+          <el-button type="primary" size="large" class="mt-4 m-8"
+            >上传头像</el-button
+          >
         </el-col>
       </el-row>
     </el-card>
@@ -129,6 +137,7 @@ export default {
       gender: "",
       pay_type: "",
       right: "",
+      avatar: "",
     });
 
     const store = userStore();
@@ -154,6 +163,7 @@ export default {
             loginInfo.gender = res.data.gender;
             loginInfo.pay_type = res.data.pay_type;
             loginInfo.right = res.data.right;
+            loginInfo.avatar = res.data.avatar;
           } else {
             ElMessage({
               showClose: true,
@@ -255,5 +265,22 @@ export default {
 }
 .button-container {
   display: flex;
+}
+.my-avatar {
+  cursor: pointer;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.my-avatar:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.info-item {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 15px;
 }
 </style>
