@@ -5,9 +5,6 @@
         <div class="w fixed left-28">
           <ul>
             <li>二手书网站欢迎您!&nbsp;</li>
-            <li>
-              <button @click="Logout">退出登录</button>
-            </li>
           </ul>
         </div>
       </section>
@@ -96,11 +93,9 @@ import OrderItem from "@c/order/OrderItem.vue";
 import ProductItem from "@c/product/ProductItem.vue";
 import personalCenterSideBar from "@c/user/personalCenterSideBar.vue";
 import personalInfo from "../../components/user/personalInfo.vue";
-import { logout } from "@/api/user.js";
 import { showCurrentUserOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { userStore } from "@/store/user.js";
-import { useRouter } from "vue-router";
 // Lifecycle hook
 onMounted(() => {
   showCurrentUserOrders().then((res) => {
@@ -126,8 +121,6 @@ onMounted(() => {
 const showOrders = ref(false);
 const showProducts = ref(false);
 const store = userStore();
-const router = useRouter();
-
 const orders = ref([]);
 const products = ref([]);
 
@@ -138,21 +131,6 @@ const toggleOrders = () => {
 
 const toggleProducts = () => {
   showProducts.value = !showProducts.value;
-};
-
-const Logout = () => {
-  logout().then((res) => {
-    console.log(res);
-    if (res.success) {
-      ElMessage({
-        showClose: true,
-        message: "退出登录成功",
-        type: "success",
-      });
-      store.clearUserInfo();
-      router.push("/");
-    }
-  });
 };
 </script>
 
