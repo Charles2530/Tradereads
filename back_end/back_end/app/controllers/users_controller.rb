@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :login_only, except: %i[ register login ]
-    before_action :current_user
+  before_action :login_only, except: %i[ register login ]
+  before_action :setAdmin
   # before_action :unlogin_only, only: %i[ register ]
   # before_action :set_per_page, only: [:index]
   # before_action :set_page, only: [:index]
@@ -181,10 +181,13 @@ class UsersController < ApplicationController
         products: user.carts.collect do |cart|
           product = cart.product
           product_detail = ProductDetail.find_by(product: product)
+          seller = product.user
+          detail = seller.user_detail
           {
             product_id: product.id,
             product_name: product_detail.product_name,
-            seller_name: product.user_id,
+            product_image: product_detail.product_image,
+            seller_name: detail.user_name,
             product_price: product.price,
             product_number: cart.number
           }
