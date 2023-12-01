@@ -7,7 +7,7 @@
       text-color="#000"
       active-text-color="#ffd04b"
     >
-      <el-sub-menu index="5">
+      <el-sub-menu index="1">
         <template #title>
           <el-icon class="el-icon-menu"><Menu></Menu></el-icon>
           <strong class="nav-title text-md">网站导航</strong>
@@ -37,20 +37,46 @@
               >商品中心</router-link
             >
           </el-menu-item>
-          <!-- <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
+          <el-menu-item index="4">
+            <i class="el-icon-style"><Setting /></i>
             <router-link to="/MyItem">我的商品</router-link>
-          </el-menu-item> -->
-          <el-menu-item index="5" @click="showAllOrderList">
-            <i class="el-icon-style">
-              <Document></Document>
-            </i>
-            <router-link class="nav-title" to="/personalCenter"
-              >查看所有订单</router-link
-            >
           </el-menu-item>
         </div>
       </el-sub-menu>
+      <div v-if="adminMode">
+        <el-sub-menu index="2">
+          <template #title>
+            <el-icon class="el-icon-menu"><Monitor /></el-icon>
+            <strong class="nav-title text-md">管理员模式</strong>
+          </template>
+          <div class="item_container p-5">
+            <el-menu-item index="1" @click="showAllOrderList">
+              <i class="el-icon-style">
+                <Document></Document>
+              </i>
+              <router-link class="nav-title" to="/personalCenter"
+                >查看所有订单</router-link
+              >
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-style">
+                <Service />
+              </i>
+              <router-link class="nav-title" to="/personalCenter"
+                >审核订单</router-link
+              >
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-style">
+                <List />
+              </i>
+              <router-link class="nav-title" to="/personalCenter"
+                >用户管理</router-link
+              >
+            </el-menu-item>
+          </div>
+        </el-sub-menu>
+      </div>
       <el-menu-item index="2">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
@@ -64,7 +90,7 @@
   <el-dialog title="查看所有订单" v-model="openOrderLists" width="90%">
     <h2 class="text-white text-2xl font-semibold mb-4">订单列表</h2>
     <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-      <order-item
+      <order-item-admin
         v-for="order in all_orders"
         :key="order.order_id"
         :buyer_id="order.buyer_id"
@@ -72,7 +98,7 @@
         :total_price="order.total_price"
         :order_time="order.order_time"
         :items="order.items"
-      ></order-item>
+      ></order-item-admin>
     </div>
   </el-dialog>
 </template>
@@ -93,6 +119,8 @@ export default {
     const activeMenu = ref("0");
     const store = userStore();
     const router = useRouter();
+    // const adminMode = store.getRight === 1;
+    const adminMode = true;
     const showAllOrderList = () => {
       showAllOrders().then((res) => {
         if (res.success) {
@@ -122,7 +150,14 @@ export default {
         }
       });
     };
-    return { activeMenu, openOrderLists, all_orders, showAllOrderList, Logout };
+    return {
+      adminMode,
+      activeMenu,
+      openOrderLists,
+      all_orders,
+      showAllOrderList,
+      Logout,
+    };
   },
 };
 </script>
