@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   has_one :product_detail, dependent: :destroy
   has_many :carts, dependent: :destroy
   has_many :order_items, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :price,
             :presence => { massage: "Price must exist." }

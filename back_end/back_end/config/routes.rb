@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :comments
+  resources :followships
   scope "api" do
     post :register, to: 'users#register', as: :user_register
     post :login, to: 'users#login', as: :user_login

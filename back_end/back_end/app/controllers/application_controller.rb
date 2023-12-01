@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   # helper_mothod :current_user
   # include ::ActionController::Cookies
+  Encoding.default_internal="UTF-8"
 
   public
 
