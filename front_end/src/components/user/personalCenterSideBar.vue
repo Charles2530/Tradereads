@@ -50,7 +50,7 @@
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
           <div class="item_container p-5">
-            <el-menu-item index="1" @click="showAllOrderList">
+            <el-menu-item index="5" @click="showAllOrderList">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
@@ -58,7 +58,7 @@
                 >查看所有订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="6">
               <i class="el-icon-style">
                 <Service />
               </i>
@@ -66,7 +66,7 @@
                 >审核订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="7">
               <i class="el-icon-style">
                 <List />
               </i>
@@ -77,7 +77,7 @@
           </div>
         </el-sub-menu>
       </div>
-      <el-menu-item index="2">
+      <el-menu-item index="8">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">
