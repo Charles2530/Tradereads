@@ -2,9 +2,6 @@
   <el-config-provider :locale="locale">
     <router-view />
   </el-config-provider>
-  <!-- <div id="app">
-    <RouterView />
-  </div> -->
 </template>
 <script setup>
 import { ElConfigProvider } from "element-plus";

@@ -33,7 +33,11 @@
             class="my-avatar rounded-full"
             alt="avatar"
           />
-          <el-button type="primary" size="large" class="mt-4 m-8"
+          <el-button
+            type="primary"
+            size="large"
+            class="mt-4 m-8"
+            @click="uploadAvatar"
             >上传头像</el-button
           >
         </el-col>
@@ -243,6 +247,19 @@ export default {
           console.error(err);
         });
     };
+
+    const uploadAvatar = () => {
+      // Call API functions here (modify_avatar)
+      // Update loginInfo after successful API calls
+      // Close the dialog and reset input fields
+      // Implement actual API calls and update logic
+      ElMessage({
+        showClose: true,
+        message: "上传头像功能暂未实现",
+        type: "warning",
+      });
+    };
+
     return {
       loginInfo,
       openUserInformation,
