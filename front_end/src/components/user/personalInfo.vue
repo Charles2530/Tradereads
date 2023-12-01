@@ -33,13 +33,19 @@
             class="my-avatar rounded-full"
             alt="avatar"
           />
-          <el-button
-            type="primary"
-            size="large"
-            class="mt-4 m-8"
-            @click="uploadAvatar"
-            >上传头像</el-button
+          <el-upload
+            ref="uploadRef"
+            class="upload-demo"
+            :action="uploadUrl"
+            :show-file-list="false"
+            accept="image/*"
           >
+            <template #trigger>
+              <el-button type="primary" size="large" class="mt-4 m-8"
+                >上传头像</el-button
+              >
+            </template>
+          </el-upload>
         </el-col>
       </el-row>
     </el-card>
@@ -154,6 +160,8 @@ export default {
     const old_password = ref("");
     const new_password = ref("");
 
+    const uploadUrl = import.meta.env.VITE_APP_BASE_API + "/user/upload_avatar";
+
     // Methods
 
     const createdUserInformation = () => {
@@ -248,18 +256,6 @@ export default {
         });
     };
 
-    const uploadAvatar = () => {
-      // Call API functions here (modify_avatar)
-      // Update loginInfo after successful API calls
-      // Close the dialog and reset input fields
-      // Implement actual API calls and update logic
-      ElMessage({
-        showClose: true,
-        message: "上传头像功能暂未实现",
-        type: "warning",
-      });
-    };
-
     return {
       loginInfo,
       openUserInformation,
@@ -270,6 +266,7 @@ export default {
       new_password,
       updateUserInfo,
       updateUserPasswordInfo,
+      uploadUrl,
     };
   },
 };

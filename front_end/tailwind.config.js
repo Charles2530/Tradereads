@@ -7,6 +7,7 @@ export default {
         "login-background": "url('/src/assets/img/login-background.jpg')",
         "personalCenter-background":
           "url('/src/assets/img/personalCenter-background.jpg')",
+        "web-logo": "url('/src/assets/img/logo.png')",
       },
       margin: {
         100: "100px",
