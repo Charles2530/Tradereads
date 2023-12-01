@@ -44,9 +44,6 @@ export default {
       default: "123456789",
     },
   },
-  setup(props) {
-    return {};
-  },
 };
 </script>
 

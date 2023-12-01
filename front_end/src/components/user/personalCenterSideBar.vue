@@ -58,6 +58,22 @@
                 >查看所有订单</router-link
               >
             </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-style">
+                <Service />
+              </i>
+              <router-link class="nav-title" to="/personalCenter"
+                >审核订单</router-link
+              >
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-style">
+                <List />
+              </i>
+              <router-link class="nav-title" to="/personalCenter"
+                >用户管理</router-link
+              >
+            </el-menu-item>
           </div>
         </el-sub-menu>
       </div>
@@ -103,8 +119,8 @@ export default {
     const activeMenu = ref("0");
     const store = userStore();
     const router = useRouter();
-    const adminMode = store.getRight === 1;
-    // const adminMode = true;
+    // const adminMode = store.getRight === 1;
+    const adminMode = true;
     const showAllOrderList = () => {
       showAllOrders().then((res) => {
         if (res.success) {
