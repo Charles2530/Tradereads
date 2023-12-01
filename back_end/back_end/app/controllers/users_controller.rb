@@ -372,10 +372,12 @@ class UsersController < ApplicationController
       message: ShowError::SHOW_SUCCEED,
       data: {
         phone: user.phone,
+        avatar: user_detail.avatar,
         user_name: user_detail.user_name,
         buy_address: user_detail.buy_address,
         gender: user_detail.gender,
-        pay_type: user_detail.pay_type
+        pay_type: user_detail.pay_type,
+        right: user.right
       }
     )
   end
