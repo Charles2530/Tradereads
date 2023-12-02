@@ -72,7 +72,7 @@
 <script>
 import { deleteOrder } from "@/api/order.js";
 export default {
-  name: "OrderItem",
+  name: "OrderItemAdmin",
   props: {
     order_id: {
       type: Number,
