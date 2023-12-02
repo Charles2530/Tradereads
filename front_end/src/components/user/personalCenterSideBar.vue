@@ -7,6 +7,9 @@
       text-color="#000"
       active-text-color="#ffd04b"
     >
+      <div>
+        <logo-info></logo-info>
+      </div>
       <el-sub-menu index="1">
         <template #title>
           <el-icon class="el-icon-menu"><Menu></Menu></el-icon>
