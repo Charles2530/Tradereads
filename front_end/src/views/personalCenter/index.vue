@@ -4,7 +4,9 @@
       <section class="shortcut">
         <div class="w fixed left-28">
           <ul>
-            <li>二手书网站欢迎您!&nbsp;</li>
+            <li style="color: #ffd04b; border-radius: 5px">
+              Welcome to Tradereads!&nbsp;
+            </li>
           </ul>
         </div>
       </section>
