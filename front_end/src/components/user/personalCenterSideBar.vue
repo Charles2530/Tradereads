@@ -79,6 +79,16 @@
       </div>
       <el-menu-item index="8">
         <template #title>
+          <el-icon class="el-icon-notice">
+            <BellFilled />
+          </el-icon>
+          <button @click="GoNotice" class="nav-title">
+            <strong class="nav-title text-md">公告栏</strong>
+          </button>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="9">
+        <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">
             <strong class="nav-title text-md">退出登录</strong>
@@ -150,6 +160,9 @@ export default {
         }
       });
     };
+    const GoNotice = () => {
+      router.push("/notice");
+    };
     return {
       adminMode,
       activeMenu,
@@ -157,6 +170,7 @@ export default {
       all_orders,
       showAllOrderList,
       Logout,
+      GoNotice,
     };
   },
 };
@@ -179,10 +193,8 @@ export default {
 .el-menu-vertical-demo:hover {
   width: 250px; /* Set the width to the expanded state on hover */
 }
-.el-icon-menu {
-  margin-right: 20px;
-  color: red;
-}
+.el-icon-menu,
+.el-icon-notice,
 .el-icon-location {
   margin-right: 20px;
   color: red;

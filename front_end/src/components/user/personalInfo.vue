@@ -1,12 +1,35 @@
 <template>
   <div class="flex justify-center items-center">
-    <h1 class="text-white text-4xl font-semibold mb-4">个人中心</h1>
+    <h1 class="text-white text-4xl font-semibold">个人中心</h1>
   </div>
+  <el-divider></el-divider>
   <div class="mb-8">
     <h2 class="text-white text-2xl font-semibold mb-4">个人信息</h2>
-    <el-card class="box-card">
+    <el-card class="box-card justify-center">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="1">
+          <div class="user-icon info-item mt-1">
+            <el-icon style="color: grey"><User /></el-icon>
+          </div>
+          <div class="phone-icon info-item mt-3">
+            <el-icon style="color: rgba(0, 0, 255, 0.426)"
+              ><Cellphone
+            /></el-icon>
+          </div>
+          <div class="address-icon info-item mt-3">
+            <el-icon style="color: grey"><Location /></el-icon>
+          </div>
+          <div class="gender-icon info-item mt-3">
+            <el-icon style="color: rgba(0, 0, 255, 0.426)"><Male /></el-icon>
+          </div>
+          <div class="pay_type-icon info-item mt-3">
+            <el-icon style="color: grey"><Money /></el-icon>
+          </div>
+          <div class="isRight-icon info-item mt-3">
+            <el-icon style="color: rgba(0, 0, 255, 0.426)"><Check /></el-icon>
+          </div>
+        </el-col>
+        <el-col :span="14">
           <div class="user info-item">
             <strong>用户名:</strong> {{ loginInfo.user_name }}
           </div>
@@ -27,7 +50,7 @@
             {{ loginInfo.right === 1 ? "管理员" : "用户" }}
           </div>
         </el-col>
-        <el-col :span="12" class="float-right">
+        <el-col :span="9" class="float-right">
           <img
             :src="loginInfo.avatar"
             class="my-avatar rounded-full"
@@ -41,8 +64,14 @@
             accept="image/*"
           >
             <template #trigger>
-              <el-button type="primary" size="large" class="mt-4 m-8"
-                >上传头像</el-button
+              <el-button
+                type="primary"
+                size="large"
+                class="mt-4 m-12 text-white font-semibold hover:underline"
+                plain
+              >
+                <el-icon class="mr-4"><Camera /></el-icon>
+                上传头像</el-button
               >
             </template>
           </el-upload>
@@ -282,8 +311,8 @@ export default {
 }
 .my-avatar {
   cursor: pointer;
-  width: 168px;
-  height: 168px;
+  width: 218px;
+  height: 218px;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }

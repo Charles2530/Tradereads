@@ -10,6 +10,7 @@ export default {
         "web-logo": "url('/src/assets/img/logo.png')",
       },
       margin: {
+        18: "4.5rem",
         100: "100px",
         150: "150px",
         250: "250px",

@@ -1,10 +1,9 @@
 <template>
-  <div class="user_info mb-10">
-    <user-info-item
+  <div class="user_info mb-4">
+    <user-info-item-simplify
       :avatar="avatar"
       :user_name="user_name"
-      :phone="phone"
-    ></user-info-item>
+    ></user-info-item-simplify>
   </div>
   <div class="button-container">
     <!-- 订单列表展开按钮 -->
@@ -15,6 +14,7 @@
         @click="openOrderDialog"
         plain
       >
+        <el-icon class="ml-1 mr-4"><MessageBox /></el-icon>
         我的购买订单
       </el-button>
       <el-dialog v-model="showOrderDialog" title="订单列表" width="80%">
@@ -38,6 +38,7 @@
         @click="openSalesOrderDialog"
         plain
       >
+        <el-icon class="ml-1 mr-4"><Files /></el-icon>
         我的销售订单
       </el-button>
       <el-dialog
@@ -69,6 +70,7 @@
         @click="openProductDialog"
         plain
       >
+        <el-icon class="ml-1 mr-4"><Reading /></el-icon>
         我的销售商品
       </el-button>
       <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
@@ -90,6 +92,7 @@
           @click="openFollowingDialog"
           plain
         >
+          <el-icon class="ml-1 mr-4"><UserFilled /></el-icon>
           我的关注列表
         </el-button>
         <el-dialog v-model="showFollowingDialog" title="我的关注" width="80%">

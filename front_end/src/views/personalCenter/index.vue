@@ -13,14 +13,14 @@
       class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
     >
       <el-row>
-        <el-col :span="8">
+        <el-col :span="5">
           <div
             class="headBar ml-100 bg-gradient-to-r from-blue-400/50 to-red-500/50 rounded-lg shadow-md p-4"
           >
             <personal-mode></personal-mode>
           </div>
         </el-col>
-        <el-col :span="16"
+        <el-col :span="19"
           ><div
             class="headBar ml-100 bg-gradient-to-r from-blue-400/50 to-red-500/50 rounded-lg shadow-md p-4"
           >
