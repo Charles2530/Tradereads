@@ -8,6 +8,8 @@ export default {
         "personalCenter-background":
           "url('/src/assets/img/personalCenter-background.jpg')",
         "web-logo": "url('/src/assets/img/logo.png')",
+        "notice-background": "url('/src/assets/img/notice-background.jpg')",
+        "admin-background": "url('/src/assets/img/admin-background.jpg')",
       },
       margin: {
         18: "4.5rem",

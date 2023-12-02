@@ -18,15 +18,20 @@
         我的购买订单
       </el-button>
       <el-dialog v-model="showOrderDialog" title="订单列表" width="80%">
-        <div class="bg-gray-600/80 p-4 rounded-lg shadow-md order_container">
-          <order-item
-            v-for="order in orders"
-            :key="order.order_id"
-            :order_id="order.order_id"
-            :total_price="parseInt(order.total_price)"
-            :order_time="order.order_time"
-            :items="order.items"
-          ></order-item>
+        <div v-if="orders.length === 0" class="text-center">
+          <el-text type="warning">暂无订单</el-text>
+        </div>
+        <div v-else>
+          <div class="bg-gray-600/80 p-4 rounded-lg shadow-md order_container">
+            <order-item
+              v-for="order in orders"
+              :key="order.order_id"
+              :order_id="order.order_id"
+              :total_price="parseInt(order.total_price)"
+              :order_time="order.order_time"
+              :items="order.items"
+            ></order-item>
+          </div>
         </div>
       </el-dialog>
     </div>
@@ -46,18 +51,23 @@
         title="销售订单列表"
         width="80%"
       >
-        <div
-          class="bg-gray-600/80 p-4 rounded-lg shadow-md sales-order-container"
-        >
-          <sales-order-item
-            v-for="salesOrder in salesOrders"
-            :key="salesOrder.order_id"
-            :order_id="salesOrder.order_id"
-            :seller_id="salesOrder.buyer_id"
-            :total_price="parseInt(salesOrder.total_price)"
-            :order_time="salesOrder.order_time"
-            :items="salesOrder.items"
-          ></sales-order-item>
+        <div v-if="salesOrders.length === 0" class="text-center">
+          <el-text type="warning">暂无销售订单</el-text>
+        </div>
+        <div v-else>
+          <div
+            class="bg-gray-600/80 p-4 rounded-lg shadow-md sales-order-container"
+          >
+            <sales-order-item
+              v-for="salesOrder in salesOrders"
+              :key="salesOrder.order_id"
+              :order_id="salesOrder.order_id"
+              :seller_id="salesOrder.buyer_id"
+              :total_price="parseInt(salesOrder.total_price)"
+              :order_time="salesOrder.order_time"
+              :items="salesOrder.items"
+            ></sales-order-item>
+          </div>
         </div>
       </el-dialog>
     </div>
@@ -74,12 +84,19 @@
         我的销售商品
       </el-button>
       <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
-        <div class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container">
-          <product-item
-            v-for="product in products"
-            :key="product.product_id"
-            :product="product"
-          ></product-item>
+        <div v-if="products.length === 0" class="text-center">
+          <el-text type="warning">暂无销售商品</el-text>
+        </div>
+        <div v-else>
+          <div
+            class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container"
+          >
+            <product-item
+              v-for="product in products"
+              :key="product.product_id"
+              :product="product"
+            ></product-item>
+          </div>
         </div>
       </el-dialog>
     </div>

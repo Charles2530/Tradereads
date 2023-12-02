@@ -1,21 +1,31 @@
 <template>
-  <div class="user-management">
-    <div v-if="userList.length === 0">
-      <h1 class="text-2xl text-center">No Users</h1>
+  <div
+    class="bg-admin-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
+  >
+    <div style="position: relative; z-index: 1">
+      <personal-center-side-bar />
     </div>
-    <div v-else>
-      <h1 class="text-2xl text-center">User Management</h1>
-      <div class="user-container">
-        <el-row v-for="(user, index) in userList" :key="index" class="mb-4">
-          <!-- User Item -->
-          <el-col :span="12">
-            <user-info-item
-              :avatar="user.avatar"
-              :user_name="user.user_name"
-              :phone="user.phone"
-            />
-          </el-col>
-        </el-row>
+    <div
+      class="user-management mx-20 bg-white"
+      style="position: relative; z-index: 0"
+    >
+      <div v-if="userList.length === 0">
+        <h1 class="text-2xl text-center">当前没有用户</h1>
+      </div>
+      <div v-else>
+        <h1 class="text-2xl text-center">用户管理</h1>
+        <div class="user-container">
+          <el-row v-for="(user, index) in userList" :key="index" class="mb-4">
+            <!-- User Item -->
+            <el-col :span="12">
+              <user-info-item
+                :avatar="user.avatar"
+                :user_name="user.user_name"
+                :phone="user.phone"
+              />
+            </el-col>
+          </el-row>
+        </div>
       </div>
     </div>
   </div>

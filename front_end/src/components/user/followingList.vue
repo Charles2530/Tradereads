@@ -1,7 +1,7 @@
 <template>
   <div class="following-list">
     <div v-if="followingList.length === 0">
-      <h1 class="text-2xl text-center">No Following</h1>
+      <h1 class="text-2xl text-center">你还没有关注别的用户，快去关注吧</h1>
     </div>
     <div v-else>
       <h1 class="text-2xl text-center">Following List</h1>

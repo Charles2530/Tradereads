@@ -94,14 +94,19 @@
       </div>
       <el-dialog title="修改个人信息" v-model="openUserInformation" width="25%">
         <div>
+          <el-text class="mx-1 mb-4" type="success"
+            >请修改你的用户信息!</el-text
+          >
           <el-input
             v-model="new_username"
             placeholder="新用户名"
+            autocomplete="on"
             clearable
           ></el-input>
           <el-input
             v-model="new_address"
             placeholder="新购买地址"
+            autocomplete="on"
             clearable
           ></el-input>
         </div>
@@ -126,6 +131,7 @@
     </div>
     <el-dialog title="修改用户密码" v-model="openUserPassword" width="25%">
       <div>
+        <el-text class="mx-1 mb-4" type="success">请修改你的密码!</el-text>
         <el-input
           v-model="old_password"
           placeholder="请输入旧密码"
