@@ -1,26 +1,41 @@
 <template>
   <div class="product-item bg-white border rounded-lg p-4 flex flex-col">
     <div v-if="!isEditing">
-      <div class="mb-2">
-        <span class="text-lg font-bold"
-          >商品名称: {{ product.product_name }}</span
-        >
-      </div>
-      <div class="mb-2">
-        <span class="text-gray-600">商品图片: {{ product.product_image }}</span>
-      </div>
-      <div class="mb-2">
-        <span class="text-gray-600">价格: {{ product.price }}</span>
-      </div>
-      <div class="mb-2">
-        <span class="text-gray-600">商品库存: {{ product.product_store }}</span>
-      </div>
-      <div>
-        <span class="text-gray-600">发货地址: {{ product.sell_address }}</span>
-      </div>
-      <div>
-        <span :class="stockClass">{{ stockStatus }}</span>
-      </div>
+      <el-row class="mb-2">
+        <el-col :span="24">
+          <span class="text-lg font-bold"
+            >商品名称: {{ product.product_name }}</span
+          >
+        </el-col>
+      </el-row>
+
+      <el-row class="mb-2">
+        <el-col :span="12" class="mb-2">
+          <el-row class="mb-5">
+            <span class="text-gray-600">价格: {{ product.price }}</span>
+          </el-row>
+          <el-row class="mb-5">
+            <span class="text-gray-600"
+              >商品库存: {{ product.product_store }}</span
+            >
+          </el-row>
+          <el-row class="mb-5">
+            <span class="text-gray-600"
+              >发货地址: {{ product.sell_address }}</span
+            >
+          </el-row>
+          <el-row class="mb-5 text-xl">
+            <span :class="stockClass">{{ stockStatus }}</span>
+          </el-row>
+        </el-col>
+        <el-col :span="12" class="text-center">
+          <img
+            :src="product.product_image"
+            alt="Product Image"
+            class="w-48 h-48"
+          />
+        </el-col>
+      </el-row>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
         @click="toggleEdit"

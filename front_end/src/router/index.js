@@ -16,6 +16,8 @@ const Page404 = () => import("@/views/404.vue");
 const CheckOrdersView = () => import("@/views/admin/checkOrdersView.vue");
 // 用户管理页面
 const UsersManagement = () => import("@/views/admin/UsersManagement.vue");
+// 公告栏
+const Notice = () => import("@/views/notice/index.vue");
 //购物车页面
 const Shopping = () => import("@/views/shopping/shopping.vue");
 //商品购买中心
@@ -62,6 +64,11 @@ const routes = [
     path: "/usersManagement",
     name: "UsersManagement",
     component: UsersManagement,
+  },
+  {
+    path: "/notice",
+    name: "Notice",
+    component: Notice,
   },
   {
     path: "/shopping",
