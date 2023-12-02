@@ -62,7 +62,7 @@
               <i class="el-icon-style">
                 <Service />
               </i>
-              <router-link class="nav-title" to="/personalCenter"
+              <router-link class="nav-title" to="/checkOrdersView"
                 >审核订单</router-link
               >
             </el-menu-item>
@@ -70,7 +70,7 @@
               <i class="el-icon-style">
                 <List />
               </i>
-              <router-link class="nav-title" to="/personalCenter"
+              <router-link class="nav-title" to="/usersManagement"
                 >用户管理</router-link
               >
             </el-menu-item>

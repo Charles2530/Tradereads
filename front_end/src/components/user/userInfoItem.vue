@@ -55,8 +55,8 @@ export default {
 }
 
 .avatar-img {
-  width: 168px; /* Make the image fill the container */
-  height: 88px; /* Make the image fill the container */
+  width: inherit; /* Make the image fill the container */
+  height: inherit; /* Make the image fill the container */
   border-radius: 50%; /* Make it circular */
 }
 
