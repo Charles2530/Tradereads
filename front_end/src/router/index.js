@@ -12,6 +12,10 @@ const Register = () => import("@/views/personalCenter/register.vue");
 const PersonalCenter = () => import("@/views/personalCenter/index.vue");
 // 404页面
 const Page404 = () => import("@/views/404.vue");
+// 审核订单页面
+const CheckOrdersView = () => import("@/views/admin/checkOrdersView.vue");
+// 用户管理页面
+const UsersManagement = () => import("@/views/admin/UsersManagement.vue");
 //购物车页面
 const Shopping = () => import("@/views/shopping/shopping.vue");
 //商品购买中心
@@ -50,6 +54,16 @@ const routes = [
     component: Page404,
   },
   {
+    path: "/checkOrdersView",
+    name: "CheckOrdersView",
+    component: CheckOrdersView,
+  },
+  {
+    path: "/usersManagement",
+    name: "UsersManagement",
+    component: UsersManagement,
+  },
+  {
     path: "/shopping",
     name: "Shopping",
     component: Shopping,
@@ -64,7 +78,6 @@ const routes = [
     name: "MyItem",
     component: MyItem,
   },
-
 ];
 
 const router = createRouter({

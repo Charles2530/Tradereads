@@ -64,6 +64,23 @@
             >
               订单状态: {{ item.state }}
             </span>
+            <el-select
+              v-model="selectedStatus"
+              class="m-2"
+              placeholder="选择订单状态"
+              size="large"
+            >
+              <el-option
+                v-for="status in orderStatusOptions"
+                :key="status.value"
+                :label="status.label"
+                :value="status.value"
+              />
+            </el-select>
+            <el-button type="primary" @click="modifyOrderStatus"
+              >修改订单状态</el-button
+            >
+            <div></div>
           </div>
         </div>
       </div>
@@ -73,8 +90,9 @@
 
 <script>
 import { deleteOrder } from "@/api/order.js";
+import { ref } from "vue";
 export default {
-  name: "OrderItemAdmin",
+  name: "SalesOrderItem",
   props: {
     order_id: {
       type: Number,
@@ -97,8 +115,27 @@ export default {
       required: true,
     },
   },
-  methods: {
-    deleteThisOrder() {
+  setup() {
+    const orderStatusOptions = [
+      {
+        value: "待支付",
+        label: "待支付",
+      },
+      {
+        value: "待发货",
+        label: "待发货",
+      },
+      {
+        value: "待收货",
+        label: "待收货",
+      },
+      {
+        value: "已完成",
+        label: "已完成",
+      },
+    ];
+    const selectedStatus = ref("");
+    const deleteThisOrder = () => {
       deleteOrder(this.order_id)
         .then((res) => {
           console.log(res);
@@ -118,7 +155,37 @@ export default {
           console.log(err);
         });
       window.location.reload();
-    },
+    };
+    const modifyOrderStatus = () => {
+      // Call your API function to update the order status here
+      // Use this.order_id to get the current order ID
+      // Update the 'state' property in each item of the 'items' array with the newStatus value
+      // Example API call:
+      //   modifyOrderStatusApi(this.order_id, newStatus)
+      //     .then((res) => {
+      //       console.log(res);
+      //       if (res.success) {
+      //         ElMessage({
+      //           message: "订单状态修改成功",
+      //           type: "success",
+      //         });
+      //       } else {
+      //         ElMessage({
+      //           message: res.message,
+      //           type: "error",
+      //         });
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+    };
+    return {
+      orderStatusOptions,
+      selectedStatus,
+      modifyOrderStatus,
+      deleteThisOrder,
+    };
   },
 };
 </script>
