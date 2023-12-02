@@ -53,7 +53,7 @@
         <el-col :span="9" class="float-right">
           <img
             :src="loginInfo.avatar"
-            class="my-avatar rounded-full"
+            class="my-avatar rounded-full mb-3"
             alt="avatar"
           />
           <el-upload
