@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       post :modify_price, to: 'products#modify_price', as: :product_modify_price
       post :modify_sell_address, to: 'products#modify_sell_address', as: :product_modify_sell_address
       post :add_product_to_cart, to: 'products#add_product_to_cart', as: :product_add_product_to_cart
+      post :add_comment, to: 'products#add_comment', as: :product_add_comment
     end
   end
 

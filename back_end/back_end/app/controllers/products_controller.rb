@@ -180,6 +180,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def add_comment
+    @product = Product.find(params[:product_id])
+    product = @product
+  end
+
   # POST /api/products
   def create
     seller = current_user
