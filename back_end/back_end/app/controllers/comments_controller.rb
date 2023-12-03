@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show update destroy ]
 
+
+  include ApplicationHelper
   # GET /comments
   # GET /comments.json
   def index
@@ -37,7 +39,24 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    @comment.destroy
+    comment = Comment.find(params[:id])
+    if comment.user != current_user && current_user.right != 1
+      render json: response_json(
+        false,
+        message: Global::UNAUTHORIZED
+      ) and return
+    end
+    if comment.destroy
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
   end
 
   private

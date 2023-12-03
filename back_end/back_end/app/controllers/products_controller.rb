@@ -13,6 +13,49 @@ class ProductsController < ApplicationController
       message: ShowError::SHOW_SUCCEED,
       data: {
         products: products.collect do |product|
+          if product.check_state == 0
+            next
+          end
+          product_detail = ProductDetail.find_by(product: product)
+          seller = product.user
+          {
+            product_id: product.id,
+            product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
+            price: product.price,
+            product_press: product_detail.product_press,
+            product_type: product_detail.product_type,
+            seller_name: seller.user_detail.user_name,
+            sell_address: product.sell_address
+          }
+        end
+      }
+    )
+  end
+
+  def show_products
+    @products = Product.all
+    show_following = params[:show_following]
+    show_order_base = params[:show_order_base]
+    show_order = params[:show_order]
+    # if show_following and show_order_base
+    #   products = Product.where.associated(:user,
+    # end
+
+    if show_order_base
+      products = Product.order(:price)
+      if show_order == "DESC"
+        products = Product.order(price: :desc)
+      end
+    end
+    render json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        products: products.collect do |product|
+          if product.check_state == 0
+            next
+          end
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
@@ -183,6 +226,100 @@ class ProductsController < ApplicationController
   def add_comment
     @product = Product.find(params[:product_id])
     product = @product
+    content = params[:content]
+    score = params[:score]
+
+    comment = Comment.new(product: product, user: current_user, content: content, score: score)
+
+    if comment.save
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS,
+        data: {
+          comment_id: comment.id,
+          date: comment.created_at
+        }
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
+  end
+
+  # GET /api/products/check_product
+  def get_product_list
+    user = current_user
+    if user.right == 0
+      render json: response_json(
+        false,
+        message: Global::UNAUTHORIZED
+      ) and return
+    end
+    @products = Product.all
+    products = @products
+    render json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        products: products.collect do |product|
+          product_detail = ProductDetail.find_by(product: product)
+          seller = product.user
+          {
+            product_id: product.id,
+            product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
+            price: product.price,
+            product_press: product_detail.product_press,
+            product_type: product_detail.product_type,
+            seller_name: seller.user_detail.user_name,
+            sell_address: product.sell_address,
+            check_state: product.check_state
+          }
+        end
+      }
+    )
+  end
+
+  # POST /api/products/<product_id>/check_product
+  def check_product
+    user = current_user
+    if user.right == 0
+      render json: response_json(
+        false,
+        message: Global::UNAUTHORIZED
+      ) and return
+    end
+    @product = Product.find(params[:product_id])
+    product = @product
+
+    check_result = params[:check_state]
+    if check_result == 0
+      if product.destroy
+        render status: 200, json: response_json(
+          true,
+          message: Global::SUCCESS
+        ) and return
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        ) and return
+      end
+    end
+    product.check_state = 1
+    if product.save
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
   end
 
   # POST /api/products
@@ -201,7 +338,8 @@ class ProductsController < ApplicationController
                           price: price,
                           sell_address: sell_address,
                           store: store,
-                          state: store == 0 ? "StockOut" : "Available")
+                          state: store == 0 ? "StockOut" : "Available",
+                          check_state: 0)
     name, image, press, type = params[:product_name], params[:product_image], params[:product_press], params[:product_type]
     product_detail = ProductDetail.new(product: product,
                                        product_name: name,

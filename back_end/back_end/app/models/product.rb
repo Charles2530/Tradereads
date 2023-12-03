@@ -14,4 +14,6 @@ class Product < ApplicationRecord
   validates :store, numericality: { only_integer: true, :greater_than_or_equal_to => 0, :massage => "Store must be non-negative." }
   validates :state, inclusion: { in: %w(Available StockOut) }
 
+  validates :check_state, inclusion: { in: [0, 1] }
+
 end

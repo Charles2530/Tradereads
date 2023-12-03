@@ -218,7 +218,8 @@ class UsersController < ApplicationController
             product_image: product_detail.product_image,
             product_store: product.store,
             sell_address: product.sell_address,
-            price: product.price
+            price: product.price,
+            check_state: product.check_state
           }
         end
       }
@@ -310,50 +311,92 @@ class UsersController < ApplicationController
         end
       }
     )
-    puts response_json(
-        true,
-        message: ShowError::SHOW_SUCCEED,
-        data: {
-          orders: user.orders.collect do |order|
-            i += 1
-            {
-              order_id: order.id,
-              total_price: total_prices[i-1],
-              order_time: order.created_at.to_s,
-              items: order.order_items.collect do |item|
-                product = item.product
-                product_detail = ProductDetail.find_by(product: product)
-                seller = product.user
-                seller_detail = UserDetail.find_by(user: seller)
-                {
-                  order_item_id: item.id,
-                  product_image: product_detail.product_image,
-                  product_name: product_detail.product_name,
-                  sell_address: product.sell_address,
-                  seller_name: seller_detail.user_name,
-                  buy_num: item.number,
-                  product_price: product.price * item.number,
-                  state: item.state
-                }
-              end
-            }
-          end
-        }
-      )
   end
 
+  def follow_user
+    user = User.find(params[:user_id])
+    if current_user == user
+      render json: response_json(
+        false,
+        message: FollowError::CANNOT_FOLLOW_SELF
+      ) and return
+    end
+    if Followship.find(user: current_user, following_user: user)
+      followship = Followship.find(user: current_user, following_user: user)
+      if followship.destroy
+        render status: 200, json: response_json(
+          false,
+          message: Global::SUCCESS
+        )
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        )
+      end
+    end
+    followship = Followship.new(user: current_user, following_user: user)
+    if followship.save
+      render status: 200, json: response_json(
+        false,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
+  end
+
+  def follow_list
+    user = User.find(params[:user_id])
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        followings: user.followings.collect do |following_user|
+          following_user_detail = following_user.user_detail
+          {
+            following_user_id: following_user.id,
+            following_user_name: following_user_detail.user_name
+          }
+        end
+      })
+  end
+
+  def if_follow
+    user = User.find(params[:user_id])
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        if_follow: (User.find(user: current_user, following_user: user) != null)
+      })
+  end
 
   # GET /api/users
   def index
     unless is_admin
       render json: response_json(
-        false
+        false,
+        message: Global::UNAUTHORIZED
       ) and return
     end
     @users = User.all
     render status: 200, json: response_json(
       true,
-      data: @users
+      message: Global::SUCCESS,
+      data: {
+        users: @users.collect do |user|
+          user_detail = user.user_detail
+          {
+            user_id: user.id,
+            user_phone: user.phone,
+            user_name: user_detail.user_name
+          }
+        end
+      }
     )
   end
 

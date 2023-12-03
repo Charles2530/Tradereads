@@ -13,18 +13,27 @@ Rails.application.routes.draw do
       post :modify_address, to: 'users#modify_address', as: :user_modify_address
       post :modify_password, to: 'users#modify_password', as: :user_modify_password
       get :show_product_list, to: 'users#show_product_list', as: :user_show_product_list
+      get :follow_user, to: 'users#follow_user', as: :follow_user
+      get :follow_list, to: 'users#follow_list', as: :follow_list
+      get :if_follow, to: 'users#if_follow', as: :if_follow
     end
     resources :user_details
     resources :order_items
     resources :orders
     resources :carts
     resources :product_details
+
+    post :show_products, to: 'products#show_products', as: :show_products
+    scope "products" do
+      get :check_product, to: 'products#get_product_list', as: :product_check_list
+    end
     resources :products do
       post :modify_store, to: 'products#modify_store', as: :product_modify_store
       post :modify_price, to: 'products#modify_price', as: :product_modify_price
       post :modify_sell_address, to: 'products#modify_sell_address', as: :product_modify_sell_address
       post :add_product_to_cart, to: 'products#add_product_to_cart', as: :product_add_product_to_cart
       post :add_comment, to: 'products#add_comment', as: :product_add_comment
+      post :check_product, to: 'products#check_product', as: :product_check
     end
   end
 
