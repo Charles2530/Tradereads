@@ -4,7 +4,9 @@
       <section class="shortcut">
         <div class="w fixed left-28">
           <ul>
-            <li>二手书网站欢迎您!&nbsp;</li>
+            <li style="color: #ffd04b; border-radius: 5px">
+              Welcome to Tradereads!&nbsp;
+            </li>
           </ul>
         </div>
       </section>
@@ -13,16 +15,16 @@
       class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
     >
       <el-row>
-        <el-col :span="8">
+        <el-col :span="5">
           <div
-            class="headBar ml-100 bg-gradient-to-r from-blue-400/50 to-red-500/50 rounded-lg shadow-md p-4"
+            class="headBar ml-100 bg-gradient-to-r from-blue-400/70 to-red-500/70 rounded-lg shadow-md p-4"
           >
             <personal-mode></personal-mode>
           </div>
         </el-col>
-        <el-col :span="16"
+        <el-col :span="19"
           ><div
-            class="headBar ml-100 bg-gradient-to-r from-blue-400/50 to-red-500/50 rounded-lg shadow-md p-4"
+            class="headBar ml-100 bg-gradient-to-r from-blue-400/70 to-red-500/70 rounded-lg shadow-md p-4"
           >
             <personal-info></personal-info></div
         ></el-col>
