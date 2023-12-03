@@ -7,6 +7,9 @@
       text-color="#000"
       active-text-color="#ffd04b"
     >
+      <div>
+        <logo-info></logo-info>
+      </div>
       <el-sub-menu index="1">
         <template #title>
           <el-icon class="el-icon-menu"><Menu></Menu></el-icon>
@@ -62,7 +65,7 @@
               <i class="el-icon-style">
                 <Service />
               </i>
-              <router-link class="nav-title" to="/personalCenter"
+              <router-link class="nav-title" to="/checkOrdersView"
                 >审核订单</router-link
               >
             </el-menu-item>
@@ -70,7 +73,7 @@
               <i class="el-icon-style">
                 <List />
               </i>
-              <router-link class="nav-title" to="/personalCenter"
+              <router-link class="nav-title" to="/usersManagement"
                 >用户管理</router-link
               >
             </el-menu-item>
@@ -78,6 +81,16 @@
         </el-sub-menu>
       </div>
       <el-menu-item index="8">
+        <template #title>
+          <el-icon class="el-icon-notice">
+            <BellFilled />
+          </el-icon>
+          <button @click="GoNotice" class="nav-title">
+            <strong class="nav-title text-md">公告栏</strong>
+          </button>
+        </template>
+      </el-menu-item>
+      <el-menu-item index="9">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">
@@ -150,6 +163,9 @@ export default {
         }
       });
     };
+    const GoNotice = () => {
+      router.push("/notice");
+    };
     return {
       adminMode,
       activeMenu,
@@ -157,6 +173,7 @@ export default {
       all_orders,
       showAllOrderList,
       Logout,
+      GoNotice,
     };
   },
 };
@@ -179,10 +196,8 @@ export default {
 .el-menu-vertical-demo:hover {
   width: 250px; /* Set the width to the expanded state on hover */
 }
-.el-icon-menu {
-  margin-right: 20px;
-  color: red;
-}
+.el-icon-menu,
+.el-icon-notice,
 .el-icon-location {
   margin-right: 20px;
   color: red;

@@ -1,8 +1,7 @@
 import axios from "axios";
-import { ElMessage } from "element-plus";
 /* Mock 使用 */
-// let baseURL = "http://127.0.0.1:4523/m1/3606851-0-default/api";
-let baseURL = "/api";
+let baseURL = import.meta.env.VITE_APP_BASE_API;
+// let baseURL = "/api";
 
 const service = axios.create({
   baseURL,

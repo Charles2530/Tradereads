@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "followingItem",
+  name: "userInfoItem",
   props: {
     avatar: {
       type: String,
@@ -55,8 +55,8 @@ export default {
 }
 
 .avatar-img {
-  width: 100%; /* Make the image fill the container */
-  height: 100%; /* Make the image fill the container */
+  width: inherit; /* Make the image fill the container */
+  height: inherit; /* Make the image fill the container */
   border-radius: 50%; /* Make it circular */
 }
 
