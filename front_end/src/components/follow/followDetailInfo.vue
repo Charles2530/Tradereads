@@ -70,7 +70,7 @@
       plain
     >
       <el-icon class="ml-1 mr-4"><Reading /></el-icon>
-      我的销售商品
+      销售商品
     </el-button>
     <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
       <div v-if="products.length === 0" class="text-center">
@@ -203,8 +203,9 @@ export default {
   color: #333;
   margin-bottom: 15px;
 }
-.product-item-read {
-  width: calc(50% - 8px); /* 50% width with some spacing */
-  margin-bottom: 16px; /* Add some bottom margin for spacing */
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
