@@ -35,16 +35,24 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button
-              v-if="!scope.row.check_state"
-              @click="approveProduct(scope.row)"
-              >审核通过</el-button
-            >
-            <el-button
-              v-if="!scope.row.check_state"
-              @click="disapproveProduct(scope.row)"
-              >审核不通过</el-button
-            >
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="approveProduct(scope.row)"
+                type="primary"
+                plain
+                >通过该审核</el-button
+              >
+            </div>
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="disapproveProduct(scope.row)"
+                type="danger"
+                plain
+                >拒绝该审核</el-button
+              >
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -100,7 +108,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Add your Tailwind CSS styles here */
-</style>
