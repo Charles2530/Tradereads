@@ -15,8 +15,16 @@
           <el-icon class="el-icon-menu"><Menu></Menu></el-icon>
           <strong class="nav-title text-md">网站导航</strong>
         </template>
-        <div class="item_container p-5">
+        <div class="item_container px-5">
           <el-menu-item index="1">
+            <i class="el-icon-style">
+              <HomeFilled />
+            </i>
+            <router-link class="nav-title" to="/personalCenter"
+              >个人中心</router-link
+            >
+          </el-menu-item>
+          <el-menu-item index="2">
             <i class="el-icon-style">
               <User></User>
             </i>
@@ -24,7 +32,7 @@
               >订单信息</router-link
             >
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="3">
             <i class="el-icon-style">
               <Ticket></Ticket>
             </i>
@@ -32,7 +40,7 @@
               >我的购物车</router-link
             >
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="4">
             <i class="el-icon-style">
               <Goods></Goods>
             </i>
@@ -40,7 +48,7 @@
               >商品中心</router-link
             >
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="5">
             <i class="el-icon-style"><Setting /></i>
             <router-link to="/MyItem">我的商品</router-link>
           </el-menu-item>
@@ -52,8 +60,8 @@
             <el-icon class="el-icon-menu"><Monitor /></el-icon>
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
-          <div class="item_container p-5">
-            <el-menu-item index="5" @click="showAllOrderList">
+          <div class="item_container px-5">
+            <el-menu-item index="6" @click="showAllOrderList">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
@@ -61,7 +69,7 @@
                 >查看所有订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="7">
               <i class="el-icon-style">
                 <Service />
               </i>
@@ -69,7 +77,7 @@
                 >审核订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="7">
+            <el-menu-item index="8">
               <i class="el-icon-style">
                 <List />
               </i>
@@ -80,7 +88,7 @@
           </div>
         </el-sub-menu>
       </div>
-      <el-menu-item index="8">
+      <el-menu-item index="9">
         <template #title>
           <el-icon class="el-icon-notice">
             <BellFilled />
@@ -90,7 +98,7 @@
           </button>
         </template>
       </el-menu-item>
-      <el-menu-item index="9">
+      <el-menu-item index="10">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">

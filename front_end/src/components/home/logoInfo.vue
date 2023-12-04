@@ -15,7 +15,7 @@
       </el-col>
     </el-row>
   </div>
-  <el-divider></el-divider>
+  <el-divider class="divider"></el-divider>
 </template>
 
 <script>
@@ -56,5 +56,9 @@ export default {
 
 .website-name:hover {
   color: #6cb2eb; /* 悬停时改变文本颜色 */
+}
+.divider {
+  margin-top: 8px !important;
+  margin-bottom: 4px !important;
 }
 </style>

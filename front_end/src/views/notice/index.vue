@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-notice-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
+    class="bg-notice-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
   >
     <div style="position: relative; z-index: 1">
       <personal-center-side-bar />
