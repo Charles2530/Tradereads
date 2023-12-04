@@ -29,7 +29,7 @@
             <el-button
               type="danger"
               class="text-white font-semibold hover:underline"
-              @click="deleteUser"
+              @click="unFollow"
               plain
             >
               <el-icon class="ml-1 mr-4"><Operation /></el-icon>
@@ -57,6 +57,8 @@
 <script>
 import { getUser } from "@/api/user.js";
 import { ref } from "vue";
+import { Follow } from "@/api/follow.js";
+import { useRouter } from "vue-router";
 export default {
   name: "followInfoItem",
   props: {
@@ -70,6 +72,7 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter();
     const avatar = ref("");
     const phone = ref("");
     getUser(props.user_id).then((res) => {
@@ -79,9 +82,30 @@ export default {
         phone.value = res.data.phone;
       }
     });
+
+    const unFollow = () => {
+      Follow(props.user_id).then((res) => {
+        if (res.success) {
+          console.log(res.data);
+        }
+      });
+    };
+
+    const goDetails = () => {
+      console.log(props.user_id);
+      router.push({
+        name: "FollowDetail",
+        props: {
+          user_id: props.user_id,
+        },
+      });
+    };
+
     return {
       avatar,
       phone,
+      unFollow,
+      goDetails,
     };
   },
 };

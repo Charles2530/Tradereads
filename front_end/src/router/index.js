@@ -18,6 +18,8 @@ const CheckOrdersView = () => import("@/views/admin/checkOrdersView.vue");
 const UsersManagement = () => import("@/views/admin/UsersManagement.vue");
 // 公告栏
 const Notice = () => import("@/views/notice/index.vue");
+// 关注用户详情页
+const FollowDetail = () => import("@/views/personalCenter/followDetail.vue");
 //购物车页面
 const Shopping = () => import("@/views/shopping/shopping.vue");
 //商品购买中心
@@ -69,6 +71,12 @@ const routes = [
     path: "/notice",
     name: "Notice",
     component: Notice,
+  },
+  {
+    path: "/followDetail",
+    name: "FollowDetail",
+    component: FollowDetail,
+    props: (route) => ({ user_id: route.query.user_id }),
   },
   {
     path: "/shopping",
