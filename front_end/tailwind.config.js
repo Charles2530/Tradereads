@@ -10,6 +10,7 @@ export default {
         "web-logo": "url('/src/assets/img/logo.png')",
         "notice-background": "url('/src/assets/img/notice-background.jpg')",
         "admin-background": "url('/src/assets/img/admin-background.jpg')",
+        "follow-background": "url('/src/assets/img/follow-background.jpg')",
       },
       margin: {
         18: "4.5rem",

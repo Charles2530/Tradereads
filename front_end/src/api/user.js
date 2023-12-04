@@ -17,6 +17,14 @@ export async function getUser(user_id) {
   return response;
 }
 
+export async function showAllUserList() {
+  let response = await service({
+    url: "/users",
+    method: "get",
+  });
+  return response;
+}
+
 //post
 export async function registerUser(params) {
   let response = await service({
