@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center">
-    <h1 class="text-white text-4xl font-semibold">
+    <h1 class="text-grey text-4xl font-semibold">
       {{ loginInfo.user_name }}的个人中心
     </h1>
   </div>
@@ -52,41 +52,44 @@
           </div>
         </el-col>
         <el-col :span="9" class="float-right">
-          <img
-            :src="loginInfo.avatar"
-            class="my-avatar rounded-full mb-3"
-            alt="avatar"
-          />
+          <div>
+            <img
+              :src="loginInfo.avatar"
+              class="my-avatar rounded-full mb-3"
+              alt="avatar"
+            />
+          </div>
+          <!-- 商品列表展开按钮 -->
+          <div class="mb-4 mx-6">
+            <el-button
+              type="success"
+              class="text-white font-semibold hover:underline"
+              @click="openProductDialog"
+              plain
+            >
+              <el-icon class="ml-1 mr-4"><Reading /></el-icon>
+              点我查看商品上新
+            </el-button>
+          </div>
         </el-col>
       </el-row>
     </el-card>
   </div>
-  <!-- 商品列表展开按钮 -->
-  <div class="mb-4">
-    <el-button
-      type="success"
-      class="text-white font-semibold hover:underline"
-      @click="openProductDialog"
-      plain
-    >
-      <el-icon class="ml-1 mr-4"><Reading /></el-icon>
-      销售商品
-    </el-button>
-    <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
-      <div v-if="products.length === 0" class="text-center">
-        <el-text type="warning">暂无销售商品</el-text>
+
+  <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
+    <div v-if="products.length === 0" class="text-center">
+      <el-text type="warning">暂无销售商品</el-text>
+    </div>
+    <div v-else>
+      <div class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container">
+        <product-item-read
+          v-for="product in products"
+          :key="product.product_id"
+          :product="product"
+        ></product-item-read>
       </div>
-      <div v-else>
-        <div class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container">
-          <product-item-read
-            v-for="product in products"
-            :key="product.product_id"
-            :product="product"
-          ></product-item-read>
-        </div>
-      </div>
-    </el-dialog>
-  </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
