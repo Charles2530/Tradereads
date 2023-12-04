@@ -26,14 +26,17 @@
           </el-row>
           <el-row class="mb-5 text-xl">
             <span :class="stockClass">{{ stockStatus }}</span>
+            <span :class="examineClass">{{ examineStatus }}</span>
           </el-row>
         </el-col>
         <el-col :span="12" class="text-center">
-          <img
-            :src="product.product_image"
-            alt="Product Image"
-            class="w-48 h-48"
-          />
+          <div>
+            <img
+              :src="product.product_image"
+              alt="Product Image"
+              class="w-48 h-48"
+            />
+          </div>
         </el-col>
       </el-row>
       <button
@@ -153,11 +156,18 @@ export default {
     const isEditing = ref(false);
     const editableProduct = reactive({ ...props.product });
     const stockClass = computed(() => ({
-      "text-red-500": editableProduct.product_store === 0,
-      "text-green-500": editableProduct.product_store > 0,
+      "text-red-500 mx-2": editableProduct.product_store === 0,
+      "text-green-500 mx-2": editableProduct.product_store > 0,
+    }));
+    const examineClass = computed(() => ({
+      "text-red-500 mx-2": editableProduct.check_state === false,
+      "text-green-500 mx-2": editableProduct.check_state === true,
     }));
     const stockStatus = computed(() =>
       editableProduct.product_store > 0 ? "有货" : "售完"
+    );
+    const examineStatus = computed(() =>
+      !editableProduct.check_state ? "未审核" : "已审核"
     );
 
     const goToProductDetails = (productId) => {
@@ -231,6 +241,8 @@ export default {
       goToProductDetails,
       toggleEdit,
       saveEdits,
+      examineClass,
+      examineStatus,
     };
   },
 };

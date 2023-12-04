@@ -13,13 +13,40 @@
       </el-col>
 
       <!-- Right section: User information -->
-      <el-col :span="16">
+      <el-col :span="8">
         <div class="user-info-section">
           <div class="user-name text-xl">
             <strong>用户名:</strong>{{ user_name }}
           </div>
           <div class="phone-number text-xl">
             <strong>电话号码:</strong>{{ phone }}
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div class="float-right">
+          <div class="mt-2 mb-2">
+            <el-button
+              type="danger"
+              class="text-white font-semibold hover:underline"
+              @click="deleteUser"
+              plain
+            >
+              <el-icon class="ml-1 mr-4"><Operation /></el-icon>
+
+              取消关注</el-button
+            >
+          </div>
+          <div>
+            <el-button
+              type="success"
+              class="text-white font-semibold hover:underline"
+              @click="goDetails"
+              plain
+            >
+              <el-icon class="ml-1 mr-4"><Share /></el-icon>
+              查看主页</el-button
+            >
           </div>
         </div>
       </el-col>
