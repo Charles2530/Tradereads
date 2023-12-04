@@ -50,7 +50,7 @@
           </el-menu-item>
           <el-menu-item index="5">
             <i class="el-icon-style"><Setting /></i>
-            <router-link to="/MyItem">我的商品</router-link>
+            <router-link class="nav-title" to="/MyItem">我的商品</router-link>
           </el-menu-item>
         </div>
       </el-sub-menu>
@@ -65,9 +65,7 @@
               <i class="el-icon-style">
                 <Document></Document>
               </i>
-              <router-link class="nav-title" to="/personalCenter"
-                >查看所有订单</router-link
-              >
+              <i class="nav-title">查看所有订单</i>
             </el-menu-item>
             <el-menu-item index="7">
               <i class="el-icon-style">
@@ -222,6 +220,8 @@ export default {
   margin-right: 20px;
 }
 .nav-title {
+  color: #666;
   padding-left: 3px;
+  font-style: normal !important;
 }
 </style>
