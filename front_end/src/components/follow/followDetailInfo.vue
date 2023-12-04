@@ -60,7 +60,7 @@
             />
           </div>
           <!-- 商品列表展开按钮 -->
-          <div class="mb-4 mx-6">
+          <div class="my-6 mx-6">
             <el-button
               type="success"
               class="text-white font-semibold hover:underline"
