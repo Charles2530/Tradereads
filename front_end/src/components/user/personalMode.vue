@@ -112,7 +112,7 @@
           <el-icon class="ml-1 mr-4"><UserFilled /></el-icon>
           我的关注列表
         </el-button>
-        <el-dialog v-model="showFollowingDialog" title="我的关注" width="80%">
+        <el-dialog v-model="showFollowingDialog" title="我的关注" width="70%">
           <following-list :followingList="followList"></following-list>
         </el-dialog>
       </div>
@@ -128,6 +128,7 @@ import { showCurrentUserOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { getUser } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
+import { showCurrentUserFollowings } from "@/api/follow";
 const store = userStore();
 const orders = ref([]);
 const products = ref([]);
@@ -178,9 +179,10 @@ const followList = ref([]);
 const showFollowingDialog = ref(false);
 const openFollowingDialog = () => {
   // Replace the API call with your actual API function for fetching following list
-  /*   showFollowingList().then((res) => {
+  showCurrentUserFollowings().then((res) => {
     if (res.success) {
-      followingList.value = res.data.followingList;
+      console.log(res.data.followings);
+      followList.value = res.data.followings;
       showFollowingDialog.value = true;
     } else {
       ElMessage({
@@ -189,8 +191,7 @@ const openFollowingDialog = () => {
         type: "error",
       });
     }
-  }); */
-  showFollowingDialog.value = true;
+  });
 };
 
 const salesOrders = ref([]);
