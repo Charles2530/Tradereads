@@ -6,56 +6,61 @@
       <h1 class="text-2xl text-center">没有待审核的商品</h1>
     </div>
     <div v-else>
-      <el-table :data="products" style="width: 100%">
-        <el-table-column label="商品名称" prop="product_name"></el-table-column>
-        <el-table-column label="价格" prop="price"></el-table-column>
-        <el-table-column
-          label="商品出版社"
-          prop="product_press"
-        ></el-table-column>
-        <el-table-column
-          label="商家用户名"
-          prop="seller_name"
-        ></el-table-column>
-        <el-table-column
-          label="商品发货地址"
-          prop="sell_address"
-        ></el-table-column>
-        <el-table-column label="状态" prop="check_state">
-          <template #default="scope">
-            <span
-              :class="{
-                'text-green-500': scope.row.check_state,
-                'text-red-500': !scope.row.check_state,
-              }"
-            >
-              {{ scope.row.check_state ? "已审核" : "待审核" }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template #default="scope">
-            <div>
-              <el-button
-                v-if="!scope.row.check_state"
-                @click="approveProduct(scope.row)"
-                type="primary"
-                plain
-                >通过该审核</el-button
+      <el-scrollbar max-height="500px">
+        <el-table :data="products" style="width: 100%">
+          <el-table-column
+            label="商品名称"
+            prop="product_name"
+          ></el-table-column>
+          <el-table-column label="价格" prop="price"></el-table-column>
+          <el-table-column
+            label="商品出版社"
+            prop="product_press"
+          ></el-table-column>
+          <el-table-column
+            label="商家用户名"
+            prop="seller_name"
+          ></el-table-column>
+          <el-table-column
+            label="商品发货地址"
+            prop="sell_address"
+          ></el-table-column>
+          <el-table-column label="状态" prop="check_state">
+            <template #default="scope">
+              <span
+                :class="{
+                  'text-green-500': scope.row.check_state,
+                  'text-red-500': !scope.row.check_state,
+                }"
               >
-            </div>
-            <div>
-              <el-button
-                v-if="!scope.row.check_state"
-                @click="disapproveProduct(scope.row)"
-                type="danger"
-                plain
-                >拒绝该审核</el-button
-              >
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+                {{ scope.row.check_state ? "已审核" : "待审核" }}
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template #default="scope">
+              <div>
+                <el-button
+                  v-if="!scope.row.check_state"
+                  @click="approveProduct(scope.row)"
+                  type="primary"
+                  plain
+                  >通过该审核</el-button
+                >
+              </div>
+              <div>
+                <el-button
+                  v-if="!scope.row.check_state"
+                  @click="disapproveProduct(scope.row)"
+                  type="danger"
+                  plain
+                  >拒绝该审核</el-button
+                >
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-scrollbar>
     </div>
   </div>
 </template>

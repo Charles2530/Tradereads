@@ -23,14 +23,16 @@
         </div>
         <div v-else>
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md order_container">
-            <order-item
-              v-for="order in orders"
-              :key="order.order_id"
-              :order_id="order.order_id"
-              :total_price="parseInt(order.total_price)"
-              :order_time="order.order_time"
-              :items="order.items"
-            ></order-item>
+            <el-scrollbar max-height="450px">
+              <order-item
+                v-for="order in orders"
+                :key="order.order_id"
+                :order_id="order.order_id"
+                :total_price="parseInt(order.total_price)"
+                :order_time="order.order_time"
+                :items="order.items"
+              ></order-item>
+            </el-scrollbar>
           </div>
         </div>
       </el-dialog>
@@ -58,15 +60,17 @@
           <div
             class="bg-gray-600/80 p-4 rounded-lg shadow-md sales-order-container"
           >
-            <sales-order-item
-              v-for="salesOrder in salesOrders"
-              :key="salesOrder.order_id"
-              :order_id="salesOrder.order_id"
-              :seller_id="salesOrder.buyer_id"
-              :total_price="parseInt(salesOrder.total_price)"
-              :order_time="salesOrder.order_time"
-              :items="salesOrder.items"
-            ></sales-order-item>
+            <el-scrollbar max-height="450px">
+              <sales-order-item
+                v-for="salesOrder in salesOrders"
+                :key="salesOrder.order_id"
+                :order_id="salesOrder.order_id"
+                :seller_id="salesOrder.buyer_id"
+                :total_price="parseInt(salesOrder.total_price)"
+                :order_time="salesOrder.order_time"
+                :items="salesOrder.items"
+              ></sales-order-item>
+            </el-scrollbar>
           </div>
         </div>
       </el-dialog>
@@ -113,7 +117,9 @@
           我的关注列表
         </el-button>
         <el-dialog v-model="showFollowingDialog" title="我的关注" width="70%">
-          <following-list :followingList="followList"></following-list>
+          <el-scrollbar max-height="450px">
+            <following-list :followingList="followList"></following-list>
+          </el-scrollbar>
         </el-dialog>
       </div>
     </div>
