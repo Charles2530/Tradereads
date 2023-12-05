@@ -238,11 +238,11 @@ export default {
       editableProduct,
       stockClass,
       stockStatus,
+      examineClass,
+      examineStatus,
       goToProductDetails,
       toggleEdit,
       saveEdits,
-      examineClass,
-      examineStatus,
     };
   },
 };

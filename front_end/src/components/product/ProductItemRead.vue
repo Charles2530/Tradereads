@@ -26,7 +26,6 @@
         </el-row>
         <el-row class="mb-5 text-xl">
           <span :class="stockClass">{{ stockStatus }}</span>
-          <span :class="examineClass">{{ examineStatus }}</span>
         </el-row>
       </el-col>
       <el-col :span="12" class="text-center">

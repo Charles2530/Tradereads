@@ -11,11 +11,13 @@
       <el-row v-for="(user, index) in userList" :key="index">
         <!-- User Item -->
         <el-col :span="24">
-          <user-manage-item
-            :user_id="user.user_id"
-            :user_name="user.user_name"
-            :phone="user.user_phone"
-          />
+          <el-scrollbar max-height="500px">
+            <user-manage-item
+              :user_id="user.user_id"
+              :user_name="user.user_name"
+              :phone="user.user_phone"
+            />
+          </el-scrollbar>
         </el-col>
         <el-col>
           <div
