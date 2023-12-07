@@ -219,12 +219,13 @@ class UsersController < ApplicationController
             product_store: product.store,
             sell_address: product.sell_address,
             price: product.price,
-            check_state: product.check_state
+            check_state: transfer_state(product.check_state)
           }
         end
       }
     )
   end
+
 
   def carts_to_orders
     user = current_user
@@ -465,4 +466,12 @@ class UsersController < ApplicationController
         current_user && current_user.right == 1
       end
 
+      def transfer_state(state)
+        if state == 1
+          true
+        else
+          false
+        end
+
+      end
 end

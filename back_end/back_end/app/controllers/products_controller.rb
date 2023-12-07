@@ -47,6 +47,8 @@ class ProductsController < ApplicationController
       if show_order == "DESC"
         products = Product.order(price: :desc)
       end
+    else
+      products = Product.all
     end
     render json: response_json(
       true,
