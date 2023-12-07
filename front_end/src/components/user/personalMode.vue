@@ -116,7 +116,7 @@
           <el-icon class="ml-1 mr-4"><UserFilled /></el-icon>
           我的关注列表
         </el-button>
-        <el-dialog v-model="showFollowingDialog" title="我的关注" width="70%">
+        <el-dialog v-model="showFollowingDialog" width="70%">
           <el-scrollbar max-height="450px">
             <following-list :followingList="followList"></following-list>
           </el-scrollbar>

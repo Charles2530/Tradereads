@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="bg-home-background home">
     <div>
       <p class="home_sub">
         北&nbsp;航&nbsp;二&nbsp;手&nbsp;书&nbsp;网&nbsp;站<br />

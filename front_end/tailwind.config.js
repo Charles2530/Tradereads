@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
+        "home-background": "url('/src/assets/img/home-background.jpg')",
         "login-background": "url('/src/assets/img/login-background.jpg')",
         "personalCenter-background":
           "url('/src/assets/img/personalCenter-background.jpg')",
