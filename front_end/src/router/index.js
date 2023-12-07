@@ -73,10 +73,10 @@ const routes = [
     component: Notice,
   },
   {
-    path: "/followDetail",
+    path: "/followDetail/:user_id",
     name: "FollowDetail",
     component: FollowDetail,
-    props: (route) => ({ user_id: route.query.user_id }),
+    props: true,
   },
   {
     path: "/shopping",
@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     /* 目前未添加数据库，之后补充在完成数据后添加直接跳转登录页 */
-    if (routes.find((item) => item.path === to.path)) {
+    if (routes.some((item) => new RegExp("^" + item.path).test(to.path))) {
       next();
     } else {
       next({ name: "404Page" });

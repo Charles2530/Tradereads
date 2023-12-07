@@ -225,6 +225,7 @@ export default {
         }
       });
     };
+
     return {
       store,
       orders,

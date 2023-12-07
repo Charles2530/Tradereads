@@ -95,7 +95,7 @@ export default {
       console.log(props.user_id);
       router.push({
         name: "FollowDetail",
-        props: {
+        params: {
           user_id: props.user_id,
         },
       });
