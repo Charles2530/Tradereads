@@ -3,7 +3,7 @@
     <h1 class="text-2xl text-center">当前没有用户</h1>
   </div>
   <div v-else>
-    <h1 class="text-2xl text-center">用户管理</h1>
+    <h1 class="text-4xl font-bold mb-8 flex justify-center">用户管理</h1>
     <div
       class="bg-gray-600/80 p-1 rounded-lg shadow-md following-container mb-2"
     ></div>
