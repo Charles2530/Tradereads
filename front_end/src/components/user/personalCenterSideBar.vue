@@ -26,10 +26,10 @@
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-style">
-              <User></User>
+              <Goods></Goods>
             </i>
-            <router-link class="nav-title" to="/personalCenter"
-              >订单信息</router-link
+            <router-link class="nav-title" to="/ProductBuy"
+              >商品中心</router-link
             >
           </el-menu-item>
           <el-menu-item index="3">
@@ -41,16 +41,16 @@
             >
           </el-menu-item>
           <el-menu-item index="4">
-            <i class="el-icon-style">
-              <Goods></Goods>
-            </i>
-            <router-link class="nav-title" to="/ProductBuy"
-              >商品中心</router-link
-            >
-          </el-menu-item>
-          <el-menu-item index="5">
             <i class="el-icon-style"><Setting /></i>
             <router-link class="nav-title" to="/MyItem">我的商品</router-link>
+          </el-menu-item>
+          <el-menu-item index="5">
+            <i class="el-icon-style">
+              <User></User>
+            </i>
+            <router-link class="nav-title" to="/personalCenter"
+              >订单信息</router-link
+            >
           </el-menu-item>
         </div>
       </el-sub-menu>
