@@ -36,13 +36,20 @@
           />
         </div>
         <div class="register__gender mb-4">
-          <el-input
+          <el-select
             v-model="gender"
             class="w-full p-2 border rounded border-gray-300 focus:outline-none focus:border-blue-500"
             type="gender"
             placeholder="gender"
             clearable
-          />
+          >
+            <el-option
+              v-for="item in genders"
+              :key="item.gender"
+              :label="item.label"
+              :value="item.gender"
+            />
+          </el-select>
         </div>
         <div class="register__button">
           <button
@@ -69,11 +76,21 @@ export default {
     const user_name = ref("");
     const password = ref("");
     const phone = ref("");
-    const gender = ref("male"); // Initialize with an empty string or fetch from the store
+    const gender = ref(""); // Initialize with an empty string or fetch from the store
 
     // Store and Router instances
     const store = userStore();
     const router = useRouter();
+    const genders = [
+      {
+        gender: "male",
+        label: "男",
+      },
+      {
+        gender: "female",
+        label: "女",
+      },
+    ];
 
     // Login method
     const register = () => {
@@ -120,6 +137,7 @@ export default {
     return {
       user_name,
       password,
+      genders,
       gender,
       phone,
       register,

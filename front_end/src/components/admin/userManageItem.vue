@@ -13,13 +13,29 @@
       </el-col>
 
       <!-- Right section: User information -->
-      <el-col :span="16">
+      <el-col :span="8">
         <div class="user-info-section">
           <div class="user-name text-xl">
             <strong>用户名:</strong>{{ user_name }}
           </div>
           <div class="phone-number text-xl">
             <strong>电话号码:</strong>{{ phone }}
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div class="float-right">
+          <div>
+            <el-button
+              type="success"
+              size="large"
+              class="text-white font-semibold hover:underline my-5"
+              @click="goDetails"
+              plain
+            >
+              <el-icon class="ml-1 mr-4"><Share /></el-icon>
+              查看该用户的主页</el-button
+            >
           </div>
         </div>
       </el-col>
@@ -30,6 +46,7 @@
 <script>
 import { getUser } from "@/api/user.js";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 export default {
   name: "userInfoItem",
   props: {
@@ -47,14 +64,25 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter();
     const avatar = ref("");
     getUser(props.user_id).then((res) => {
       if (res.success) {
         avatar.value = res.data.avatar;
       }
     });
+    const goDetails = () => {
+      console.log(props.user_id);
+      router.push({
+        name: "FollowDetail",
+        props: {
+          user_id: props.user_id,
+        },
+      });
+    };
     return {
       avatar,
+      goDetails,
     };
   },
 };

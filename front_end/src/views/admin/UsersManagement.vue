@@ -36,8 +36,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Add any additional styling for the User Management page as needed */
 .user-management {
-  padding: 20px; /* Adjust padding as needed */
+  padding: 20px;
 }
 </style>

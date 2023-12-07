@@ -8,7 +8,7 @@
     <div class="container mx-auto p-4" style="position: relative; z-index: 0">
       <div class="mb-4">
         <h1 class="text-3xl font-semibold mb-2 text-white">二手书交易公告栏</h1>
-        <p class="text-gray-600">浏览最新的二手书信息。</p>
+        <p class="text-gray-600 notice-detail">浏览最新的二手书信息。</p>
       </div>
 
       <el-card class="mb-4" v-for="book in books" :key="book.id">
@@ -64,5 +64,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add Tailwind CSS classes as needed */
+.notice-detail:hover {
+  color: #fff;
+  text-decoration: underline;
+}
 </style>
