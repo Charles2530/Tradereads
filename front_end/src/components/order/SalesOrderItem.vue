@@ -34,7 +34,7 @@
           <el-col :span="2">
             <div class="mt-2">
               <el-popconfirm
-                title="Are you sure to delete this?"
+                title="请问你确认删除此订单吗？"
                 @confirm="deleteThisOrder"
               >
                 <template #reference>
@@ -65,7 +65,7 @@
               订单状态: {{ item.state }}
             </span>
             <el-select
-              v-model="selectedStatus"
+              v-model="item.state"
               class="m-2"
               placeholder="选择订单状态"
               size="large"
@@ -90,7 +90,6 @@
 
 <script>
 import { deleteOrder } from "@/api/order.js";
-import { ref } from "vue";
 export default {
   name: "SalesOrderItem",
   props: {
@@ -134,7 +133,6 @@ export default {
         label: "已完成",
       },
     ];
-    const selectedStatus = ref("");
     const deleteThisOrder = () => {
       deleteOrder(this.order_id)
         .then((res) => {
@@ -156,7 +154,7 @@ export default {
         });
       window.location.reload();
     };
-    const modifyOrderStatus = () => {
+    const modifyOrderStatus = (item) => {
       // Call your API function to update the order status here
       // Use this.order_id to get the current order ID
       // Update the 'state' property in each item of the 'items' array with the newStatus value
@@ -182,7 +180,6 @@ export default {
     };
     return {
       orderStatusOptions,
-      selectedStatus,
       modifyOrderStatus,
       deleteThisOrder,
     };

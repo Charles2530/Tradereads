@@ -3,11 +3,9 @@
     <div class="sidebar" id="root">
       <div class="icon one">
         <router-link to="/personalCenter"></router-link>
-
       </div>
       <div class="icon two">
         <router-link to="/ProductBuy"></router-link>
-
       </div>
       <div class="icon three">
         <router-link to="/shopping"></router-link>
@@ -17,7 +15,6 @@
       </div>
       <div class="icon five">
         <router-link to="/404"></router-link>
-
       </div>
     </div>
     <div class="main" :style="onehidden">
@@ -25,60 +22,102 @@
         <p>商品中心</p>
         <div class="return">
           <router-link to="/personalCenter"></router-link>
-
         </div>
       </div>
       <div class="button">
-        <buyProductItem v-for="shoppinglist in shoopingUser.value" :key="shoppinglist.product_id"
-          :product_id="shoppinglist.product_id" :product_name="shoppinglist.product_name" :price="shoppinglist.price"
-          :product_press="shoppinglist.product_press" :seller_name="shoppinglist.seller_name"
-          :sell_address="shoppinglist.sell_address" :product_type="shoppinglist.product_type"
-          :product_image="shoppinglist.product_image">
+        <buyProductItem
+          v-for="shoppinglist in shoopingUser.value"
+          :key="shoppinglist.product_id"
+          :product_id="shoppinglist.product_id"
+          :product_name="shoppinglist.product_name"
+          :price="shoppinglist.price"
+          :product_press="shoppinglist.product_press"
+          :seller_name="shoppinglist.seller_name"
+          :sell_address="shoppinglist.sell_address"
+          :product_type="shoppinglist.product_type"
+          :product_image="shoppinglist.product_image"
+        >
         </buyProductItem>
       </div>
-
     </div>
     <button class="generate" @click="generate()"></button>
     <div class="submit" :style="twohidden">
       <div class="up">
         <div class="total">
           <label for="price">price</label>
-          <input type="text" style="font-size: 20px" v-model="price" id="price" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="price"
+            id="price"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="sell_address">address</label>
-          <input type="text" style="font-size: 20px" v-model="sell_address" id="sell_address" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="sell_address"
+            id="sell_address"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="store">store</label>
-          <input type="text" style="font-size: 20px" v-model="store" id="store" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="store"
+            id="store"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="product_name">name</label>
-          <input type="text" style="font-size: 20px" v-model="product_name" id="product_name" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="product_name"
+            id="product_name"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="number">image</label>
-          <input type="text" style="font-size: 20px" v-model="product_image" id="number" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="product_image"
+            id="number"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="product_press">press</label>
-          <input type="text" style="font-size: 20px" v-model="product_press" id="product_press" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="product_press"
+            id="product_press"
+            autocomplete="off"
+          />
         </div>
         <div class="total">
           <label for="product_type">type</label>
-          <input type="text" style="font-size: 20px" v-model="product_type" id="product_type" autocomplete="off" />
+          <input
+            type="text"
+            style="font-size: 20px"
+            v-model="product_type"
+            id="product_type"
+            autocomplete="off"
+          />
         </div>
         <div class="and">
-          <button class="left" @click="cancel()">
-            取消
-          </button>
-          <button class="right" @click="comfirm()">
-            确定
-          </button>
+          <button class="left" @click="cancel()">取消</button>
+          <button class="right" @click="comfirm()">确定</button>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -90,7 +129,7 @@
 
 .generate {
   position: fixed;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 50px;
   content: "\ea52";
   bottom: 80px;
@@ -129,7 +168,6 @@
 }
 
 .submit {
-
   position: fixed;
   width: 100%;
   height: 100%;
@@ -139,7 +177,6 @@
 .up {
   margin-top: 100px;
   text-align: right;
-
 }
 
 .total {
@@ -147,7 +184,6 @@
 
   font-size: 30px;
   color: rgb(13, 18, 18);
-
 }
 
 input {
@@ -160,10 +196,8 @@ input {
 .and {
   margin: 10px 40%;
 
-
   font-size: 30px;
   color: rgb(13, 18, 18);
-
 }
 
 input {
@@ -173,18 +207,16 @@ input {
 </style>
 
 <script>
-import buyProductItem from '../../components/buyProductItem.vue';
-import { onMounted, ref } from 'vue'
-import { showAllProducts } from '@/api/product.js'
-import { addProduct } from '../../api/product'
+import buyProductItem from "../../components/buyProductItem.vue";
+import { onMounted, ref } from "vue";
+import { showAllProducts } from "@/api/product.js";
+import { addProduct } from "../../api/product";
 
 // Open notification
 
 export default {
-
-
   components: {
-    'shooping-item': buyProductItem
+    "shooping-item": buyProductItem,
   },
   data() {
     return {
@@ -229,35 +261,30 @@ export default {
         product_image: this.product_image,
         product_press: this.product_press,
         product_type: this.product_type,
-      }
+      };
 
-      addProduct(t).then(res => {
+      addProduct(t).then((res) => {
         console.log(res);
         if (res.success == true) {
           this.openMessage(res.message);
-          showAllProducts().then(res => {
+          showAllProducts().then((res) => {
             console.log(res.data);
             this.shoopingUser.value = res.data.products;
             console.log(this.shoopingUser.value);
             console.log(this.shoopingUser.value[0].product_id);
-
           });
           location.reload();
         }
-
       });
-    }
+    },
   },
   mounted() {
-
-    showAllProducts().then(res => {
+    showAllProducts().then((res) => {
       console.log(res.data);
       this.shoopingUser.value = res.data.products;
       console.log(this.shoopingUser.value);
       console.log(this.shoopingUser.value[0].product_id);
-
     });
-
-  }
+  },
 };
 </script>
