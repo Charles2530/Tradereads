@@ -6,16 +6,11 @@ class ProductsController < ApplicationController
 
   # GET /api/products
   def index
-    @products = Product.all
-    products = @products
     render json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        products: products.collect do |product|
-          if product.check_state == 0
-            next
-          end
+        products: Product.where(check_state: 1).collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
@@ -54,10 +49,7 @@ class ProductsController < ApplicationController
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        products: products.collect do |product|
-          if product.check_state == 0
-            next
-          end
+        products: products.where(check_state: 1).collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
