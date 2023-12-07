@@ -199,7 +199,7 @@ export default {
     const followList = ref([]);
     const showFollowingDialog = ref(false);
     const openFollowingDialog = () => {
-      showCurrentUserFollowings().then((res) => {
+      showCurrentUserFollowings(user_id).then((res) => {
         if (res.success) {
           console.log(res.data.followings);
           followList.value = res.data.followings;
