@@ -267,9 +267,55 @@ class UsersController < ApplicationController
 
   def show_current_orders
     user = current_user
-    puts "----------------------------------------"
-    puts "current_user:#{current_user.id}"
-    puts "----------------------------------------"
+    total_prices = []
+    puts user.orders.length
+    user.orders.each do |order|
+      total_price = 0
+      order.order_items.each do |item|
+        product = item.product
+        price = product.price
+        total_price += price * item.number
+      end
+      total_prices << total_price
+    end
+    i = 0
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        orders: user.orders.collect do |order|
+          i += 1
+          {
+            order_id: order.id,
+            total_price: total_prices[i-1],
+            order_time: order.created_at.to_s,
+            items: order.order_items.collect do |item|
+              product = item.product
+              product_detail = ProductDetail.find_by(product: product)
+              seller = product.user
+              seller_detail = UserDetail.find_by(user: seller)
+              {
+                order_item_id: item.id,
+                product_image: product_detail.product_image,
+                product_name: product_detail.product_name,
+                sell_address: product.sell_address,
+                seller_name: seller_detail.user_name,
+                buy_num: item.number,
+                product_price: product.price * item.number,
+                state: item.state
+              }
+            end
+          }
+        end
+      }
+    )
+  end
+
+  def show_sell_orders
+    # TODO
+    user = current_user
+    # sell_orders = OrderItem.select('OrderItem.').joins(:products).where("products.user_id == ?", user.id)
+
     total_prices = []
     puts user.orders.length
     user.orders.each do |order|
