@@ -4,12 +4,14 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
+        "home-background": "url('/src/assets/img/home-background.jpg')",
         "login-background": "url('/src/assets/img/login-background.jpg')",
         "personalCenter-background":
           "url('/src/assets/img/personalCenter-background.jpg')",
         "web-logo": "url('/src/assets/img/logo.png')",
         "notice-background": "url('/src/assets/img/notice-background.jpg')",
         "admin-background": "url('/src/assets/img/admin-background.jpg')",
+        "follow-background": "url('/src/assets/img/follow-background.jpg')",
       },
       margin: {
         18: "4.5rem",

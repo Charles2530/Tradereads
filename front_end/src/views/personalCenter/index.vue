@@ -1,16 +1,6 @@
 <template>
   <div>
-    <div>
-      <section class="shortcut">
-        <div class="w fixed left-28">
-          <ul>
-            <li style="color: #ffd04b; border-radius: 5px">
-              Welcome to Tradereads!&nbsp;
-            </li>
-          </ul>
-        </div>
-      </section>
-    </div>
+    <navigation-bar></navigation-bar>
     <div
       class="bg-personalCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen"
     >
@@ -36,11 +26,6 @@
   </div>
 </template>
 
-<style>
-@import url("@css/base.css");
-@import url("@css/header.css");
-</style>
-
 <script setup>
 import { ref, onMounted } from "vue";
 import personalCenterSideBar from "@c/user/personalCenterSideBar.vue";
@@ -48,6 +33,7 @@ import personalInfo from "@c/user/personalInfo.vue";
 import { showCurrentUserOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { userStore } from "@/store/user.js";
+import NavigationBar from "@c/home/NavigationBar.vue";
 // Lifecycle hook
 onMounted(() => {
   showCurrentUserOrders().then((res) => {

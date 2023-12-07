@@ -1,15 +1,11 @@
 /* 声明字体图标 注意路径的更换*/
 
-
-
-
 .home {
-    background-image: url(../public/home_page.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     font-family: Arial, "Microsoft Yahei", "微软雅黑";
-    font-size: 40px;
+    font-size: 50px;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -18,30 +14,55 @@
     animation-iteration-count: infinite;
 }
 
+.home_sub_title {
+    text-align: center;
+    line-height: 100px;
+    color: yellow;
+    content: "\ea36";
+    font-family: 'icomoon';
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 添加文字阴影 */
+}
+
 .home_sub {
     text-align: center;
     line-height: 100px;
     color: yellowgreen;
     content: "\ea36";
     font-family: 'icomoon';
+    animation-name: bigsmall_sub;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 
 .arrow-icon {
-
     margin-left: 6px;
     text-align: center;
 }
 
 @keyframes bigsmall {
     0% {
-        font-size: 40px;
+        font-size: 50px;
     }
 
     50% {
-        font-size: 45px;
+        font-size: 55px;
     }
 
     100% {
-        font-size: 40px;
+        font-size: 50px;
+    }
+}
+
+@keyframes bigsmall_sub {
+    0% {
+        font-size: 20px;
+    }
+
+    50% {
+        font-size: 23px;
+    }
+
+    100% {
+        font-size: 20px;
     }
 }

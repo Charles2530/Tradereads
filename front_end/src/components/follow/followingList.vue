@@ -4,18 +4,26 @@
       <h1 class="text-2xl text-center">你还没有关注别的用户，快去关注吧</h1>
     </div>
     <div v-else>
-      <h1 class="text-2xl text-center">Following List</h1>
+      <h1 class="text-3xl text-center mb-4">关注列表</h1>
       <div
-        class="bg-gray-600/80 p-4 rounded-lg shadow-md following-container"
+        class="bg-gray-600/80 p-1 rounded-lg shadow-md following-container"
       ></div>
-      <el-row v-for="(user, index) in followingList" :key="index" class="mb-4">
-        <!-- User Item -->
-        <user-info-item
-          :avatar="user.avatar"
-          :user_name="user.user_name"
-          :phone="user.phone"
-        />
-      </el-row>
+      <div>
+        <el-row v-for="(user, index) in followingList" :key="index">
+          <!-- User Item -->
+          <el-col :span="24">
+            <follow-info-item
+              :user_id="user.following_user_id"
+              :user_name="user.following_user_name"
+            />
+          </el-col>
+          <el-col>
+            <div
+              class="bg-gray-600/80 p-1 rounded-lg shadow-md following-container"
+            ></div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -49,7 +57,7 @@ export default {
   justify-content: space-between;
 }
 
-.user-info-item {
+.follow-info-item {
   width: calc(50% - 8px); /* 50% width with some spacing */
   margin-bottom: 16px; /* Add some bottom margin for spacing */
   /* Additional styling based on your design preferences */
