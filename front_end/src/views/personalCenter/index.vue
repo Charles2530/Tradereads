@@ -25,38 +25,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from "vue";
-import personalCenterSideBar from "@c/user/personalCenterSideBar.vue";
-import personalInfo from "@c/user/personalInfo.vue";
-import { showCurrentUserOrders } from "@/api/order.js";
-import { showProductsList } from "@/api/product.js";
-import { userStore } from "@/store/user.js";
-import NavigationBar from "@c/home/NavigationBar.vue";
-// Lifecycle hook
-onMounted(() => {
-  showCurrentUserOrders().then((res) => {
-    if (res.success) {
-      console.log(res.data.orders);
-      orders.value = res.data.orders;
-    }
-  });
-
-  showProductsList(store.getToken).then((res) => {
-    if (res.success) {
-      products.value = res.data.products;
-    } else {
-      ElMessage({
-        showClose: true,
-        message: res.message,
-        type: "error",
-      });
-    }
-  });
-});
-
-const store = userStore();
-const orders = ref([]);
-const products = ref([]);
-</script>
