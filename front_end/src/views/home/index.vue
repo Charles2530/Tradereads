@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="bg-home-background home">
     <div>
+      <h1 class="home_sub_title">Tradereads</h1>
       <p class="home_sub">
-        北&nbsp;航&nbsp;二&nbsp;手&nbsp;书&nbsp;网&nbsp;站<br />
-        一个平台 帮助每一位北航人售购闲置二手书<br />
+        一个平台 帮助每一位北航人售购闲置二手书!<br />
         <router-link to="/login" class="home_sub"></router-link>
       </p>
     </div>
