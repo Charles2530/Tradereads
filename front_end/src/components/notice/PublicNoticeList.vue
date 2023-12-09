@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name: "PublicNoticeList",
   props: {
     books: {
       type: Array,
