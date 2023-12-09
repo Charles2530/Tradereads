@@ -38,9 +38,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.notice-detail:hover {
-  color: #fff;
-  text-decoration: underline;
-}
-</style>
+<style scoped></style>
