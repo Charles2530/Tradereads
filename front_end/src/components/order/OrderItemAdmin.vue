@@ -38,15 +38,18 @@
           </el-col>
         </el-row>
       </div>
-
-      <!-- el-table for order items -->
-      <el-table :data="items" style="width: 80%">
-        <el-table-column prop="product_name" label="产品名称"></el-table-column>
-        <el-table-column prop="product_price" label="价格"></el-table-column>
-        <el-table-column prop="buy_num" label="数量"></el-table-column>
-        <el-table-column prop="sell_address" label="发往"></el-table-column>
-        <el-table-column prop="state" label="订单状态"></el-table-column>
-      </el-table>
+      <div class="order-container">
+        <el-table :data="items" style="width: 100%">
+          <el-table-column
+            prop="product_name"
+            label="产品名称"
+          ></el-table-column>
+          <el-table-column prop="product_price" label="价格"></el-table-column>
+          <el-table-column prop="buy_num" label="数量"></el-table-column>
+          <el-table-column prop="sell_address" label="发往"></el-table-column>
+          <el-table-column prop="state" label="订单状态"></el-table-column>
+        </el-table>
+      </div>
     </div>
   </div>
 </template>

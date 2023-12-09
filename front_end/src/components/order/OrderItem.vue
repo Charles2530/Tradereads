@@ -39,7 +39,7 @@
         </el-row>
       </div>
       <div class="order-container">
-        <el-table :data="items" style="width: 80%">
+        <el-table :data="items" style="width: 100%">
           <el-table-column
             prop="product_name"
             label="产品名称"
