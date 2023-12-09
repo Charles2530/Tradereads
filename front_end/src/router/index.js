@@ -12,6 +12,8 @@ const Register = () => import("@/views/personalCenter/register.vue");
 const PersonalCenter = () => import("@/views/personalCenter/index.vue");
 // 404页面
 const Page404 = () => import("@/views/404.vue");
+// 订单管理页面
+const OrdersManagement = () => import("@/views/admin/userOrderManagement.vue");
 // 审核订单页面
 const CheckOrdersView = () => import("@/views/admin/checkOrdersView.vue");
 // 用户管理页面
@@ -56,6 +58,11 @@ const routes = [
     path: "/404",
     name: "404Page",
     component: Page404,
+  },
+  {
+    path: "/ordersManagement",
+    name: "OrdersManagement",
+    component: OrdersManagement,
   },
   {
     path: "/checkOrdersView",

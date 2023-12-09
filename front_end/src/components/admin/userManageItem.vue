@@ -48,7 +48,7 @@ import { getUser } from "@/api/user.js";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 export default {
-  name: "userInfoItem",
+  name: "userManageItem",
   props: {
     user_id: {
       type: Number,
@@ -75,11 +75,12 @@ export default {
       console.log(props.user_id);
       router.push({
         name: "FollowDetail",
-        props: {
+        params: {
           user_id: props.user_id,
         },
       });
     };
+
     return {
       avatar,
       goDetails,
