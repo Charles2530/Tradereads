@@ -76,11 +76,6 @@ export default {
   padding: 20px;
 }
 
-h1 {
-  color: #333;
-  font-family: "Helvetica Neue", sans-serif;
-}
-
 .search-box {
   justify-content: center;
   margin-bottom: 20px;
@@ -95,20 +90,4 @@ h1 {
 .search-box el-input:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-
-.order-item-admin {
-  background-color: #fff;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.order-item-admin:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 其他需要的样式 */
 </style>

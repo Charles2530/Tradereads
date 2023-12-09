@@ -1,5 +1,5 @@
 <template>
-  <div class="m-100 bg-white" style="position: relative; z-index: 0">
+  <div class="mx-100 mt-20 bg-white">
     <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
     <el-divider></el-divider>
     <div>
