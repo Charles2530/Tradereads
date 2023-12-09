@@ -35,3 +35,10 @@ const books = ref([
   },
 ]);
 </script>
+
+<style>
+.notice-detail:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+</style>
