@@ -3,21 +3,21 @@
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
       <div class="pb-4 border-b border-gray-200 mb-4">
         <el-row :gutter="22">
-          <el-col :span="6">
+          <el-col :span="4">
             <div class="mt-2">
               <h2 class="text-gray-600 text-2xl font-bold">
                 订单:{{ order_id }}
               </h2>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >总价: {{ total_price }}</span
               >
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="12">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >下单时间: {{ order_time }}</span

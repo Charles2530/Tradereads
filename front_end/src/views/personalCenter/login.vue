@@ -49,10 +49,8 @@ import { ref } from "vue";
 import { userStore } from "@/store/user.js"; // Make sure the path is correct
 import { useRouter } from "vue-router";
 import { loginUser } from "@/api/user.js";
-import NoticeList from "../../components/notice/NoticeList.vue";
 
 export default {
-  components: { NoticeList },
   setup() {
     // Reactive state properties
     const phone = ref("");
