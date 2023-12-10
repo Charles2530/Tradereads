@@ -217,6 +217,53 @@ class ProductsController < ApplicationController
     end
   end
 
+  def buy_product
+    @product = Product.find(params[:product_id])
+    product = @product
+    count = params[:count].to_i
+    unless count >= 0 && count.is_a?(Integer)
+      render json: response_json(
+        false,
+        message: CartError::ADD_FAIL
+      ) and return
+    end
+    if count > product.store
+      render json: response_json(
+        false,
+        message: CartError::NOT_ENOUGH_STORE
+      ) and return
+    end
+    product.store -= count
+    if product.store == 0
+      product.state = "StockOut"
+    end
+
+    buyer = current_user
+    order = Order.new(user: buyer)
+    unless order.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    state = "待支付"
+    order_item = OrderItem.new(product: product, number: count, state: state, order: order)
+    unless order_item.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+
+    order.save
+    order_item.save
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS
+    )
+
+  end
+
   def add_comment
     @product = Product.find(params[:product_id])
     product = @product
@@ -270,6 +317,26 @@ class ProductsController < ApplicationController
             seller_name: seller.user_detail.user_name,
             sell_address: product.sell_address,
             check_state: product.check_state
+          }
+        end
+      }
+    )
+  end
+
+  def show_comments
+    product = params[:product_id]
+    comments = product.comments
+    render json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        comments: comments.collect do |comment|
+          {
+            product_id: product.id,
+            user_id: comment.user_id,
+            content: comment.content,
+            score: comment.score,
+            date: comment.created_at
           }
         end
       }

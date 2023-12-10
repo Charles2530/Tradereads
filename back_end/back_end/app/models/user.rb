@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :followings, through: :followships
   has_many :followers, through: :reverse_followships
   has_many :comments, dependent: :destroy
+  has_many :notices, dependent: :destroy
+  has_many :notice_records
 
 
   # phone must be series of number

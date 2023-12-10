@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :notice_records
+  resources :notices
   resources :comments
   resources :followships
   scope "api" do
@@ -19,7 +21,9 @@ Rails.application.routes.draw do
       get :if_follow, to: 'users#if_follow', as: :if_follow
     end
     resources :user_details
-    resources :order_items
+    resources :order_items do
+      post :modify_order_item_state, to: 'order_items#modify_state', as: :modify_order_item_state
+    end
     resources :orders
     resources :carts
     resources :product_details
@@ -33,7 +37,9 @@ Rails.application.routes.draw do
       post :modify_price, to: 'products#modify_price', as: :product_modify_price
       post :modify_sell_address, to: 'products#modify_sell_address', as: :product_modify_sell_address
       post :add_product_to_cart, to: 'products#add_product_to_cart', as: :product_add_product_to_cart
+      post :buy_product, to: 'products#buy_product', as: :buy_product
       post :add_comment, to: 'products#add_comment', as: :product_add_comment
+      get :show_comments, to: 'products#show_comments', as: :product_show_comments
       post :check_product, to: 'products#check_product', as: :product_check
     end
   end

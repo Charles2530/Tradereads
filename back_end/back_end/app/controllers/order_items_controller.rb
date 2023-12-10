@@ -5,6 +5,29 @@ class OrderItemsController < ApplicationController
 
   include ApplicationHelper
 
+  def modify_state
+    item = OrderItem.find(params[:order_item_id])
+    new_state = params[:new_state]
+    if current_user.right != 1 and current_user != item.order.user
+      render json: response_json(
+        false,
+        message: Global::UNAUTHORIZED
+      ) and return
+    end
+    item.state = new_state
+    if item.save
+        render status: 200, json: response_json(
+          true,
+          message: Global::SUCCESS
+        )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
+    end
+  end
+
   # GET /order_items
   def index
     @order_items = OrderItem.all

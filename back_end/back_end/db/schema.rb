@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_03_082322) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_10_151307) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "product_id", null: false
@@ -40,6 +40,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_03_082322) do
     t.datetime "updated_at", null: false
     t.index ["following_user_id"], name: "index_followships_on_following_user_id"
     t.index ["user_id"], name: "index_followships_on_user_id"
+  end
+
+  create_table "notice_records", force: :cascade do |t|
+    t.integer "notice_id", null: false
+    t.integer "user_id", null: false
+    t.boolean "readed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notice_id"], name: "index_notice_records_on_notice_id"
+    t.index ["user_id"], name: "index_notice_records_on_user_id"
+  end
+
+  create_table "notices", force: :cascade do |t|
+    t.string "title"
+    t.integer "type"
+    t.integer "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notices_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -109,6 +129,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_03_082322) do
   add_foreign_key "comments", "users"
   add_foreign_key "followships", "users"
   add_foreign_key "followships", "users", column: "following_user_id"
+  add_foreign_key "notice_records", "notices"
+  add_foreign_key "notice_records", "users"
+  add_foreign_key "notices", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
