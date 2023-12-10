@@ -3,21 +3,21 @@
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
       <div class="pb-4 border-b border-gray-200 mb-4">
         <el-row :gutter="22">
-          <el-col :span="6">
+          <el-col :span="4">
             <div class="mt-2">
               <h2 class="text-gray-600 text-2xl font-bold">
                 订单:{{ order_id }}
               </h2>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >总价: {{ total_price }}</span
               >
             </div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="12">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >下单时间: {{ order_time }}</span
@@ -27,7 +27,7 @@
           <el-col :span="2">
             <div class="mt-2">
               <el-popconfirm
-                title="Are you sure to delete this?"
+                title="确定要删除此订单吗?"
                 @confirm="deleteThisOrder"
               >
                 <template #reference>
@@ -39,26 +39,16 @@
         </el-row>
       </div>
       <div class="order-container">
-        <div class="order-item" v-for="item in items" :key="item.order_item_id">
-          <div
-            class="border rounded-lg p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300"
-          >
-            <span class="text-lg font-semibold">{{ item.product_name }}</span>
-            <span class="text-gray-600">价格: {{ item.product_price }}</span>
-            <span class="text-gray-600">数量: {{ item.buy_num }}</span>
-            <span class="text-gray-600">发往: {{ item.sell_address }}</span>
-            <span
-              :class="{
-                'text-red-500': item.state === '待支付',
-                'text-yellow-500': item.state === '待发货',
-                'text-blue-500': item.state === '待收货',
-                'text-green-500': item.state === '已完成',
-              }"
-            >
-              订单状态: {{ item.state }}
-            </span>
-          </div>
-        </div>
+        <el-table :data="items" style="width: 100%">
+          <el-table-column
+            prop="product_name"
+            label="产品名称"
+          ></el-table-column>
+          <el-table-column prop="product_price" label="价格"></el-table-column>
+          <el-table-column prop="buy_num" label="数量"></el-table-column>
+          <el-table-column prop="sell_address" label="发往"></el-table-column>
+          <el-table-column prop="state" label="订单状态"></el-table-column>
+        </el-table>
       </div>
     </div>
   </div>
@@ -111,16 +101,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.order-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem; /* 调整间距，根据需要调整 */
-}
-
-.order-item {
-  width: calc(50% - 1rem); /* 计算 50% 宽度，并减去间距 */
-  box-sizing: border-box;
-}
-</style>

@@ -61,11 +61,13 @@
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
           <div class="item_container px-5">
-            <el-menu-item index="6" @click="showAllOrderList">
+            <el-menu-item index="6">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
-              <i class="nav-title">查看所有订单</i>
+              <router-link class="nav-title" to="/ordersManagement"
+                >订单管理</router-link
+              >
             </el-menu-item>
             <el-menu-item index="7">
               <i class="el-icon-style">
@@ -106,28 +108,11 @@
       </el-menu-item>
     </el-menu>
   </div>
-  <el-dialog title="查看所有订单" v-model="openOrderLists" width="90%">
-    <h2 class="text-white text-2xl font-semibold">订单列表</h2>
-    <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-      <el-scrollbar max-height="450px">
-        <order-item-admin
-          v-for="order in all_orders"
-          :key="order.order_id"
-          :buyer_id="order.buyer_id"
-          :order_id="order.order_id"
-          :total_price="order.total_price"
-          :order_time="order.order_time"
-          :items="order.items"
-        ></order-item-admin>
-      </el-scrollbar>
-    </div>
-  </el-dialog>
 </template>
 
 <script>
 import { ref } from "vue";
 import { ElMessage, ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
-import { showAllOrders } from "@/api/order";
 import { logout } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -135,28 +120,11 @@ export default {
   name: "personalCenterSideBar",
   components: { ElMenu, ElMenuItem, ElSubMenu },
   setup() {
-    const openOrderLists = ref(false);
-    const all_orders = ref([]);
     const activeMenu = ref("0");
     const store = userStore();
     const router = useRouter();
     // const adminMode = store.getRight === 1;
     const adminMode = true;
-    const showAllOrderList = () => {
-      showAllOrders().then((res) => {
-        if (res.success) {
-          console.log(res.data.orders);
-          all_orders.value = res.data.orders;
-          openOrderLists.value = true;
-        } else {
-          ElMessage({
-            showClose: true,
-            message: res.message,
-            type: "error",
-          });
-        }
-      });
-    };
     const Logout = () => {
       logout().then((res) => {
         console.log(res);
@@ -177,9 +145,6 @@ export default {
     return {
       adminMode,
       activeMenu,
-      openOrderLists,
-      all_orders,
-      showAllOrderList,
       Logout,
       GoNotice,
     };

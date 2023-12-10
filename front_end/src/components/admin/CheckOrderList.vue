@@ -1,9 +1,9 @@
 <template>
-  <div class="m-100 bg-white" style="position: relative; z-index: 0">
+  <div class="mx-100 mt-20 bg-white">
     <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
     <el-divider></el-divider>
     <div>
-      <div>
+      <div class="items-center">
         <el-switch
           class="mx-4 my-2"
           v-model="showApproved"
@@ -12,122 +12,152 @@
           :active-action-icon="View"
           :inactive-action-icon="Hide"
         />
+        <div class="float-right">
+          <el-select v-model="searchType" placeholder="选择搜索维度">
+            <el-option label="商品名称" value="product_name"></el-option>
+            <el-option label="商品出版社" value="product_press"></el-option>
+            <el-option label="商家用户名" value="seller_name"></el-option>
+            <el-option label="商品发货地址" value="sell_address"></el-option>
+          </el-select>
+          <el-input
+            v-model="searchKeyword"
+            placeholder="请输入关键字"
+            style="width: 200px; margin-left: 10px"
+          ></el-input>
+          <el-switch
+            class="mx-4 mb-2"
+            v-model="Match"
+            style="
+              --el-switch-on-color: #13ce66;
+              --el-switch-off-color: #ff4949;
+            "
+            active-text="模糊匹配"
+          />
+        </div>
       </div>
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
-      <el-scrollbar max-height="500px">
-        <el-table :data="approvedProducts" style="width: 100%">
-          <el-table-column
-            label="商品名称"
-            prop="product_name"
-          ></el-table-column>
-          <el-table-column label="价格" prop="price"></el-table-column>
-          <el-table-column
-            label="商品出版社"
-            prop="product_press"
-          ></el-table-column>
-          <el-table-column
-            label="商家用户名"
-            prop="seller_name"
-          ></el-table-column>
-          <el-table-column
-            label="商品发货地址"
-            prop="sell_address"
-          ></el-table-column>
-          <el-table-column label="状态" prop="check_state">
-            <template #default="scope">
-              <span
-                :class="{
-                  'text-green-500': scope.row.check_state,
-                  'text-red-500': !scope.row.check_state,
-                }"
-              >
-                {{ scope.row.check_state ? "已审核" : "待审核" }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template #default="scope">
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="approveProduct(scope.row)"
-                  type="primary"
-                  plain
-                  >通过该审核</el-button
-                >
-              </div>
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="disapproveProduct(scope.row)"
-                  type="danger"
-                  plain
-                  >拒绝该审核</el-button
-                >
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-scrollbar>
+      <el-table :data="approvedProducts" style="width: 100%">
+        <el-table-column
+          label="商品名称"
+          align="center"
+          prop="product_name"
+        ></el-table-column>
+        <el-table-column
+          label="价格"
+          align="center"
+          prop="price"
+        ></el-table-column>
+        <el-table-column
+          label="商品出版社"
+          align="center"
+          prop="product_press"
+        ></el-table-column>
+        <el-table-column
+          label="商家用户名"
+          align="center"
+          prop="seller_name"
+        ></el-table-column>
+        <el-table-column
+          label="商品发货地址"
+          align="center"
+          prop="sell_address"
+        ></el-table-column>
+        <el-table-column label="状态" align="center" prop="check_state">
+          <template #default="scope">
+            <span
+              :class="{
+                'text-green-500': scope.row.check_state,
+                'text-red-500': !scope.row.check_state,
+              }"
+            >
+              {{ scope.row.check_state ? "已审核" : "待审核" }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" />
+      </el-table>
+      <el-pagination
+        v-if="showApproved"
+        v-model="approvedPage"
+        :page-size="pageSize"
+        :total="approvedSize"
+        :current-page="approvedPage"
+        @current-change="handleApprovedPageChange"
+      ></el-pagination>
     </div>
     <div v-if="!showApproved && pendingProducts.length > 0">
-      <el-scrollbar max-height="500px">
-        <el-table :data="pendingProducts" style="width: 100%">
-          <el-table-column
-            label="商品名称"
-            prop="product_name"
-          ></el-table-column>
-          <el-table-column label="价格" prop="price"></el-table-column>
-          <el-table-column
-            label="商品出版社"
-            prop="product_press"
-          ></el-table-column>
-          <el-table-column
-            label="商家用户名"
-            prop="seller_name"
-          ></el-table-column>
-          <el-table-column
-            label="商品发货地址"
-            prop="sell_address"
-          ></el-table-column>
-          <el-table-column label="状态" prop="check_state">
-            <template #default="scope">
-              <span
-                :class="{
-                  'text-green-500': scope.row.check_state,
-                  'text-red-500': !scope.row.check_state,
-                }"
+      <el-table :data="pendingProducts" style="width: 100%">
+        <el-table-column
+          label="商品名称"
+          align="center"
+          prop="product_name"
+        ></el-table-column>
+        <el-table-column
+          label="价格"
+          align="center"
+          prop="price"
+        ></el-table-column>
+        <el-table-column
+          label="商品出版社"
+          align="center"
+          prop="product_press"
+        ></el-table-column>
+        <el-table-column
+          label="商家用户名"
+          align="center"
+          prop="seller_name"
+        ></el-table-column>
+        <el-table-column
+          label="商品发货地址"
+          align="center"
+          prop="sell_address"
+        ></el-table-column>
+        <el-table-column label="状态" align="center" prop="check_state">
+          <template #default="scope">
+            <span
+              :class="{
+                'text-green-500': scope.row.check_state,
+                'text-red-500': !scope.row.check_state,
+              }"
+            >
+              {{ scope.row.check_state ? "已审核" : "待审核" }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template #default="scope">
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="approveProduct(scope.row)"
+                type="primary"
+                plain
+                size="small"
+                >通过该审核</el-button
               >
-                {{ scope.row.check_state ? "已审核" : "待审核" }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template #default="scope">
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="approveProduct(scope.row)"
-                  type="primary"
-                  plain
-                  >通过该审核</el-button
-                >
-              </div>
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="disapproveProduct(scope.row)"
-                  type="danger"
-                  plain
-                  >拒绝该审核</el-button
-                >
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-scrollbar>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="disapproveProduct(scope.row)"
+                type="danger"
+                plain
+                size="small"
+                >拒绝该审核</el-button
+              >
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        v-if="!showApproved"
+        v-model="pendingPage"
+        :page-size="pageSize"
+        :total="pendingSize"
+        :current-page="pendingPage"
+        @current-change="handlePendingPageChange"
+      ></el-pagination>
     </div>
+
     <div v-if="products.length === 0">
       <h1 class="text-2xl text-center">没有待审核的商品</h1>
     </div>
@@ -135,7 +165,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { ExamineProduct } from "@/api/examine.js";
 import { Hide, View } from "@element-plus/icons-vue";
 export default {
@@ -148,17 +178,58 @@ export default {
   },
   setup(props) {
     const showApproved = ref(false);
+    const pageSize = ref(10);
+    const approvedPage = ref(1);
+    const pendingPage = ref(1);
+    const approvedSize = ref(0);
+    const pendingSize = ref(0);
+    const searchType = ref("");
+    const searchKeyword = ref("");
+    const filteredProducts = computed(() => {
+      if (searchType.value && searchKeyword.value) {
+        if (Match.value) {
+          return props.products.filter((product) =>
+            product[searchType.value].includes(searchKeyword.value)
+          );
+        } else {
+          return props.products.filter(
+            (product) => product[searchType.value] == searchKeyword.value
+          );
+        }
+      } else {
+        return props.products;
+      }
+    });
+    const Match = ref(true);
+    const search = () => {
+      approvedPage.value = 1;
+      pendingPage.value = 1;
+    };
+    watch(searchType, search);
+    watch(searchKeyword, search);
 
     const toggleShowApproved = () => {
       showApproved.value = !showApproved.value;
     };
 
     const approvedProducts = computed(() => {
-      return props.products.filter((product) => product.check_state);
+      const startIdx = (approvedPage.value - 1) * pageSize.value;
+      const endIdx = startIdx + pageSize.value;
+      const approvedProducts = filteredProducts.value.filter(
+        (product) => product.check_state
+      );
+      approvedSize.value = approvedProducts.length;
+      return approvedProducts.slice(startIdx, endIdx);
     });
 
     const pendingProducts = computed(() => {
-      return props.products.filter((product) => !product.check_state);
+      const startIdx = (pendingPage.value - 1) * pageSize.value;
+      const endIdx = startIdx + pageSize.value;
+      const pendingProducts = filteredProducts.value.filter(
+        (product) => !product.check_state
+      );
+      pendingSize.value = pendingProducts.length;
+      return pendingProducts.slice(startIdx, endIdx);
     });
 
     const approveProduct = (product) => {
@@ -191,6 +262,19 @@ export default {
       });
     };
 
+    const handleApprovedPageChange = (page) => {
+      approvedPage.value = page;
+    };
+
+    const handlePendingPageChange = (page) => {
+      pendingPage.value = page;
+    };
+
+    watch(showApproved, () => {
+      approvedPage.value = 1;
+      pendingPage.value = 1;
+    });
+
     return {
       showApproved,
       toggleShowApproved,
@@ -200,7 +284,27 @@ export default {
       disapproveProduct,
       Hide,
       View,
+      approvedPage,
+      pendingPage,
+      handleApprovedPageChange,
+      handlePendingPageChange,
+      pageSize,
+      approvedSize,
+      pendingSize,
+      searchType,
+      searchKeyword,
+      search,
+      filteredProducts,
+      Match,
     };
   },
 };
 </script>
+
+<style>
+.el-pagination {
+  margin-top: 10px !important;
+  margin-right: 30px !important;
+  padding-bottom: 10px !important;
+}
+</style>
