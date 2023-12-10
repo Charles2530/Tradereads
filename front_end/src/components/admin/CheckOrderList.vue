@@ -156,7 +156,7 @@ export default {
   },
   setup(props) {
     const showApproved = ref(false);
-    const pageSize = ref(5);
+    const pageSize = ref(10);
     const approvedPage = ref(1);
     const pendingPage = ref(1);
     const approvedSize = ref(0);
