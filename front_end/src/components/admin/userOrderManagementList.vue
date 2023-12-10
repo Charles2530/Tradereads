@@ -12,9 +12,9 @@
       </el-row>
     </div>
     <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-      <el-scrollbar max-height="600px">
+      <el-scrollbar max-height="500px">
         <order-item-admin
-          v-for="order in filteredOrders"
+          v-for="order in filteredOrdersPerPage"
           :key="order.order_id"
           :buyer_id="order.buyer_id"
           :order_id="order.order_id"
@@ -22,6 +22,12 @@
           :order_time="order.order_time"
           :items="order.items"
         ></order-item-admin>
+        <el-pagination
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :total="filteredOrders.length"
+          @current-change="handlePageChange"
+        />
       </el-scrollbar>
     </div>
   </div>
@@ -53,18 +59,33 @@ export default {
         }
       });
     };
+
     const filteredOrders = computed(() => {
       if (!searchQuery.value) return all_orders.value;
       return all_orders.value.filter((order) =>
         String(order.buyer_id).includes(searchQuery.value)
       );
     });
+    const pageSize = ref(5);
+    const currentPage = ref(1);
+    const filteredOrdersPerPage = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value;
+      const end = currentPage.value * pageSize.value;
+      return filteredOrders.value.slice(start, end);
+    });
+    const handlePageChange = (newPage) => {
+      currentPage.value = newPage;
+    };
     return {
       all_orders,
       showAllOrderList,
       filteredOrders,
       searchQuery,
       OrderItemAdmin,
+      pageSize,
+      currentPage,
+      handlePageChange,
+      filteredOrdersPerPage,
     };
   },
 };
