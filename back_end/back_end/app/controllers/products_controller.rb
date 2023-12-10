@@ -84,6 +84,7 @@ class ProductsController < ApplicationController
       message: ProductError::SHOW_PRODUCT_SUCCEED,
       data: {
         product_name: product_detail.product_name,
+        product_image: product_detail.product_image,
         product_press: product_detail.product_press,
         product_price: product.price,
         product_state: product.state,
