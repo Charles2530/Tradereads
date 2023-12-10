@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name: "PublicNoticeList",
   props: {
     books: {
       type: Array,
@@ -38,9 +39,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.notice-detail:hover {
-  color: #fff;
-  text-decoration: underline;
-}
-</style>
+<style scoped></style>

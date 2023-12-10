@@ -5,7 +5,7 @@
     <div style="position: relative; z-index: 1">
       <personal-center-side-bar />
     </div>
-    <div>
+    <div style="position: relative; z-index: 0">
       <check-order-list :products="checkOrders"></check-order-list>
     </div>
   </div>
