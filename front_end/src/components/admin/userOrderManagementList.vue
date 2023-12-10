@@ -9,26 +9,41 @@
         <div>
           <el-input v-model="searchQuery" placeholder="搜索用户订单"></el-input>
         </div>
+        <div>
+          <el-switch
+            class="mx-4 mb-2"
+            v-model="Match"
+            style="
+              --el-switch-on-color: #13ce66;
+              --el-switch-off-color: #ff4949;
+            "
+            active-text="模糊匹配"
+            :active-action-icon="View"
+            :inactive-action-icon="Hide"
+          />
+        </div>
       </el-row>
     </div>
     <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
-      <el-scrollbar max-height="500px">
-        <order-item-admin
-          v-for="order in filteredOrdersPerPage"
-          :key="order.order_id"
-          :buyer_id="order.buyer_id"
-          :order_id="order.order_id"
-          :total_price="order.total_price"
-          :order_time="order.order_time"
-          :items="order.items"
-        ></order-item-admin>
-        <el-pagination
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="filteredOrders.length"
-          @current-change="handlePageChange"
-        />
-      </el-scrollbar>
+      <div class="bg-white p-3">
+        <el-scrollbar max-height="600px">
+          <order-item-admin
+            v-for="order in filteredOrdersPerPage"
+            :key="order.order_id"
+            :buyer_id="order.buyer_id"
+            :order_id="order.order_id"
+            :total_price="order.total_price"
+            :order_time="order.order_time"
+            :items="order.items"
+          ></order-item-admin>
+          <el-pagination
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="filteredOrders.length"
+            @current-change="handlePageChange"
+          />
+        </el-scrollbar>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +52,7 @@
 import { ref, computed, onMounted } from "vue";
 import OrderItemAdmin from "@c/order/OrderItemAdmin.vue";
 import { showAllOrders } from "@/api/order";
+import { Hide, View } from "@element-plus/icons-vue";
 export default {
   name: "OrderListPage",
   setup() {
@@ -59,12 +75,20 @@ export default {
         }
       });
     };
-
+    const Match = ref(true);
     const filteredOrders = computed(() => {
-      if (!searchQuery.value) return all_orders.value;
-      return all_orders.value.filter((order) =>
-        String(order.buyer_id).includes(searchQuery.value)
-      );
+      if (!Match.value) {
+        console.log(Match.value);
+        if (!searchQuery.value) return all_orders.value;
+        return all_orders.value.filter(
+          (order) => String(order.buyer_id) == searchQuery.value
+        );
+      } else {
+        if (!searchQuery.value) return all_orders.value;
+        return all_orders.value.filter((order) =>
+          String(order.buyer_id).includes(searchQuery.value)
+        );
+      }
     });
     const pageSize = ref(5);
     const currentPage = ref(1);
@@ -86,6 +110,9 @@ export default {
       currentPage,
       handlePageChange,
       filteredOrdersPerPage,
+      Hide,
+      View,
+      Match,
     };
   },
 };
