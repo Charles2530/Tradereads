@@ -3,7 +3,7 @@
     <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
     <el-divider></el-divider>
     <div>
-      <div>
+      <div class="items-center">
         <el-switch
           class="mx-4 my-2"
           v-model="showApproved"
@@ -12,6 +12,28 @@
           :active-action-icon="View"
           :inactive-action-icon="Hide"
         />
+        <div class="float-right">
+          <el-select v-model="searchType" placeholder="选择搜索维度">
+            <el-option label="商品名称" value="product_name"></el-option>
+            <el-option label="商品出版社" value="product_press"></el-option>
+            <el-option label="商家用户名" value="seller_name"></el-option>
+            <el-option label="商品发货地址" value="sell_address"></el-option>
+          </el-select>
+          <el-input
+            v-model="searchKeyword"
+            placeholder="请输入关键字"
+            style="width: 200px; margin-left: 10px"
+          ></el-input>
+          <el-switch
+            class="mx-4 mb-2"
+            v-model="Match"
+            style="
+              --el-switch-on-color: #13ce66;
+              --el-switch-off-color: #ff4949;
+            "
+            active-text="模糊匹配"
+          />
+        </div>
       </div>
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
@@ -161,6 +183,30 @@ export default {
     const pendingPage = ref(1);
     const approvedSize = ref(0);
     const pendingSize = ref(0);
+    const searchType = ref("");
+    const searchKeyword = ref("");
+    const filteredProducts = computed(() => {
+      if (searchType.value && searchKeyword.value) {
+        if (Match.value) {
+          return props.products.filter((product) =>
+            product[searchType.value].includes(searchKeyword.value)
+          );
+        } else {
+          return props.products.filter(
+            (product) => product[searchType.value] == searchKeyword.value
+          );
+        }
+      } else {
+        return props.products;
+      }
+    });
+    const Match = ref(false);
+    const search = () => {
+      approvedPage.value = 1;
+      pendingPage.value = 1;
+    };
+    watch(searchType, search);
+    watch(searchKeyword, search);
 
     const toggleShowApproved = () => {
       showApproved.value = !showApproved.value;
@@ -169,7 +215,7 @@ export default {
     const approvedProducts = computed(() => {
       const startIdx = (approvedPage.value - 1) * pageSize.value;
       const endIdx = startIdx + pageSize.value;
-      const approvedProducts = props.products.filter(
+      const approvedProducts = filteredProducts.value.filter(
         (product) => product.check_state
       );
       approvedSize.value = approvedProducts.length;
@@ -179,7 +225,7 @@ export default {
     const pendingProducts = computed(() => {
       const startIdx = (pendingPage.value - 1) * pageSize.value;
       const endIdx = startIdx + pageSize.value;
-      const pendingProducts = props.products.filter(
+      const pendingProducts = filteredProducts.value.filter(
         (product) => !product.check_state
       );
       pendingSize.value = pendingProducts.length;
@@ -245,6 +291,11 @@ export default {
       pageSize,
       approvedSize,
       pendingSize,
+      searchType,
+      searchKeyword,
+      search,
+      filteredProducts,
+      Match,
     };
   },
 };
