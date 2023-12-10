@@ -16,21 +16,32 @@
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
       <el-table :data="approvedProducts" style="width: 100%">
-        <el-table-column label="商品名称" prop="product_name"></el-table-column>
-        <el-table-column label="价格" prop="price"></el-table-column>
+        <el-table-column
+          label="商品名称"
+          align="center"
+          prop="product_name"
+        ></el-table-column>
+        <el-table-column
+          label="价格"
+          align="center"
+          prop="price"
+        ></el-table-column>
         <el-table-column
           label="商品出版社"
+          align="center"
           prop="product_press"
         ></el-table-column>
         <el-table-column
           label="商家用户名"
+          align="center"
           prop="seller_name"
         ></el-table-column>
         <el-table-column
           label="商品发货地址"
+          align="center"
           prop="sell_address"
         ></el-table-column>
-        <el-table-column label="状态" prop="check_state">
+        <el-table-column label="状态" align="center" prop="check_state">
           <template #default="scope">
             <span
               :class="{
@@ -42,30 +53,8 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
-          <template #default="scope">
-            <div>
-              <el-button
-                v-if="!scope.row.check_state"
-                @click="approveProduct(scope.row)"
-                type="primary"
-                plain
-                >通过该审核</el-button
-              >
-            </div>
-            <div>
-              <el-button
-                v-if="!scope.row.check_state"
-                @click="disapproveProduct(scope.row)"
-                type="danger"
-                plain
-                >拒绝该审核</el-button
-              >
-            </div>
-          </template>
-        </el-table-column>
+        <el-table-column label="操作" align="center" />
       </el-table>
-      <!-- Add pagination controls for approvedProducts -->
       <el-pagination
         v-if="showApproved"
         v-model="approvedPage"
@@ -77,21 +66,32 @@
     </div>
     <div v-if="!showApproved && pendingProducts.length > 0">
       <el-table :data="pendingProducts" style="width: 100%">
-        <el-table-column label="商品名称" prop="product_name"></el-table-column>
-        <el-table-column label="价格" prop="price"></el-table-column>
+        <el-table-column
+          label="商品名称"
+          align="center"
+          prop="product_name"
+        ></el-table-column>
+        <el-table-column
+          label="价格"
+          align="center"
+          prop="price"
+        ></el-table-column>
         <el-table-column
           label="商品出版社"
+          align="center"
           prop="product_press"
         ></el-table-column>
         <el-table-column
           label="商家用户名"
+          align="center"
           prop="seller_name"
         ></el-table-column>
         <el-table-column
           label="商品发货地址"
+          align="center"
           prop="sell_address"
         ></el-table-column>
-        <el-table-column label="状态" prop="check_state">
+        <el-table-column label="状态" align="center" prop="check_state">
           <template #default="scope">
             <span
               :class="{
@@ -103,7 +103,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" align="center">
           <template #default="scope">
             <div>
               <el-button
@@ -111,22 +111,21 @@
                 @click="approveProduct(scope.row)"
                 type="primary"
                 plain
+                size="small"
                 >通过该审核</el-button
               >
-            </div>
-            <div>
               <el-button
                 v-if="!scope.row.check_state"
                 @click="disapproveProduct(scope.row)"
                 type="danger"
                 plain
+                size="small"
                 >拒绝该审核</el-button
               >
             </div>
           </template>
         </el-table-column>
       </el-table>
-      <!-- Add pagination controls for pendingProducts -->
       <el-pagination
         v-if="!showApproved"
         v-model="pendingPage"
