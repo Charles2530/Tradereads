@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
 export default {
   name: "UserManagementList",
   props: {
@@ -46,6 +45,5 @@ export default {
 .user-info-item {
   width: calc(50% - 8px); /* 50% width with some spacing */
   margin-bottom: 16px; /* Add some bottom margin for spacing */
-  /* Additional styling based on your design preferences */
 }
 </style>

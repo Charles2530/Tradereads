@@ -15,119 +15,128 @@
       </div>
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
-      <el-scrollbar max-height="500px">
-        <el-table :data="approvedProducts" style="width: 100%">
-          <el-table-column
-            label="商品名称"
-            prop="product_name"
-          ></el-table-column>
-          <el-table-column label="价格" prop="price"></el-table-column>
-          <el-table-column
-            label="商品出版社"
-            prop="product_press"
-          ></el-table-column>
-          <el-table-column
-            label="商家用户名"
-            prop="seller_name"
-          ></el-table-column>
-          <el-table-column
-            label="商品发货地址"
-            prop="sell_address"
-          ></el-table-column>
-          <el-table-column label="状态" prop="check_state">
-            <template #default="scope">
-              <span
-                :class="{
-                  'text-green-500': scope.row.check_state,
-                  'text-red-500': !scope.row.check_state,
-                }"
+      <el-table :data="approvedProducts" style="width: 100%">
+        <el-table-column label="商品名称" prop="product_name"></el-table-column>
+        <el-table-column label="价格" prop="price"></el-table-column>
+        <el-table-column
+          label="商品出版社"
+          prop="product_press"
+        ></el-table-column>
+        <el-table-column
+          label="商家用户名"
+          prop="seller_name"
+        ></el-table-column>
+        <el-table-column
+          label="商品发货地址"
+          prop="sell_address"
+        ></el-table-column>
+        <el-table-column label="状态" prop="check_state">
+          <template #default="scope">
+            <span
+              :class="{
+                'text-green-500': scope.row.check_state,
+                'text-red-500': !scope.row.check_state,
+              }"
+            >
+              {{ scope.row.check_state ? "已审核" : "待审核" }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template #default="scope">
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="approveProduct(scope.row)"
+                type="primary"
+                plain
+                >通过该审核</el-button
               >
-                {{ scope.row.check_state ? "已审核" : "待审核" }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template #default="scope">
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="approveProduct(scope.row)"
-                  type="primary"
-                  plain
-                  >通过该审核</el-button
-                >
-              </div>
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="disapproveProduct(scope.row)"
-                  type="danger"
-                  plain
-                  >拒绝该审核</el-button
-                >
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-scrollbar>
+            </div>
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="disapproveProduct(scope.row)"
+                type="danger"
+                plain
+                >拒绝该审核</el-button
+              >
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- Add pagination controls for approvedProducts -->
+      <el-pagination
+        v-if="showApproved"
+        v-model="approvedPage"
+        :page-size="pageSize"
+        :total="approvedSize"
+        :current-page="approvedPage"
+        @current-change="handleApprovedPageChange"
+      ></el-pagination>
     </div>
     <div v-if="!showApproved && pendingProducts.length > 0">
-      <el-scrollbar max-height="500px">
-        <el-table :data="pendingProducts" style="width: 100%">
-          <el-table-column
-            label="商品名称"
-            prop="product_name"
-          ></el-table-column>
-          <el-table-column label="价格" prop="price"></el-table-column>
-          <el-table-column
-            label="商品出版社"
-            prop="product_press"
-          ></el-table-column>
-          <el-table-column
-            label="商家用户名"
-            prop="seller_name"
-          ></el-table-column>
-          <el-table-column
-            label="商品发货地址"
-            prop="sell_address"
-          ></el-table-column>
-          <el-table-column label="状态" prop="check_state">
-            <template #default="scope">
-              <span
-                :class="{
-                  'text-green-500': scope.row.check_state,
-                  'text-red-500': !scope.row.check_state,
-                }"
+      <el-table :data="pendingProducts" style="width: 100%">
+        <el-table-column label="商品名称" prop="product_name"></el-table-column>
+        <el-table-column label="价格" prop="price"></el-table-column>
+        <el-table-column
+          label="商品出版社"
+          prop="product_press"
+        ></el-table-column>
+        <el-table-column
+          label="商家用户名"
+          prop="seller_name"
+        ></el-table-column>
+        <el-table-column
+          label="商品发货地址"
+          prop="sell_address"
+        ></el-table-column>
+        <el-table-column label="状态" prop="check_state">
+          <template #default="scope">
+            <span
+              :class="{
+                'text-green-500': scope.row.check_state,
+                'text-red-500': !scope.row.check_state,
+              }"
+            >
+              {{ scope.row.check_state ? "已审核" : "待审核" }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template #default="scope">
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="approveProduct(scope.row)"
+                type="primary"
+                plain
+                >通过该审核</el-button
               >
-                {{ scope.row.check_state ? "已审核" : "待审核" }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template #default="scope">
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="approveProduct(scope.row)"
-                  type="primary"
-                  plain
-                  >通过该审核</el-button
-                >
-              </div>
-              <div>
-                <el-button
-                  v-if="!scope.row.check_state"
-                  @click="disapproveProduct(scope.row)"
-                  type="danger"
-                  plain
-                  >拒绝该审核</el-button
-                >
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-scrollbar>
+            </div>
+            <div>
+              <el-button
+                v-if="!scope.row.check_state"
+                @click="disapproveProduct(scope.row)"
+                type="danger"
+                plain
+                >拒绝该审核</el-button
+              >
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- Add pagination controls for pendingProducts -->
+      <el-pagination
+        v-if="!showApproved"
+        v-model="pendingPage"
+        :page-size="pageSize"
+        :total="pendingSize"
+        :current-page="pendingPage"
+        @current-change="handlePendingPageChange"
+      ></el-pagination>
     </div>
+
     <div v-if="products.length === 0">
       <h1 class="text-2xl text-center">没有待审核的商品</h1>
     </div>
@@ -135,7 +144,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { ExamineProduct } from "@/api/examine.js";
 import { Hide, View } from "@element-plus/icons-vue";
 export default {
@@ -148,17 +157,34 @@ export default {
   },
   setup(props) {
     const showApproved = ref(false);
+    const pageSize = ref(5);
+    const approvedPage = ref(1);
+    const pendingPage = ref(1);
+    const approvedSize = ref(0);
+    const pendingSize = ref(0);
 
     const toggleShowApproved = () => {
       showApproved.value = !showApproved.value;
     };
 
     const approvedProducts = computed(() => {
-      return props.products.filter((product) => product.check_state);
+      const startIdx = (approvedPage.value - 1) * pageSize.value;
+      const endIdx = startIdx + pageSize.value;
+      const approvedProducts = props.products.filter(
+        (product) => product.check_state
+      );
+      approvedSize.value = approvedProducts.length;
+      return approvedProducts.slice(startIdx, endIdx);
     });
 
     const pendingProducts = computed(() => {
-      return props.products.filter((product) => !product.check_state);
+      const startIdx = (pendingPage.value - 1) * pageSize.value;
+      const endIdx = startIdx + pageSize.value;
+      const pendingProducts = props.products.filter(
+        (product) => !product.check_state
+      );
+      pendingSize.value = pendingProducts.length;
+      return pendingProducts.slice(startIdx, endIdx);
     });
 
     const approveProduct = (product) => {
@@ -191,6 +217,19 @@ export default {
       });
     };
 
+    const handleApprovedPageChange = (page) => {
+      approvedPage.value = page;
+    };
+
+    const handlePendingPageChange = (page) => {
+      pendingPage.value = page;
+    };
+
+    watch(showApproved, () => {
+      approvedPage.value = 1;
+      pendingPage.value = 1;
+    });
+
     return {
       showApproved,
       toggleShowApproved,
@@ -200,7 +239,22 @@ export default {
       disapproveProduct,
       Hide,
       View,
+      approvedPage,
+      pendingPage,
+      handleApprovedPageChange,
+      handlePendingPageChange,
+      pageSize,
+      approvedSize,
+      pendingSize,
     };
   },
 };
 </script>
+
+<style>
+.el-pagination {
+  margin-top: 10px !important;
+  margin-right: 30px !important;
+  padding-bottom: 10px !important;
+}
+</style>
