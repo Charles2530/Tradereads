@@ -13,7 +13,7 @@
       <div>
         <el-tabs v-model="activeName" class="demo-tabs">
           <el-tab-pane label="公共通知" name="first"
-            ><public-notice-list :books="notices"
+            ><public-notice-list :notices="notices"
           /></el-tab-pane>
           <el-tab-pane label="我的关注" name="Config">
             <follow-notice-list :books="books" />
@@ -25,38 +25,36 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import { showCurrentNotices } from "@/api/notice.js";
 import PublicNoticeList from "@c/notice/PublicNoticeList.vue";
 import FollowNoticeList from "@c/notice/FollowNoticeList.vue";
 const activeName = ref("first");
-const notices = ref([
-  {
-    id: 1,
-    title: "Book Title 1",
-    description: "Book Description 1",
-    date: "2023-01-01",
-  },
-  {
-    id: 2,
-    title: "Book Title 2",
-    description: "Book Description 2",
-    date: "2023-02-01",
-  },
-]);
-const books = ref([
-  {
-    id: 3,
-    title: "Book Title 3",
-    description: "Book Description 1",
-    date: "2023-01-01",
-  },
-  {
-    id: 4,
-    title: "Book Title 4",
-    description: "Book Description 2",
-    date: "2023-02-01",
-  },
-]);
+const AllNotice = ref([]);
+onMounted(() => {
+  showCurrentNotices().then((res) => {
+    if (res.success) {
+      console.log(res.data.notice);
+      AllNotice.value = res.data.notice;
+    } else {
+      ElMessage({
+        showClose: true,
+        type: "error",
+        message: res.message,
+      });
+    }
+  });
+});
+const notices = computed(() => {
+  return AllNotice.value.filter((item) => {
+    return item.notice_type === 0;
+  });
+});
+const books = computed(() => {
+  return AllNotice.value.filter((item) => {
+    return item.notice_type === 1;
+  });
+});
 </script>
 
 <style>
