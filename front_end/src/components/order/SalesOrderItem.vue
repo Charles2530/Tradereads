@@ -77,7 +77,7 @@
                 :value="status.value"
               />
             </el-select>
-            <el-button type="primary" @click="modifyOrderStatus"
+            <el-button type="primary" @click="modifyOrderState"
               >修改订单状态</el-button
             >
             <div></div>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { deleteOrder } from "@/api/order.js";
+import { deleteOrder, modifyOrderStatus } from "@/api/order.js";
 export default {
   name: "SalesOrderItem",
   props: {
@@ -154,33 +154,30 @@ export default {
         });
       window.location.reload();
     };
-    const modifyOrderStatus = (item) => {
-      // Call your API function to update the order status here
-      // Use this.order_id to get the current order ID
-      // Update the 'state' property in each item of the 'items' array with the newStatus value
-      // Example API call:
-      //   modifyOrderStatusApi(this.order_id, newStatus)
-      //     .then((res) => {
-      //       console.log(res);
-      //       if (res.success) {
-      //         ElMessage({
-      //           message: "订单状态修改成功",
-      //           type: "success",
-      //         });
-      //       } else {
-      //         ElMessage({
-      //           message: res.message,
-      //           type: "error",
-      //         });
-      //       }
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
+
+    const modifyOrderState = (item) => {
+      modifyOrderStatus(item.order_id, { new_state: item.state })
+        .then((res) => {
+          if (res.success) {
+            ElMessage({
+              message: "订单状态修改成功",
+              type: "success",
+            });
+          } else {
+            ElMessage({
+              message: res.message,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     return {
       orderStatusOptions,
       modifyOrderStatus,
+      modifyOrderState,
       deleteThisOrder,
     };
   },
