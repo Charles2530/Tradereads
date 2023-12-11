@@ -1,5 +1,23 @@
 <template>
-  <el-table :data="orders" style="width: 100%">
+  <div class="float-right">
+    <el-select v-model="searchType" placeholder="选择搜索维度">
+      <el-option label="订单" value="order_id"></el-option>
+      <el-option label="买家" value="buyer_id"></el-option>
+      <el-option label="产品名" value="product_name"></el-option>
+    </el-select>
+    <el-input
+      v-model="searchKeyword"
+      placeholder="请输入关键字"
+      style="width: 200px; margin-left: 10px"
+    ></el-input>
+    <el-switch
+      class="mx-4 mb-2"
+      v-model="Match"
+      style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+      active-text="模糊匹配"
+    />
+  </div>
+  <el-table :data="filteredProducts" style="width: 100%">
     <el-table-column prop="order_id" label="订单" width="80px" />
     <el-table-column prop="buyer_id" label="买家" min-width="100px" />
     <el-table-column prop="product_name" label="产品名" min-width="100px" />
@@ -44,7 +62,7 @@
         </div>
         <div class="ml-2">
           <el-button type="primary" @click="modifyOrderState">
-            <el-icon class="mr-3"><Delete /></el-icon>
+            <el-icon class="mr-3"><Connection /></el-icon>
             修改订单状态</el-button
           >
         </div>
@@ -55,11 +73,12 @@
 
 <script>
 import { deleteOrder, modifyOrderStatus } from "@/api/order.js";
+import { ref, computed, watch } from "vue";
 export default {
   name: "SalesOrderItemList",
   props: {
     orders: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
@@ -125,11 +144,34 @@ export default {
           console.log(err);
         });
     };
+    const Match = ref(true);
+    const searchType = ref("");
+    const searchKeyword = ref("");
+    const filteredProducts = computed(() => {
+      if (searchType.value && searchKeyword.value) {
+        if (Match.value) {
+          return props.orders.filter((order) =>
+            String(order[searchType.value]).includes(searchKeyword.value)
+          );
+        } else {
+          return props.orders.filter(
+            (order) => String(order[searchType.value]) == searchKeyword.value
+          );
+        }
+      } else {
+        return props.orders;
+      }
+    });
+
     return {
       orderStatusOptions,
       modifyOrderStatus,
       modifyOrderState,
       deleteThisOrder,
+      filteredProducts,
+      searchType,
+      searchKeyword,
+      Match,
     };
   },
 };
