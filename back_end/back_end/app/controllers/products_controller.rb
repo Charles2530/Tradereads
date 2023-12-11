@@ -33,17 +33,17 @@ class ProductsController < ApplicationController
     show_following = params[:show_following]
     show_order_base = params[:show_order_base]
     show_order = params[:show_order]
-    # if show_following and show_order_base
-    #   products = Product.where.associated(:user,
-    # end
-
-    if show_order_base
-      products = Product.order(:price)
-      if show_order == "DESC"
-        products = Product.order(price: :desc)
-      end
+    if show_following == 0
+      products = Product.All
     else
-      products = Product.all
+      if show_order_base == "price"
+        products = Product.order(:price)
+        if show_order == "DESC"
+          products = Product.order(price: :desc)
+        end
+      else
+        products = Product.all
+      end
     end
     render json: response_json(
       true,
@@ -409,9 +409,11 @@ class ProductsController < ApplicationController
                                        product_press: press,
                                        product_type: type)
 
+    notice = Notice.new(title: title, type: 1, user: user, content: content)
     if product.valid? && product_detail.valid?
       product.save
       product_detail.save
+
       render status: 200, json: response_json(
         true,
         message: ProductError::CREATE_SUCCEED,
