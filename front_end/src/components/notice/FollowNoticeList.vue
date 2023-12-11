@@ -2,7 +2,7 @@
   <el-card class="mb-4" v-for="book in books" :key="book.id">
     <div class="flex justify-between items-center">
       <h2 class="text-xl font-semibold">{{ book.notice_title }}</h2>
-      <span class="text-gray-500">{{ book.notice_date }}</span>
+      <span class="text-gray-500">{{ book.notice_create_time }}</span>
     </div>
     <p class="text-gray-700 mt-2">{{ book.notice_content }}</p>
     <div class="mt-4 flex justify-end">
