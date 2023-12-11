@@ -70,13 +70,13 @@ onMounted(() => {
 
 const notices = computed(() => {
   return AllNotice.value.filter((item) => {
-    return item.notice_type === 0;
+    return item.notice_type === 1;
   });
 });
 
 const books = computed(() => {
   return AllNotice.value.filter((item) => {
-    return item.notice_type === 1;
+    return item.notice_type === 2;
   });
 });
 const getNotices = () => {
