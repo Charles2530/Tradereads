@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-100 mt-20 bg-white">
+  <div class="mx-100 mt-20 bg-white rounded-xl">
     <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
     <el-divider></el-divider>
     <div>
@@ -136,6 +136,7 @@
         :total="pendingSize"
         :current-page="pendingPage"
         @current-change="handlePendingPageChange"
+        class="px-6"
       ></el-pagination>
     </div>
 
@@ -285,9 +286,24 @@ export default {
 </script>
 
 <style>
+.el-table-column,
 .el-pagination {
   margin-top: 10px !important;
   margin-right: 30px !important;
   padding-bottom: 10px !important;
+}
+.el-table {
+  border-radius: 10px !important; /* 调整圆角大小 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* 添加阴影 */
+}
+
+.el-pagination {
+  border-radius: 10px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.el-button {
+  border-radius: 5px !important;
+  padding: 5px 15px !important;
 }
 </style>

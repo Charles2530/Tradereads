@@ -41,6 +41,7 @@
             :page-size="pageSize"
             :total="filteredOrders.length"
             @current-change="handlePageChange"
+            class="px-6"
           />
         </el-scrollbar>
       </div>
