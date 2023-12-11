@@ -312,48 +312,34 @@ class UsersController < ApplicationController
   end
 
   def show_sell_orders
-    # TODO
     user = current_user
+    order_items = []
     # sell_orders = OrderItem.select('OrderItem.').joins(:products).where("products.user_id == ?", user.id)
-
-    total_prices = []
-    puts user.orders.length
-    user.orders.each do |order|
-      total_price = 0
-      order.order_items.each do |item|
-        product = item.product
-        price = product.price
-        total_price += price * item.number
+    OrderItem.each do |order_item|
+      product = order_item.product
+      if product.user == user
+        order_items << order_item
       end
-      total_prices << total_price
     end
-    i = 0
+
+    puts order_items.length
     render status: 200, json: response_json(
       true,
-      message: ShowError::SHOW_SUCCEED,
+      message: Global::SUCCESS,
       data: {
-        orders: user.orders.collect do |order|
-          i += 1
+        order_items: order_items.collect do |order_item|
+          order = order_item.order
+          product = order_item.product
           {
             order_id: order.id,
-            total_price: total_prices[i-1],
-            order_time: order.created_at.to_s,
-            items: order.order_items.collect do |item|
-              product = item.product
-              product_detail = ProductDetail.find_by(product: product)
-              seller = product.user
-              seller_detail = UserDetail.find_by(user: seller)
-              {
-                order_item_id: item.id,
-                product_image: product_detail.product_image,
-                product_name: product_detail.product_name,
-                sell_address: product.sell_address,
-                seller_name: seller_detail.user_name,
-                buy_num: item.number,
-                product_price: product.price * item.number,
-                state: item.state
-              }
-            end
+            order_item_id: order_item.id,
+            order_item_number: order_item.number,
+            order_item_state: order_item.state,
+            product_id: product.id,
+            product_name: product.product_detail.product_name,
+            product_price: product.price,
+            order_item_time: order_item.created_at,
+            order_item_total_price: product.price * order_item.number
           }
         end
       }

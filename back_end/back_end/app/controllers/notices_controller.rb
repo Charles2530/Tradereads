@@ -8,6 +8,7 @@ class NoticesController < ApplicationController
   def index
     @notices = Notice.all
     user = current_user
+    notices = []
     @notices.each do |notice|
       if user.followings.include? notice.user
         notices << notice
@@ -27,6 +28,7 @@ class NoticesController < ApplicationController
             notice_user_name: notice.user.user_detail.user_name,
             notice_title: notice.title,
             notice_content: notice.content,
+            notice_create_time: notice.created_at
           }
         end
       }
@@ -54,7 +56,11 @@ class NoticesController < ApplicationController
     if notice.save
       render status: 200, json: response_json(
         true,
-        message: Global::SUCCESS
+        message: Global::SUCCESS,
+        data: {
+          notice_id: notice.id,
+          notice_create_time: notice.created_at
+        }
       )
     else
       render status: 200, json: response_json(
