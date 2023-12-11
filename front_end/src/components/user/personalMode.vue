@@ -130,7 +130,7 @@ import { onMounted, ref } from "vue";
 import OrderItem from "@c/order/OrderItem.vue";
 import ProductItem from "@c/product/ProductItem.vue";
 import followingList from "@c/follow/followingList.vue";
-import { showCurrentUserOrders } from "@/api/order.js";
+import { showCurrentUserOrders, showSellOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { getUser } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
@@ -217,7 +217,7 @@ export default {
     const salesOrders = ref([]);
     const showSalesOrderDialog = ref(false);
     const openSalesOrderDialog = () => {
-      showCurrentUserOrders().then((res) => {
+      showSellOrders().then((res) => {
         if (res.success) {
           console.log(res.data.orders);
           salesOrders.value = res.data.orders;
