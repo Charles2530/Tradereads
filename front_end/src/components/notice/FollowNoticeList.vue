@@ -13,7 +13,7 @@
         plain
       >
         <el-icon class="ml-1 mr-4"><Finished /></el-icon>
-        查看详情</el-button
+        点击进入个人中心</el-button
       >
     </div>
   </el-card>
