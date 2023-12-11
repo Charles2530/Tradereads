@@ -26,7 +26,7 @@
     </div>
     <div class="bg-gray-600/80 p-4 rounded-lg shadow-md">
       <div class="bg-white p-3">
-        <el-scrollbar max-height="600px">
+        <el-scrollbar max-height="500px">
           <order-item-admin
             v-for="order in filteredOrdersPerPage"
             :key="order.order_id"

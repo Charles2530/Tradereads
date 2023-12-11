@@ -1,25 +1,26 @@
 <template>
   <el-card class="mb-4" v-for="book in books" :key="book.id">
     <div class="flex justify-between items-center">
-      <h2 class="text-xl font-semibold">{{ book.title }}</h2>
-      <span class="text-gray-500">{{ book.date }}</span>
+      <h2 class="text-xl font-semibold">{{ book.notice_title }}</h2>
+      <span class="text-gray-500">{{ book.notice_date }}</span>
     </div>
-    <p class="text-gray-700 mt-2">{{ book.description }}</p>
+    <p class="text-gray-700 mt-2">{{ book.notice_content }}</p>
     <div class="mt-4 flex justify-end">
       <el-button
         type="primary"
         class="text-white font-semibold hover:underline"
-        @click="viewDetails(book.id)"
+        @click="viewDetails(book.notice_user_id)"
         plain
       >
         <el-icon class="ml-1 mr-4"><Finished /></el-icon>
-        查看详情</el-button
+        点击进入个人中心</el-button
       >
     </div>
   </el-card>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 export default {
   name: "FollowNoticeList",
   props: {
@@ -29,8 +30,14 @@ export default {
     },
   },
   setup() {
-    const viewDetails = (bookId) => {
-      console.log("View details for book with ID:", bookId);
+    const router = useRouter();
+    const viewDetails = (user_id) => {
+      router.push({
+        name: "FollowDetail",
+        params: {
+          user_id,
+        },
+      });
     };
     return {
       viewDetails,
