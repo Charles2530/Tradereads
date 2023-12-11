@@ -1,6 +1,6 @@
 <template>
-  <div class="float-right">
-    <el-select v-model="searchType" placeholder="选择搜索维度">
+  <div class="float-right mb-2">
+    <el-select v-model="searchType" placeholder="搜索维度">
       <el-option label="订单" value="order_id"></el-option>
       <el-option label="买家" value="buyer_id"></el-option>
       <el-option label="产品名" value="product_name"></el-option>
@@ -11,12 +11,12 @@
       style="width: 200px; margin-left: 10px"
     ></el-input>
     <el-switch
-      class="mx-4 mb-2"
+      class="mx-4 mb-1"
       v-model="Match"
       style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
       active-text="模糊匹配"
-      :active-icon="View"
-      :inactive-icon="Hide"
+      :active-action-icon="View"
+      :inactive-action-icon="Hide"
     />
   </div>
   <el-table :data="filteredProducts" style="width: 100%">

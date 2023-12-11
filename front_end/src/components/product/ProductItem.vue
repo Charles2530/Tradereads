@@ -40,15 +40,17 @@
         </el-col>
       </el-row>
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 mr-2"
         @click="toggleEdit"
       >
+        <el-icon class="mr-2"><Histogram /></el-icon>
         编辑商品信息
       </button>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         @click="goToProductDetails(product.id)"
       >
+        <el-icon class="mr-2"><Promotion /></el-icon>
         详细信息
       </button>
     </div>
