@@ -15,6 +15,8 @@
       v-model="Match"
       style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
       active-text="模糊匹配"
+      :active-icon="View"
+      :inactive-icon="Hide"
     />
   </div>
   <el-table :data="filteredProducts" style="width: 100%">
@@ -73,7 +75,8 @@
 
 <script>
 import { deleteOrder, modifyOrderStatus } from "@/api/order.js";
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
+import { Hide, View } from "@element-plus/icons-vue";
 export default {
   name: "SalesOrderItemList",
   props: {
@@ -172,6 +175,8 @@ export default {
       searchType,
       searchKeyword,
       Match,
+      Hide,
+      View,
     };
   },
 };
