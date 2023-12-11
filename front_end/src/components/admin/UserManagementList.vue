@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <h1 class="text-4xl font-bold mb-8 flex justify-center">用户管理</h1>
-    <div class="flex justify-end mb-4">
+    <div class="flex justify-end mb-2">
       <el-select
         v-model="searchType"
         placeholder="搜索维度"
@@ -16,7 +16,8 @@
       <el-input
         v-model="searchKeyword"
         placeholder="关键词"
-        style="width: 150px; margin-right: 10px"
+        style="width: 150px; margin-right: 10px; height: 30px"
+        clearable
       ></el-input>
       <div>
         <el-switch
@@ -36,7 +37,7 @@
     <div class="user-container">
       <el-row v-for="(user, index) in userListPerPage" :key="index">
         <el-col :span="24">
-          <el-scrollbar max-height="500px">
+          <el-scrollbar max-height="300px">
             <user-manage-item
               :user_id="user.user_id"
               :user_name="user.user_name"
