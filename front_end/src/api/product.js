@@ -41,6 +41,14 @@ export async function addProductToCart(product_id, params) {
   });
 }
 
+export async function directBuyProduct(product_id, params) {
+  return await service({
+    url: "/products/" + product_id + "/buy_product",
+    method: "post",
+    params,
+  });
+}
+
 //get
 export async function showAllProducts() {
   return await service({
