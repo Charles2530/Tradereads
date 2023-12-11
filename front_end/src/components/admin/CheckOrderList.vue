@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-100 mt-20 bg-white">
+  <div class="mx-100 mt-20 bg-white rounded-xl">
     <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
     <el-divider></el-divider>
     <div>
@@ -38,32 +38,22 @@
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
       <el-table :data="approvedProducts" style="width: 100%">
-        <el-table-column
-          label="商品名称"
-          align="center"
-          prop="product_name"
-        ></el-table-column>
-        <el-table-column
-          label="价格"
-          align="center"
-          prop="price"
-        ></el-table-column>
+        <el-table-column label="商品名称" prop="product_name"></el-table-column>
+        <el-table-column label="价格" prop="price"></el-table-column>
         <el-table-column
           label="商品出版社"
-          align="center"
           prop="product_press"
         ></el-table-column>
         <el-table-column
           label="商家用户名"
-          align="center"
           prop="seller_name"
         ></el-table-column>
         <el-table-column
           label="商品发货地址"
-          align="center"
           prop="sell_address"
+          min-width="150px"
         ></el-table-column>
-        <el-table-column label="状态" align="center" prop="check_state">
+        <el-table-column label="状态" prop="check_state">
           <template #default="scope">
             <span
               :class="{
@@ -75,12 +65,11 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" />
       </el-table>
       <el-pagination
         v-if="showApproved"
         v-model="approvedPage"
-        :page-size="pageSize"
+        :page-size="approvedPageSize"
         :total="approvedSize"
         :current-page="approvedPage"
         @current-change="handleApprovedPageChange"
@@ -88,32 +77,22 @@
     </div>
     <div v-if="!showApproved && pendingProducts.length > 0">
       <el-table :data="pendingProducts" style="width: 100%">
-        <el-table-column
-          label="商品名称"
-          align="center"
-          prop="product_name"
-        ></el-table-column>
-        <el-table-column
-          label="价格"
-          align="center"
-          prop="price"
-        ></el-table-column>
+        <el-table-column label="商品名称" prop="product_name"></el-table-column>
+        <el-table-column label="价格" prop="price"></el-table-column>
         <el-table-column
           label="商品出版社"
-          align="center"
           prop="product_press"
         ></el-table-column>
         <el-table-column
           label="商家用户名"
-          align="center"
           prop="seller_name"
         ></el-table-column>
         <el-table-column
           label="商品发货地址"
-          align="center"
           prop="sell_address"
+          min-width="150px"
         ></el-table-column>
-        <el-table-column label="状态" align="center" prop="check_state">
+        <el-table-column label="状态" prop="check_state">
           <template #default="scope">
             <span
               :class="{
@@ -125,7 +104,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作">
           <template #default="scope">
             <div>
               <el-button
@@ -136,6 +115,8 @@
                 size="small"
                 >通过该审核</el-button
               >
+            </div>
+            <div>
               <el-button
                 v-if="!scope.row.check_state"
                 @click="disapproveProduct(scope.row)"
@@ -151,10 +132,11 @@
       <el-pagination
         v-if="!showApproved"
         v-model="pendingPage"
-        :page-size="pageSize"
+        :page-size="pendingPageSize"
         :total="pendingSize"
         :current-page="pendingPage"
         @current-change="handlePendingPageChange"
+        class="px-6"
       ></el-pagination>
     </div>
 
@@ -178,7 +160,8 @@ export default {
   },
   setup(props) {
     const showApproved = ref(false);
-    const pageSize = ref(10);
+    const approvedPageSize = ref(10);
+    const pendingPageSize = ref(5);
     const approvedPage = ref(1);
     const pendingPage = ref(1);
     const approvedSize = ref(0);
@@ -213,8 +196,8 @@ export default {
     };
 
     const approvedProducts = computed(() => {
-      const startIdx = (approvedPage.value - 1) * pageSize.value;
-      const endIdx = startIdx + pageSize.value;
+      const startIdx = (approvedPage.value - 1) * approvedPageSize.value;
+      const endIdx = startIdx + approvedPageSize.value;
       const approvedProducts = filteredProducts.value.filter(
         (product) => product.check_state
       );
@@ -223,8 +206,8 @@ export default {
     });
 
     const pendingProducts = computed(() => {
-      const startIdx = (pendingPage.value - 1) * pageSize.value;
-      const endIdx = startIdx + pageSize.value;
+      const startIdx = (pendingPage.value - 1) * pendingPageSize.value;
+      const endIdx = startIdx + pendingPageSize.value;
       const pendingProducts = filteredProducts.value.filter(
         (product) => !product.check_state
       );
@@ -288,7 +271,8 @@ export default {
       pendingPage,
       handleApprovedPageChange,
       handlePendingPageChange,
-      pageSize,
+      approvedPageSize,
+      pendingPageSize,
       approvedSize,
       pendingSize,
       searchType,
@@ -302,9 +286,24 @@ export default {
 </script>
 
 <style>
+.el-table-column,
 .el-pagination {
   margin-top: 10px !important;
   margin-right: 30px !important;
   padding-bottom: 10px !important;
+}
+.el-table {
+  border-radius: 10px !important; /* 调整圆角大小 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* 添加阴影 */
+}
+
+.el-pagination {
+  border-radius: 10px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.el-button {
+  border-radius: 5px !important;
+  padding: 5px 15px !important;
 }
 </style>

@@ -61,15 +61,9 @@
             class="bg-gray-600/80 p-4 rounded-lg shadow-md sales-order-container"
           >
             <el-scrollbar max-height="450px">
-              <sales-order-item
-                v-for="salesOrder in salesOrders"
-                :key="salesOrder.order_id"
-                :order_id="salesOrder.order_id"
-                :seller_id="salesOrder.buyer_id"
-                :total_price="parseInt(salesOrder.total_price)"
-                :order_time="salesOrder.order_time"
-                :items="salesOrder.items"
-              ></sales-order-item>
+              <sales-order-item-list
+                :orders="salesOrders"
+              ></sales-order-item-list>
             </el-scrollbar>
           </div>
         </div>
@@ -130,7 +124,7 @@ import { onMounted, ref } from "vue";
 import OrderItem from "@c/order/OrderItem.vue";
 import ProductItem from "@c/product/ProductItem.vue";
 import followingList from "@c/follow/followingList.vue";
-import { showCurrentUserOrders } from "@/api/order.js";
+import { showCurrentUserOrders, showSellOrders } from "@/api/order.js";
 import { showProductsList } from "@/api/product.js";
 import { getUser } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
@@ -217,10 +211,10 @@ export default {
     const salesOrders = ref([]);
     const showSalesOrderDialog = ref(false);
     const openSalesOrderDialog = () => {
-      showCurrentUserOrders().then((res) => {
+      showSellOrders().then((res) => {
         if (res.success) {
-          console.log(res.data.orders);
-          salesOrders.value = res.data.orders;
+          console.log(res.data.order_items);
+          salesOrders.value = res.data.order_items;
           showSalesOrderDialog.value = true;
         }
       });

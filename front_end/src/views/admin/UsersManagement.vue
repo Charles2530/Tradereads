@@ -6,7 +6,7 @@
       <personal-center-side-bar />
     </div>
     <div
-      class="user-management mx-20 bg-white"
+      class="user-management mx-20 bg-white rounded-xl"
       style="position: relative; z-index: 0"
     >
       <user-management-list :userList="users" />
