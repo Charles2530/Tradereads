@@ -27,11 +27,11 @@
           <el-col :span="2">
             <div class="mt-2">
               <el-popconfirm
-                title="确定要删除此订单吗?"
+                title="确定要取消此订单吗?"
                 @confirm="deleteThisOrder"
               >
                 <template #reference>
-                  <el-button type="danger">删除订单</el-button>
+                  <el-button type="danger">取消订单</el-button>
                 </template>
               </el-popconfirm>
             </div>
