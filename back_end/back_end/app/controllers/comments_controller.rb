@@ -46,7 +46,15 @@ class CommentsController < ApplicationController
         message: Global::UNAUTHORIZED
       ) and return
     end
+    product = comment.product
+    if product.comments.length == 1
+      product.score_per = 0.0
+    else
+      product.score_per = (product.score_per * product.comments.length - comment.score) / (product.comments.length - 1).to_f
+    end
+
     if comment.destroy
+      product.save
       render status: 200, json: response_json(
         true,
         message: Global::SUCCESS

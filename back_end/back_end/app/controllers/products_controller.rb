@@ -33,23 +33,49 @@ class ProductsController < ApplicationController
     show_following = params[:show_following]
     show_order_base = params[:show_order_base]
     show_order = params[:show_order]
-    if show_following == 0
-      products = Product.All
-    else
-      if show_order_base == "price"
+    user = current_user
+
+    if show_order_base == "price"
+      if show_order == "DESC" # 降序
+        products = Product.order(price: :desc)
+      else # 升序 / 默认
         products = Product.order(:price)
-        if show_order == "DESC"
-          products = Product.order(price: :desc)
-        end
+      end
+    elsif show_order_base == "comment"
+      products = Product.all
+      if show_order == "DESC" # 降序
+        products = products.sort {|a, b| b.comments.length <=> a.comments.length }
+      else # 升序 / 默认
+        products = products.sort {|a, b| a.comments.length <=> b.comments.length }
+      end
+    elsif show_order_base == "score"
+      products = Product.all
+      if show_order == "DESC" # 降序
+        products = products.sort {|a, b| b.score_per <=> a.score_per }
       else
-        products = Product.all
+        products = products.sort {|a, b| a.score_per <=> b.score_per }
+      end
+    else
+      products = Product.all
+    end
+
+    products = products.where(check_state: 1)
+
+    if show_following == 1
+      temp = products
+      products = []
+      temp.each do |product|
+        if user.followings.include? product.user
+          products << product
+        end
       end
     end
+
     render json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        products: products.where(check_state: 1).collect do |product|
+        products: products.collect do |product|
           product_detail = ProductDetail.find_by(product: product)
           seller = product.user
           {
@@ -269,11 +295,12 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:product_id])
     product = @product
     content = params[:content]
-    score = params[:score]
-
+    score = params[:score].to_i
+    product.score_per = (product.score_per * product.comments.length + score) / (product.comments.length + 1).to_f
     comment = Comment.new(product: product, user: current_user, content: content, score: score)
-
-    if comment.save
+    if comment.valid? and product.valid?
+      comment.save
+      product.save
       render status: 200, json: response_json(
         true,
         message: Global::SUCCESS,
@@ -401,7 +428,8 @@ class ProductsController < ApplicationController
                           sell_address: sell_address,
                           store: store,
                           state: store == 0 ? "StockOut" : "Available",
-                          check_state: 0)
+                          check_state: 0,
+                          score_per: 0.0)
     name, image, press, type = params[:product_name], params[:product_image], params[:product_press], params[:product_type]
     product_detail = ProductDetail.new(product: product,
                                        product_name: name,
