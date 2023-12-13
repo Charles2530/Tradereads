@@ -35,12 +35,13 @@
     </div>
   </div>
   <div>
-    <el-dialog v-model="createNoticeDialog" title="发布公告" width="50%">
+    <el-dialog v-model="createNoticeDialog" width="50%">
       <el-form
         :model="newNotice"
         ref="createNoticeForm"
         :rules="createNoticeFormRules"
       >
+        <el-text class="mx-1 launch-notice" type="info">发布公告</el-text>
         <el-form-item label="标题" prop="title">
           <el-input v-model="newNotice_title"></el-input>
         </el-form-item>
@@ -48,7 +49,6 @@
           <el-input type="textarea" v-model="newNotice_content"></el-input>
         </el-form-item>
       </el-form>
-
       <div class="dialog-footer">
         <el-button @click="createNoticeDialog = false">取消</el-button>
         <el-button type="primary" @click="createNoticeFunc">发布</el-button>
@@ -175,5 +175,12 @@ const createNoticeFunc = () => {
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+}
+.launch-notice {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: block;
+  text-align: center !important;
 }
 </style>
