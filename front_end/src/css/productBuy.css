@@ -1,0 +1,33 @@
+.item {
+    position: relative;
+}
+
+.choose {
+    position: absolute;
+    position: absolute;
+    font-family: 'icomoon';
+    font-size: 30px;
+    content: "\ea0a";
+    bottom: 20px;
+    right: 30px;
+}
+
+.choose:hover {
+    color: aqua;
+    font-size: 40px;
+}
+
+.buy {
+    position: absolute;
+    position: absolute;
+    font-family: 'icomoon';
+    font-size: 30px;
+    content: "\ea11";
+    bottom: 20px;
+    right: 90px;
+}
+
+.buy:hover {
+    color: aqua;
+    font-size: 40px;
+}

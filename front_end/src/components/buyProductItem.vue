@@ -1,12 +1,45 @@
 <template>
   <div class="item1">
-    <div class="img" :style="imgg"></div>
-    <div class="seller">卖家:{{ seller_name }}</div>
-    <div class="price">价格:￥{{ price }}</div>
-    <div class="name">书名:{{ product_name }}</div>
-    <div class="num">发货地址:{{ sell_address }}</div>
-    <div class="press">出版社:{{ product_press }}</div>
-    <div class="type">类型:{{ product_type }}</div>
+    <div class="img" :style="imgg" @click="deliverParams()">
+
+    </div>
+
+    <div div class=" seller">
+      <span class="bold">
+        卖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家:
+      </span>
+      {{ seller_name }}
+    </div>
+    <div class="price">
+      <span class="bold">
+        价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格:
+      </span>
+      ￥{{ price }}
+    </div>
+    <div class="name">
+      <span class="bold">
+        书&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:
+      </span>
+      {{ product_name }}
+    </div>
+    <div class="num">
+      <span class="bold">
+        发货地址:
+      </span>
+      {{ sell_address }}
+    </div>
+    <div class="press">
+      <span class="bold">
+        出&nbsp;版&nbsp;&nbsp;社:
+      </span>
+      {{ product_press }}
+    </div>
+    <div class="type">
+      <span class="bold">
+        类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:
+      </span>
+      {{ product_type }}
+    </div>
 
 
     <div class="add" @click="count++">
@@ -19,30 +52,49 @@
     <div class="bought" @click="buything">
       
     </div>
+    <div class="goto" @click="deliverParams()">
+      
+      <!-- <router-link to="/Pruductdetail"></router-link> -->
+
+    </div>
   </div>
 </template>
 
 <style>
-@import url("../../css/base.css");
+@import url("../css/base.css");
 
 .item1 {
   position: relative;
   float: left;
-  width: 30%;
+  width: 31.5%;
   height: 500px;
   margin: 14px;
   border-radius: 40px;
   background-size: 300px;
-  overflow-y: scroll;
-  overflow-x: scroll;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  border: 1px solid blue;
+  border-radius: 30px;
+  box-shadow: 10px 10px 3px rgba(141, 138, 138, 0.3);
 }
+
+.bold {
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 
 .img {
   position: absolute;
-  height: 400px;
-  width: 100%;
+  height: 300px;
+  width: 42%;
   background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
-  top: 0px;
+  top: 15px;
   background-size: contain;
 
 }
@@ -50,48 +102,55 @@
 .seller {
   position: absolute;
   font-size: 20px;
-  top: 420px;
-  left: 20px;
+  height: 40px;
+  top: 20px;
+  left: 43%;
   line-height: 30px;
+
 }
 
 .price {
   position: absolute;
   font-size: 20px;
-  top: 480px;
-  left: 20px;
+  top: 80px;
+  left: 43%;
   line-height: 30px;
+  overflow: hidden;
 }
 
 .name {
   position: absolute;
   font-size: 20px;
-  top: 540px;
-  left: 20px;
+  top: 140px;
+  left: 43%;
   line-height: 30px;
+  overflow: hidden;
 }
 
 .num {
   position: absolute;
   font-size: 20px;
-  top: 600px;
-  left: 20px;
+  top: 200px;
+  left: 43%;
   line-height: 30px;
+  overflow: hidden;
+
 }
 
 .press {
   position: absolute;
   font-size: 20px;
-  top: 660px;
-  left: 20px;
+  top: 260px;
+  left: 43%;
   line-height: 30px;
+  overflow: hidden;
 }
 
 .type {
   position: absolute;
   font-size: 20px;
-  top: 720px;
-  left: 20px;
+  top: 320px;
+  left: 43%;
   line-height: 30px;
 }
 
@@ -100,7 +159,7 @@
   font-family: 'icomoon';
   font-size: 20px;
   content: "\ea0a";
-  top: 420px;
+  top: 400px;
   right: 90px;
 }
 
@@ -114,7 +173,7 @@
   font-family: 'icomoon';
   font-size: 20px;
   content: "\ea0b";
-  top: 420px;
+  top: 400px;
   right: 10px;
 }
 
@@ -126,7 +185,7 @@
 .count {
   position: absolute;
   font-size: 20px;
-  top: 420px;
+  top: 400px;
   right: 50px;
 }
 
@@ -136,8 +195,23 @@
   font-family: 'icomoon';
   font-size: 30px;
   content: "\ea11";
-  top: 460px;
+  top: 440px;
   right: 40px;
+}
+
+.goto {
+  position: absolute;
+  position: absolute;
+  font-family: 'icomoon';
+  font-size: 30px;
+  content: "\ea34";
+  top: 0px;
+  right: 10px;
+}
+
+.goto:hover {
+  font-size: 40px;
+  color: aqua;
 }
 
 .bought:hover {
@@ -173,11 +247,20 @@ export default {
   },
   computed: {
     imgg: function () {
-      return "background-image: url(../../public/" + this.product_image + ");"
-      // return "background-image: url(../../public/" + "4.jpg" + ");"
+      //return "background-image: url(../../public/" + this.product_image + ");"
+      return "background-image: url(../../public/" + "4.jpg" + ");"
     }
   },
   methods: {
+    deliverParams() {
+      let i = this.product_id
+      this.$router.push({
+        name: "Pruductdetail",
+        params: {
+          id: i
+        }
+      })
+    },
     openMessage(message) {
       ElMessage({
         showClose: true,
@@ -192,12 +275,12 @@ export default {
 
         if (res.success == true) {
           this.openMessage(res.message)
+          this.count = 0;
         }
-
-
       });
       this.message = t.message;
-      console.log
+    },
+    opendetail() {
 
     },
   },

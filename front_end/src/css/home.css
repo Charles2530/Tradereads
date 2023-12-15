@@ -1,0 +1,47 @@
+/* 声明字体图标 注意路径的更换*/
+
+
+
+
+.home {
+    background-image: url(../public/home_page.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    font-family: Arial, "Microsoft Yahei", "微软雅黑";
+    font-size: 40px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    animation-name: bigsmall;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.home_sub {
+    text-align: center;
+    line-height: 100px;
+    color: yellowgreen;
+    content: "\ea36";
+    font-family: 'icomoon';
+}
+
+.arrow-icon {
+
+    margin-left: 6px;
+    text-align: center;
+}
+
+@keyframes bigsmall {
+    0% {
+        font-size: 40px;
+    }
+
+    50% {
+        font-size: 45px;
+    }
+
+    100% {
+        font-size: 40px;
+    }
+}

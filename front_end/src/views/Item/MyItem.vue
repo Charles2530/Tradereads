@@ -30,8 +30,8 @@
 </template>
 
 <style>
-@import url("../../../css/base.css");
-@import url("../../../css/MyItem.css");
+@import url("../../css/base.css");
+@import url("../../css/MyItem.css");
 </style>
 
 <script>

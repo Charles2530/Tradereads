@@ -12,8 +12,6 @@ const Register = () => import("@/views/personalCenter/register.vue");
 const PersonalCenter = () => import("@/views/personalCenter/index.vue");
 // 404页面
 const Page404 = () => import("@/views/404.vue");
-// 订单管理页面
-const OrdersManagement = () => import("@/views/admin/userOrderManagement.vue");
 // 审核订单页面
 const CheckOrdersView = () => import("@/views/admin/checkOrdersView.vue");
 // 用户管理页面
@@ -28,6 +26,10 @@ const Shopping = () => import("@/views/shopping/shopping.vue");
 const ProductBuy = () => import("@/views/productBuyCenter/productBuy.vue");
 //我的商品
 const MyItem = () => import("@/views/Item/MyItem.vue");
+//搜索界面
+const Search = () => import("@/views/search/search.vue");
+//商品详情界面
+const Pruductdetail = () => import("@/views/productBuyCenter/productdetail.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -60,11 +62,6 @@ const routes = [
     component: Page404,
   },
   {
-    path: "/ordersManagement",
-    name: "OrdersManagement",
-    component: OrdersManagement,
-  },
-  {
     path: "/checkOrdersView",
     name: "CheckOrdersView",
     component: CheckOrdersView,
@@ -80,10 +77,10 @@ const routes = [
     component: Notice,
   },
   {
-    path: "/followDetail/:user_id",
+    path: "/followDetail",
     name: "FollowDetail",
     component: FollowDetail,
-    props: true,
+    props: (route) => ({ user_id: route.query.user_id }),
   },
   {
     path: "/shopping",
@@ -100,6 +97,16 @@ const routes = [
     name: "MyItem",
     component: MyItem,
   },
+  {
+    path: "/Search",
+    name: "Search",
+    component: Search,
+  },
+  {
+    path: "/Pruductdetail",
+    name: "Pruductdetail",
+    component: Pruductdetail,
+  },
 ];
 
 const router = createRouter({
@@ -114,7 +121,7 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     /* 目前未添加数据库，之后补充在完成数据后添加直接跳转登录页 */
-    if (routes.some((item) => new RegExp("^" + item.path).test(to.path))) {
+    if (routes.find((item) => item.path === to.path)) {
       next();
     } else {
       next({ name: "404Page" });

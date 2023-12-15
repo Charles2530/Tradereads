@@ -41,19 +41,19 @@ export async function addProductToCart(product_id, params) {
   });
 }
 
-export async function directBuyProduct(product_id, params) {
+export async function buyProduct(product_id, params) {
   return await service({
     url: "/products/" + product_id + "/buy_product",
     method: "post",
     params,
   });
 }
-
 //get
-export async function showAllProducts() {
+export async function showAllProducts(params) {
   return await service({
-    url: "/products",
-    method: "get",
+    url: "/show_products",
+    method: "post",
+    params,
   });
 }
 
@@ -71,6 +71,16 @@ export async function showProductsList(user_id) {
   });
 }
 
+export async function showComments(product_id) {
+  return await service({
+    url: "/products/" + product_id + "/show_comments",
+    method: "get",
+
+  });
+}
+
+
+
 //delete
 export async function deleteProduct(product_id) {
   return await service({
@@ -78,3 +88,5 @@ export async function deleteProduct(product_id) {
     method: "delete",
   });
 }
+
+
