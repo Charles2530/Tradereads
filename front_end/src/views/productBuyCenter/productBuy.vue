@@ -43,7 +43,7 @@
       </div>
       <div class="button">
         <buyProductItem v-for="shoppinglist in shoopingUser.value" :key="shoppinglist.product_id"
-          :product_id="shoppinglist.product_id" :product_name="shoppinglist.product_name" :price="shoppinglist.price"
+          :product_id="shoppinglist.product_id" :product_name="shoppinglist.product_name" :price="parseInt(shoppinglist.price)"
           :product_press="shoppinglist.product_press" :seller_name="shoppinglist.seller_name"
           :sell_address="shoppinglist.sell_address" :product_type="shoppinglist.product_type"
           :product_image="shoppinglist.product_image">

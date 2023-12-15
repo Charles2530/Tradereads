@@ -115,8 +115,8 @@ export default {
   },
   computed: {
     imgg: function () {
-      //return "background-image: url(../../public/" + this.product_image + ");"
-      return "background-image: url(../../public/" + "4.jpg" + ");"
+      return "background-image: url(../../public/" + this.product_image + ");"
+      // return "background-image: url(../../public/" + "4.jpg" + ");"
     }
   },
   props: {

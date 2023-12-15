@@ -60,8 +60,8 @@
 </template>
 
 <style>
-@import url("../../css//base.css");
-
+@import url("../../css/base.css");
+@import url("../../css/shopping.css");
 .header1 {
 
     width: 100%;
@@ -342,12 +342,12 @@ export default {
         return {
             score: 0,
             product_image: "1.jpg",
-            price: 62,
-            product_name: "造现参",
-            product_press: "dolor occaecat aute aliqua",
-            product_state: "aliquip culpa",
-            seller_name: "门达到合军处",
-            seller_phone: "18684594537",
+            price: 0,
+            product_name: "",
+            product_press: "",
+            product_state: "",
+            seller_name: "",
+            seller_phone: "",
             comments: [],
             count: 0,
             search: "说说你的想法",
@@ -482,7 +482,7 @@ export default {
     mounted() {
         getProduct(this.$route.params.id).then(res => {
             console.log(res.data);
-            this.price = res.data.price;
+            this.price = res.data.product_price;
             this.product_name = res.data.product_name;
             this.product_press = res.data.product_press;
             this.product_state = res.data.product_state;

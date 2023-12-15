@@ -247,8 +247,8 @@ export default {
   },
   computed: {
     imgg: function () {
-      //return "background-image: url(../../public/" + this.product_image + ");"
-      return "background-image: url(../../public/" + "4.jpg" + ");"
+      return "background-image: url(../../public/" + this.product_image + ");"
+      // return "background-image: url(../../public/" + "4.jpg" + ");"
     }
   },
   methods: {
@@ -315,7 +315,7 @@ export default {
       required: true,
     },
     product_image: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

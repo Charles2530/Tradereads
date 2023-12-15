@@ -110,9 +110,10 @@ const routes = [
     component: Search,
   },
   {
-    path: "/Pruductdetail",
+    path: "/Pruductdetail/:id",
     name: "Pruductdetail",
     component: Pruductdetail,
+    props: true
   },
 ];
 
