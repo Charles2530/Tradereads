@@ -48,7 +48,7 @@
       </button>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        @click="goToProductDetails(product.id)"
+        @click="goToProductDetails(product.product_id)"
       >
         <el-icon class="mr-2"><Promotion /></el-icon>
         详细信息
@@ -140,6 +140,7 @@
 
 <script>
 import { ref, reactive, computed } from "vue";
+import { useRouter } from "vue-router";
 import {
   modifyStorage,
   modifyPrice,
@@ -171,10 +172,16 @@ export default {
     const examineStatus = computed(() =>
       !editableProduct.check_state ? "未审核" : "已审核"
     );
+    const router = useRouter();
 
     const goToProductDetails = (productId) => {
       // Replace with your router logic or window location change
-      // this.$router.push(`/product/${productId}`);
+      router.push({
+        name: "ProductDetail",
+        params: {
+          id: productId,
+        },
+      });
     };
 
     const toggleEdit = () => {
