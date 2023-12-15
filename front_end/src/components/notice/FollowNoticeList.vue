@@ -6,15 +6,19 @@
     </div>
     <p class="text-gray-700 mt-2">{{ book.notice_content }}</p>
     <div class="mt-4 flex justify-end">
-      <el-button
-        type="primary"
-        class="text-white font-semibold hover:underline"
-        @click="viewDetails(book.notice_user_id)"
-        plain
-      >
-        <el-icon class="ml-1 mr-4"><Finished /></el-icon>
-        点击进入个人中心</el-button
-      >
+      <div>
+        <el-button
+          type="primary"
+          class="text-white font-semibold hover:underline"
+          @click="viewDetails(book.notice_user_id)"
+          plain
+        >
+          <el-icon class="ml-1 mr-4"><Finished /></el-icon>
+          点击查看&nbsp;
+          <strong> {{ book.notice_user_name }} </strong>
+          &nbsp;的店铺新品</el-button
+        >
+      </div>
     </div>
   </el-card>
 </template>
