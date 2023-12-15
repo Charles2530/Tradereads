@@ -3,6 +3,9 @@
     class="min-h-screen bg-login-background bg-cover bg-center bg-no-repeat flex justify-end items-center p-10"
   >
     <div class="w-full max-w-xs bg-white p-8 rounded shadow-lg">
+      <div class="mb-4">
+        <logo-info />
+      </div>
       <h1
         class="register__title text-2xl font-bold mb-6 bg-blue-500 text-white p-3 rounded text-center"
       >
@@ -57,7 +60,7 @@
             class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
             @click.prevent="register"
           >
-            register
+            立即注册
           </button>
         </div>
       </form>
