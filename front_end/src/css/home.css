@@ -1,5 +1,8 @@
 /* 声明字体图标 注意路径的更换*/
 
+
+
+
 .home {
     background-repeat: no-repeat;
     background-size: cover;
@@ -35,6 +38,7 @@
 }
 
 .arrow-icon {
+
     margin-left: 6px;
     text-align: center;
 }

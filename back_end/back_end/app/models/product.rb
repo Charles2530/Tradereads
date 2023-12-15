@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   has_one :product_detail, dependent: :destroy
   has_many :carts, dependent: :destroy
   has_many :order_items, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :price,
             :presence => { massage: "Price must exist." }
@@ -12,5 +13,7 @@ class Product < ApplicationRecord
   validates :store, presence: true
   validates :store, numericality: { only_integer: true, :greater_than_or_equal_to => 0, :massage => "Store must be non-negative." }
   validates :state, inclusion: { in: %w(Available StockOut) }
+
+  validates :check_state, inclusion: { in: [0, 1] }
 
 end

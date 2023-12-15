@@ -16,7 +16,5 @@
 import personalCenterSideBar from "@c/user/personalCenterSideBar.vue";
 import NavigationBar from "@c/home/NavigationBar.vue";
 const context = defineProps(["user_id"]);
-console.log(context);
 const user_id = parseInt(context.user_id);
-console.log(user_id);
 </script>

@@ -85,8 +85,8 @@ const books = computed(() => {
 const getNotices = () => {
   showCurrentNotices().then((res) => {
     if (res.success) {
-      console.log(res.data.notice);
-      AllNotice.value = res.data.notice;
+      console.log(res.data.notices);
+      AllNotice.value = res.data.notices;
     } else {
       ElMessage({
         showClose: true,

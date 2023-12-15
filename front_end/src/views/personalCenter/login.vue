@@ -47,7 +47,6 @@
         <router-link
           to="/register"
           class="inline-block mt-4 register-line text-zinc-500"
-          style="font-size: 1px"
           >没有账号?点击注册!</router-link
         >
       </form>
