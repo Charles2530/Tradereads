@@ -2,6 +2,8 @@ class OrderItem < ApplicationRecord
   belongs_to :product
   belongs_to :order
 
+
   validates :number, presence: true, numericality: { greater_than_or_equal_to: 1 }
-  validates :state, inclusion:{ in: %w(´ýÖ§¸¶ ´ý·¢»õ ´ýÊÕ»õ ÒÑÍê³É) }
+  validates :state, inclusion:{ in: ["å¾…æ”¯ä»˜", "å¾…å‘è´§", "å¾…æ”¶è´§", "å·²å®Œæˆ"] }
+
 end

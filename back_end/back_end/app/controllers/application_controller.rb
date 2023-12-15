@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::API
   # helper_mothod :current_user
   # include ::ActionController::Cookies
+  Encoding.default_internal="UTF-8"
 
   public
 
   def setAdmin
-    unless @admin
+    if User.find_by(phone: "13612345678")
+      @admin = User.find_by(phone: "13612345678")
+    else
       @admin = User.new(right: 1, phone: "13612345678")
       detail = UserDetail.new(user: @admin, password: "adminadmin", user_name: "admin", gender: "male",
                               pay_type: "Alipay")

@@ -86,4 +86,11 @@ module ApplicationHelper
       data: data
     }
   end
+
+  module FollowError
+    extend Global
+
+    CANNOT_FOLLOW_SELF = "You cannot follow yourself."
+  end
+
 end
