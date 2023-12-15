@@ -437,7 +437,7 @@ class ProductsController < ApplicationController
                                        product_press: press,
                                        product_type: type)
 
-    notice = Notice.new(title: title, type: 1, user: user, content: content)
+    notice = Notice.new(title: "新商品上新了", notice_type: 1, user: seller, content: "添加了商品 #{name}")
     if product.valid? && product_detail.valid?
       product.save
       product_detail.save

@@ -52,7 +52,7 @@ class NoticesController < ApplicationController
     user = current_user
     title = params[:title]
     content = params[:content]
-    notice = Notice.new(title: title, type: 1, user: user, content: content)
+    notice = Notice.new(title: title, notice_type: 1, user: user, content: content)
     if notice.save
       render status: 200, json: response_json(
         true,
@@ -94,6 +94,6 @@ class NoticesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def notice_params
-      params.require(:notice).permit(:title, :type, :user_id, :content)
+      params.require(:notice).permit(:title, :notice_type, :user_id, :content)
     end
 end
