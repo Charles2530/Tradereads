@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :login_only, except: %i[ index show ]
-  before_action :setAdmin
 
   include ApplicationHelper
 
@@ -17,7 +16,7 @@ class ProductsController < ApplicationController
             product_id: product.id,
             product_name: product_detail.product_name,
             product_image: product_detail.product_image,
-            price: product.price,
+            price: product.price.to_f,
             product_press: product_detail.product_press,
             product_type: product_detail.product_type,
             seller_name: seller.user_detail.user_name,
@@ -112,9 +111,9 @@ class ProductsController < ApplicationController
         product_name: product_detail.product_name,
         product_image: product_detail.product_image,
         product_press: product_detail.product_press,
-        product_price: product.price,
+        product_price: product.price.to_f,
         product_state: product.state,
-        seller_name: seller.username,
+        seller_name: seller.user_detail.user_name,
         seller_phone: seller.phone
       }
     )
@@ -306,7 +305,7 @@ class ProductsController < ApplicationController
         message: Global::SUCCESS,
         data: {
           comment_id: comment.id,
-          date: comment.created_at
+          date: comment.created_at.to_s
         }
       )
     else
@@ -352,7 +351,7 @@ class ProductsController < ApplicationController
   end
 
   def show_comments
-    product = params[:product_id]
+    product = Product.find(params[:product_id])
     comments = product.comments
     render json: response_json(
       true,
@@ -364,7 +363,7 @@ class ProductsController < ApplicationController
             user_id: comment.user_id,
             content: comment.content,
             score: comment.score,
-            date: comment.created_at
+            date: comment.created_at.to_s
           }
         end
       }

@@ -23,12 +23,12 @@ class NoticesController < ApplicationController
       data: {
         notices: notices.collect do |notice|
           {
-            notice_type: notice.type,
+            notice_type: notice.notice_type,
             notice_user_id: notice.user_id,
             notice_user_name: notice.user.user_detail.user_name,
             notice_title: notice.title,
             notice_content: notice.content,
-            notice_create_time: notice.created_at
+            notice_create_time: notice.created_at.to_s
           }
         end
       }
@@ -59,7 +59,7 @@ class NoticesController < ApplicationController
         message: Global::SUCCESS,
         data: {
           notice_id: notice.id,
-          notice_create_time: notice.created_at
+          notice_create_time: notice.created_at.to_s
         }
       )
     else

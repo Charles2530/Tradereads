@@ -339,7 +339,7 @@ class UsersController < ApplicationController
             product_name: product.product_detail.product_name,
             product_price: product.price,
             buyer_id: order.user_id,
-            order_item_time: order_item.created_at,
+            order_item_time: order_item.created_at.to_s,
             order_item_total_price: product.price * order_item.number
           }
         end

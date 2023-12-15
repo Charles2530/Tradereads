@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :notice_records
-  resources :notices
-  resources :comments
-  resources :followships
   scope "api" do
+    resources :notice_records
+    resources :notices
+    resources :comments
+    resources :followships
     post :register, to: 'users#register', as: :user_register
     post :login, to: 'users#login', as: :user_login
     get :logout, to: 'users#logout', as: :user_logout
