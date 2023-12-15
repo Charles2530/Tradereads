@@ -58,10 +58,12 @@
           />
           <el-upload
             ref="uploadRef"
+            :http-request="uploadHttpRequest"
             class="upload-demo"
-            :action="uploadUrl"
             :show-file-list="false"
             accept="image/*"
+            :file-input="fileInputRef"
+            :file-list="fileList"
           >
             <template #trigger>
               <el-button
@@ -162,12 +164,13 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, nextTick } from "vue";
 import {
   getUser,
   modify_username,
   modify_address,
   modify_password,
+  uploadAvatar,
 } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -200,8 +203,34 @@ export default {
     const new_address = ref("");
     const old_password = ref("");
     const new_password = ref("");
+    // upload avatar
+    const fileList = ref([]);
+    const fileInputRef = ref(null);
 
-    const uploadUrl = import.meta.env.VITE_APP_BASE_API + "/user/upload_avatar";
+    const uploadHttpRequest = ({ file }) => {
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append("avatar", file);
+        console.log(formData);
+        uploadAvatar(store.getToken, formData)
+          .then((res) => {
+            if (res.success) {
+              ElMessage({
+                message: "头像上传成功",
+                type: "success",
+              });
+              resolve(res);
+            } else {
+              ElMessage({ message: res.message, type: "error" });
+              reject(res);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            reject(err);
+          });
+      });
+    };
 
     // Methods
     const personalMessageInfo = () => {
@@ -237,11 +266,7 @@ export default {
     };
 
     const updateUserInfo = () => {
-      // Call API functions here (modify_username and modify_address)
-      // Update loginInfo after successful API calls
-      // Close the dialog and reset input fields
       openUserInformation.value = false;
-      // Implement actual API calls and update logic
       updateUserAddress();
       updateUserName();
     };
@@ -313,7 +338,9 @@ export default {
       updateUserInfo,
       updateUserPasswordInfo,
       personalMessageInfo,
-      uploadUrl,
+      uploadHttpRequest,
+      fileInputRef,
+      fileList,
     };
   },
 };
