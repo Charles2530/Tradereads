@@ -86,29 +86,34 @@
         <el-button
           type="info"
           class="text-white font-semibold hover:underline"
-          @click="openUserInformation = true"
+          @click="personalMessageInfo"
           plain
         >
           修改个人信息
         </el-button>
       </div>
-      <el-dialog title="修改个人信息" v-model="openUserInformation" width="25%">
+      <el-dialog v-model="openUserInformation" width="25%">
         <div>
           <el-text class="mx-1 mb-4" type="success"
             >请修改你的用户信息!</el-text
           >
-          <el-input
-            v-model="new_username"
-            placeholder="新用户名"
-            autocomplete="on"
-            clearable
-          ></el-input>
-          <el-input
-            v-model="new_address"
-            placeholder="新购买地址"
-            autocomplete="on"
-            clearable
-          ></el-input>
+          <div class="mt-2">
+            <el-text class="mx-1" type="info">新用户名</el-text>
+            <el-input
+              v-model="new_username"
+              class="my-2"
+              placeholder="新用户名"
+              autocomplete="on"
+              clearable
+            ></el-input>
+            <el-text class="mx-1" type="info">新购买地址</el-text>
+            <el-input
+              v-model="new_address"
+              placeholder="新购买地址"
+              autocomplete="on"
+              clearable
+            ></el-input>
+          </div>
         </div>
         <template v-slot:footer>
           <div style="display: flex; justify-content: space-between">
@@ -129,13 +134,14 @@
         修改用户密码
       </el-button>
     </div>
-    <el-dialog title="修改用户密码" v-model="openUserPassword" width="25%">
+    <el-dialog v-model="openUserPassword" width="25%">
       <div>
         <el-text class="mx-1 mb-4" type="success">请修改你的密码!</el-text>
         <el-input
           v-model="old_password"
           placeholder="请输入旧密码"
           clearable
+          class="my-2"
         ></el-input>
         <el-input
           v-model="new_password"
@@ -198,6 +204,11 @@ export default {
     const uploadUrl = import.meta.env.VITE_APP_BASE_API + "/user/upload_avatar";
 
     // Methods
+    const personalMessageInfo = () => {
+      openUserInformation.value = true;
+      new_username.value = loginInfo.user_name;
+      new_address.value = loginInfo.buy_address;
+    };
 
     const createdUserInformation = () => {
       getUser(store.getToken)
@@ -301,6 +312,7 @@ export default {
       new_password,
       updateUserInfo,
       updateUserPasswordInfo,
+      personalMessageInfo,
       uploadUrl,
     };
   },

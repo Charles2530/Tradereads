@@ -17,11 +17,12 @@
         <el-icon class="ml-1 mr-4"><MessageBox /></el-icon>
         我的购买订单
       </el-button>
-      <el-dialog v-model="showOrderDialog" title="订单列表" width="80%">
+      <el-dialog v-model="showOrderDialog" width="80%">
         <div v-if="orders.length === 0" class="text-center">
           <el-text type="warning">暂无订单</el-text>
         </div>
         <div v-else>
+          <h1 class="text-3xl text-center mb-4">订单列表</h1>
           <div class="bg-gray-600/80 p-4 rounded-lg shadow-md order_container">
             <el-scrollbar max-height="450px">
               <order-item
@@ -48,15 +49,12 @@
         <el-icon class="ml-1 mr-4"><Files /></el-icon>
         我的销售订单
       </el-button>
-      <el-dialog
-        v-model="showSalesOrderDialog"
-        title="销售订单列表"
-        width="80%"
-      >
+      <el-dialog v-model="showSalesOrderDialog" width="80%">
         <div v-if="salesOrders.length === 0" class="text-center">
           <el-text type="warning">暂无销售订单</el-text>
         </div>
         <div v-else>
+          <h1 class="text-3xl text-center mb-4">销售订单列表</h1>
           <div
             class="bg-gray-600/80 p-4 rounded-lg shadow-md sales-order-container"
           >
@@ -81,11 +79,12 @@
         <el-icon class="ml-1 mr-4"><Reading /></el-icon>
         我的销售商品
       </el-button>
-      <el-dialog v-model="showProductDialog" title="我的商品列表" width="80%">
+      <el-dialog v-model="showProductDialog" width="80%">
         <div v-if="products.length === 0" class="text-center">
           <el-text type="warning">暂无销售商品</el-text>
         </div>
         <div v-else>
+          <h1 class="text-3xl text-center mb-4">我的商品列表</h1>
           <div
             class="bg-gray-600/80 p-4 rounded-lg shadow-md product-container"
           >

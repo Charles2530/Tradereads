@@ -14,9 +14,11 @@
       <div>
         <el-button
           @click="showCreateNoticeDialog"
-          plain
+          type="success"
           class="btn-create-notice"
+          plain
         >
+          <el-icon class="mr-3"><EditPen /></el-icon>
           发布公告
         </el-button>
       </div>
@@ -33,22 +35,22 @@
     </div>
   </div>
   <div>
-    <el-dialog v-model="createNoticeDialog" title="发布公告" width="50%">
+    <el-dialog v-model="createNoticeDialog" width="50%">
       <el-form
         :model="newNotice"
         ref="createNoticeForm"
         :rules="createNoticeFormRules"
       >
+        <el-text class="mx-1 launch-notice" type="info">发布公告</el-text>
         <el-form-item label="标题" prop="title">
-          <el-input v-model="newNotice.title"></el-input>
+          <el-input v-model="newNotice_title"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input type="textarea" v-model="newNotice.content"></el-input>
+          <el-input type="textarea" v-model="newNotice_content"></el-input>
         </el-form-item>
       </el-form>
-
       <div class="dialog-footer">
-        <el-button @click="createNoticeDialogVisible = false">取消</el-button>
+        <el-button @click="createNoticeDialog = false">取消</el-button>
         <el-button type="primary" @click="createNoticeFunc">发布</el-button>
       </div>
     </el-dialog>
@@ -56,7 +58,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, nextTick } from "vue";
 import { userStore } from "@/store/user.js";
 import { createNotice, showCurrentNotices } from "@/api/notice.js";
 import PublicNoticeList from "@c/notice/PublicNoticeList.vue";
@@ -79,6 +81,7 @@ const books = computed(() => {
     return item.notice_type === 2;
   });
 });
+
 const getNotices = () => {
   showCurrentNotices().then((res) => {
     if (res.success) {
@@ -95,10 +98,14 @@ const getNotices = () => {
 };
 
 const createNoticeDialog = ref(false);
-const newNotice = {
-  title: "",
-  content: "",
-};
+const newNotice_title = ref("");
+const newNotice_content = ref("");
+const newNotice = computed(() => {
+  return {
+    title: newNotice_title.value,
+    content: newNotice_content.value,
+  };
+});
 const createNoticeFormRules = {
   title: [
     { required: true, message: "请输入标题", trigger: "blur" },
@@ -113,30 +120,37 @@ const createNoticeFormRules = {
 const showCreateNoticeDialog = () => {
   createNoticeDialog.value = true;
 };
+const createNoticeForm = ref(null);
 
 const createNoticeFunc = () => {
-  const form = ref("createNoticeForm");
-  form.value.validate(async (valid) => {
-    if (valid) {
-      try {
-        createNotice(newNotice).then((res) => {
-          if (res.success) {
-            console.log(res.data.notice);
-            getNotices();
-            newNotice.title = "";
-            newNotice.content = "";
-            createNoticeDialog.value = false;
-          } else {
-            ElMessage({
-              showClose: true,
-              type: "error",
-              message: res.message,
-            });
-          }
-        });
-      } catch (error) {
-        console.error(error);
-      }
+  nextTick(() => {
+    if (createNoticeForm.value) {
+      createNoticeForm.value.validate(async (valid) => {
+        if (valid) {
+          createNotice({
+            title: newNotice_title.value,
+            content: newNotice_content.value,
+          }).then((res) => {
+            if (res.success) {
+              getNotices();
+              newNotice_title.value = "";
+              newNotice_content.value = "";
+              createNoticeDialog.value = false;
+              ElMessage({
+                showClose: true,
+                type: "success",
+                message: res.message,
+              });
+            } else {
+              ElMessage({
+                showClose: true,
+                type: "error",
+                message: res.message,
+              });
+            }
+          });
+        }
+      });
     }
   });
 };
@@ -157,11 +171,16 @@ const createNoticeFunc = () => {
 }
 
 .btn-create-notice {
-  background-color: #409eff;
-  color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+}
+.launch-notice {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: block;
+  text-align: center !important;
 }
 </style>
