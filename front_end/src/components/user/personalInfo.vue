@@ -56,27 +56,7 @@
             class="my-avatar rounded-full mb-3"
             alt="avatar"
           />
-          <el-upload
-            ref="uploadRef"
-            :http-request="uploadHttpRequest"
-            class="upload-demo"
-            :show-file-list="false"
-            accept="image/*"
-            :file-input="fileInputRef"
-            :file-list="fileList"
-          >
-            <template #trigger>
-              <el-button
-                type="primary"
-                size="large"
-                class="mt-4 m-12 text-white font-semibold hover:underline"
-                plain
-              >
-                <el-icon class="mr-4"><Camera /></el-icon>
-                上传头像</el-button
-              >
-            </template>
-          </el-upload>
+          <personal-avatar-upload />
         </el-col>
       </el-row>
     </el-card>
@@ -164,13 +144,12 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, nextTick } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import {
   getUser,
   modify_username,
   modify_address,
   modify_password,
-  uploadAvatar,
 } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { useRouter } from "vue-router";
@@ -203,34 +182,6 @@ export default {
     const new_address = ref("");
     const old_password = ref("");
     const new_password = ref("");
-    // upload avatar
-    const fileList = ref([]);
-    const fileInputRef = ref(null);
-
-    const uploadHttpRequest = ({ file }) => {
-      return new Promise((resolve, reject) => {
-        const formData = new FormData();
-        formData.append("avatar", file);
-        console.log(formData);
-        uploadAvatar(store.getToken, formData)
-          .then((res) => {
-            if (res.success) {
-              ElMessage({
-                message: "头像上传成功",
-                type: "success",
-              });
-              resolve(res);
-            } else {
-              ElMessage({ message: res.message, type: "error" });
-              reject(res);
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            reject(err);
-          });
-      });
-    };
 
     // Methods
     const personalMessageInfo = () => {
@@ -338,9 +289,6 @@ export default {
       updateUserInfo,
       updateUserPasswordInfo,
       personalMessageInfo,
-      uploadHttpRequest,
-      fileInputRef,
-      fileList,
     };
   },
 };
