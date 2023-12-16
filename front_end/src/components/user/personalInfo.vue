@@ -56,25 +56,7 @@
             class="my-avatar rounded-full mb-3"
             alt="avatar"
           />
-          <el-upload
-            ref="uploadRef"
-            class="upload-demo"
-            :action="uploadUrl"
-            :show-file-list="false"
-            accept="image/*"
-          >
-            <template #trigger>
-              <el-button
-                type="primary"
-                size="large"
-                class="mt-4 m-12 text-white font-semibold hover:underline"
-                plain
-              >
-                <el-icon class="mr-4"><Camera /></el-icon>
-                上传头像</el-button
-              >
-            </template>
-          </el-upload>
+          <personal-avatar-upload />
         </el-col>
       </el-row>
     </el-card>
@@ -201,8 +183,6 @@ export default {
     const old_password = ref("");
     const new_password = ref("");
 
-    const uploadUrl = import.meta.env.VITE_APP_BASE_API + "/user/upload_avatar";
-
     // Methods
     const personalMessageInfo = () => {
       openUserInformation.value = true;
@@ -237,11 +217,7 @@ export default {
     };
 
     const updateUserInfo = () => {
-      // Call API functions here (modify_username and modify_address)
-      // Update loginInfo after successful API calls
-      // Close the dialog and reset input fields
       openUserInformation.value = false;
-      // Implement actual API calls and update logic
       updateUserAddress();
       updateUserName();
     };
@@ -313,7 +289,6 @@ export default {
       updateUserInfo,
       updateUserPasswordInfo,
       personalMessageInfo,
-      uploadUrl,
     };
   },
 };

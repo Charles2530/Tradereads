@@ -70,3 +70,12 @@ export async function modify_address(user_id, params) {
   });
   return response;
 }
+
+export async function uploadAvatar(user_id, params) {
+  let response = await service({
+    url: "/users/" + user_id + "/upload_avatar",
+    method: "post",
+    params,
+  });
+  return response;
+}
