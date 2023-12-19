@@ -71,7 +71,7 @@ export default {
             location.reload();
         },
         updataData(data) {
-
+ 
         }
     },
     mounted() {

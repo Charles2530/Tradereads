@@ -11,7 +11,7 @@ class UserDetail < ApplicationRecord
             length: { in: 6..20, message: "The length of password must >=6 and <=20 ." }
 
   validates :gender, inclusion: { in: %w(male female), message: "%{value} is not available gender." }
-  validates :pay_type, inclusion: { in: %w(Wechat Alipay Paypal Card),
+  validates :pay_type, inclusion: { in: %w(wechat alipay bank),
                                     message: "Pay type %{value} is not supported." }
 
 end

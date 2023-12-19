@@ -61,7 +61,7 @@
   position: absolute;
   height: 290px;
   width: 50%;
-  background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+  background: aliceblue url(../public/1.jpg) no-repeat center 0px;
   top: 2px;
   background-size: contain;
   border-radius: 30px;
@@ -115,8 +115,8 @@ export default {
   },
   computed: {
     imgg: function () {
-      return "background-image: url(../../public/" + this.product_image + ");"
-      // return "background-image: url(../../public/" + "4.jpg" + ");"
+      //return "background-image: url(src/public/" + this.product_image + ");"
+      return "background-image: url(src/public/" + "2.jpg" + ");"
     }
   },
   props: {
