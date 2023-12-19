@@ -82,7 +82,7 @@
     position: relative;
     height: 400px;
     width: 30%;
-    background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+    background: aliceblue url(../../public/1.jpg) no-repeat center 0px;
     top: 60px;
     left: 80px;
     background-size: contain;
@@ -482,8 +482,8 @@ export default {
 
     computed: {
         imgg: function () {
-            //return "background-image: url(../../../public/" + this.product_image + ");"
-            return "background-image: url(../../../public/" + "1.jpg" + ");"
+            //return "background-image: url(../../public/" + this.product_image + ");"
+            return "background-image: url(../../public/" + "1.jpg" + ");"
         }
     },
     mounted() {
