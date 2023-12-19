@@ -341,7 +341,7 @@ export default {
     openMessage(message) {
       ElMessage({
         showClose: true,
-        message: message,
+        message: "成功添加购物车！",
         type: "success",
       });
     },
