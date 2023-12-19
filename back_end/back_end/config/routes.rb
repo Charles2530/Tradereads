@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get :show_current_orders, to: 'users#show_current_orders', as: :user_show_current_orders
     get :show_sell_orders, to: 'users#show_sell_orders', as: :user_show_sell_orders
     get :carts_to_orders, to: 'users#carts_to_orders', as: :user_carts_to_orders
+    get :have_new_notice, to: 'notices#have_new_notice', as: :notice_have_new_notice
     resources :users do
       post :upload_avatar, to: 'upload#upload_avatar', as: :user_upload_avatar
       post :modify_username, to: 'users#modify_username', as: :user_modify_username

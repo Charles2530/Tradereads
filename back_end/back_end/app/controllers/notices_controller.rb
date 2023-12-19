@@ -18,7 +18,7 @@ class NoticesController < ApplicationController
     end
 
     notices.each do |notice|
-      unless NoticeRecord.find(notice: notice, user: user)
+      unless NoticeRecord.find_by(notice: notice, user: user)
         notice_record = NoticeRecord.new(notice: notice, user: user, readed: false)
         if notice_record.valid?
           notice_record.save
@@ -33,7 +33,7 @@ class NoticesController < ApplicationController
       message: Global::SUCCESS,
       data: {
         notices: notices.collect do |notice|
-          notice_record = NoticeRecord.find(notice: notice, user: user)
+          notice_record = NoticeRecord.find_by(notice: notice, user: user)
           {
             notice_type: notice.notice_type,
             notice_user_id: notice.user_id,
@@ -47,9 +47,46 @@ class NoticesController < ApplicationController
       }
     )
     notices.each do |notice|
-      notice_record = NoticeRecord.find(notice: notice, user: user)
+      notice_record = NoticeRecord.find_by(notice: notice, user: user)
       notice_record.readed = true
+      notice_record.save
     end
+  end
+
+  def have_new_notice
+    user = current_user
+    @notices.each do |notice|
+      if user.followings.include? notice.user
+        notice_record = NoticeRecord.find_by(notice: notice, user: user)
+        if notice_record == null or notice_record.readed == false
+          render status: 200, json: response_json(
+            true,
+            message: Global::SUCCESS,
+            data: {
+              have_new_notice: true
+            }
+          ) and return
+        end
+      elsif notice.user.right == 1
+        notice_record = NoticeRecord.find_by(notice: notice, user: user)
+        if notice_record == null or notice_record.readed == false
+          render status: 200, json: response_json(
+            true,
+            message: Global::SUCCESS,
+            data: {
+              have_new_notice: true
+            }
+          ) and return
+        end
+      end
+    end
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        have_new_notice: false
+      }
+    )
   end
 
 

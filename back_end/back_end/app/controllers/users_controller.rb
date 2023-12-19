@@ -67,7 +67,7 @@ class UsersController < ApplicationController
         ) and return
     end
 
-    user_detail = UserDetail.find_by(user: user)
+    user_detail = user.user_detail
     unless user_detail.password == _password
       render json: response_json(
         false,
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
   def modify_username
     @user = User.find(params[:user_id])
     user = @user
-    user_detail = UserDetail.find_by(user: user)
+    user_detail = user.user_detail
     if params[:new_username]
       user_detail.user_name = params[:new_username]
     end
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
   def modify_address
     @user = User.find(params[:user_id])
     user = @user
-    user_detail = UserDetail.find_by(user: user)
+    user_detail = user.user_detail
     if params[:new_address]
       user_detail.buy_address = params[:new_address]
     end
@@ -144,7 +144,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
     user = @user
     puts "modify_password-------------#{user.id}"
-    user_detail = UserDetail.find_by(user: user)
+    user_detail = user.user_detail
     if user_detail.password != params[:old_password]
       render json: response_json(
         false,
@@ -169,9 +169,9 @@ class UsersController < ApplicationController
   def modify_pay_type
     @user = User.find(params[:user_id])
     user = @user
-    user_detail = UserDetail.find_by(user: user)
-    if params[:new_pay_type]
-      user_detail.pay_type = params[:new_pay_type]
+    user_detail = user.user_detail
+    if params[:pay_type]
+      user_detail.pay_type = params[:pay_type]
     end
     if user_detail.save
       render status: 200, json: response_json(
@@ -315,7 +315,7 @@ class UsersController < ApplicationController
               product = item.product
               product_detail = ProductDetail.find_by(product: product)
               seller = product.user
-              seller_detail = UserDetail.find_by(user: seller)
+              seller_detail = seller.user_detail
               {
                 order_item_id: item.id,
                 product_image: product_detail.product_image,
@@ -466,7 +466,7 @@ class UsersController < ApplicationController
         message: ShowError::SHOW_FAIL
       ) and return
     end
-    user_detail = UserDetail.find_by(user: user)
+    user_detail = user.user_detail
     render status: 200, json: response_json(
       true,
       message: ShowError::SHOW_SUCCEED,
