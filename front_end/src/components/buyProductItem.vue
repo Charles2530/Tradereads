@@ -253,7 +253,7 @@ export default {
     deliverParams() {
       let i = this.product_id
       this.$router.push({
-        name: "Pruductdetail",
+        name: "Productdetail",
         params: {
           id: i
         }
