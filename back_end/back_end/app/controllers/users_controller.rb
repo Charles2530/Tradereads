@@ -20,14 +20,16 @@ class UsersController < ApplicationController
 
     user = User.new(phone: params[:phone], right: 0)
     gender = params[:gender] || "male"
-    pay_type = "Alipay"
+    pay_type = "alipay"
     user_detail = UserDetail.new(user: user,
                                  password: params[:password],
                                  user_name: params[:user_name],
                                  gender: gender,
                                  pay_type: pay_type)
-    if user.valid? and user_detail.valid?
+    wallet = Wallet.new(user: user, money_sum: 0.0)
+    if user.valid? and user_detail.valid? and wallet.valid?
       user.save
+      wallet.save
       user_detail.save
       session[:current_userid] = user.id
       puts "register ------------------------------ #{session[:current_userid]}"
@@ -161,6 +163,26 @@ class UsersController < ApplicationController
           message: ModifyUserError::MODIFY_PASSWORD_FAIL
         )
       end
+    end
+  end
+
+  def modify_pay_type
+    @user = User.find(params[:user_id])
+    user = @user
+    user_detail = UserDetail.find_by(user: user)
+    if params[:new_pay_type]
+      user_detail.pay_type = params[:new_pay_type]
+    end
+    if user_detail.save
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      )
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_120441) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_19_091004) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "product_id", null: false
@@ -124,6 +124,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_120441) do
     t.integer "right"
   end
 
+  create_table "wallets", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "money_sum"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wallets_on_user_id"
+  end
+
   add_foreign_key "carts", "products"
   add_foreign_key "carts", "users"
   add_foreign_key "comments", "products"
@@ -139,4 +147,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_120441) do
   add_foreign_key "product_details", "products"
   add_foreign_key "products", "users"
   add_foreign_key "user_details", "users"
+  add_foreign_key "wallets", "users"
 end

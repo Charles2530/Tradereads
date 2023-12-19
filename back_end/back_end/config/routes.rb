@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :notices
     resources :comments
     resources :followships
+    get :wallet, to: 'wallets#show_wallet', as: :show_wallet
+    post :wallet_charge, to: 'wallets#wallet_charge', as: :wallet_charge
     post :register, to: 'users#register', as: :user_register
     post :login, to: 'users#login', as: :user_login
     get :logout, to: 'users#logout', as: :user_logout
@@ -12,9 +14,11 @@ Rails.application.routes.draw do
     get :show_sell_orders, to: 'users#show_sell_orders', as: :user_show_sell_orders
     get :carts_to_orders, to: 'users#carts_to_orders', as: :user_carts_to_orders
     resources :users do
+      post :upload_avatar, to: 'upload#upload_avatar', as: :user_upload_avatar
       post :modify_username, to: 'users#modify_username', as: :user_modify_username
       post :modify_address, to: 'users#modify_address', as: :user_modify_address
       post :modify_password, to: 'users#modify_password', as: :user_modify_password
+      post :modify_pay_type, to: 'users#modify_pay_type', as: :user_modify_pay_type
       get :show_product_list, to: 'users#show_product_list', as: :user_show_product_list
       get :follow_user, to: 'users#follow_user', as: :follow_user
       get :follow_list, to: 'users#follow_list', as: :follow_list
@@ -42,6 +46,7 @@ Rails.application.routes.draw do
       get :show_comments, to: 'products#show_comments', as: :product_show_comments
       post :check_product, to: 'products#check_product', as: :product_check
     end
+
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
