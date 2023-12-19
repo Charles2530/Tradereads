@@ -6,6 +6,25 @@
     ></user-info-item-simplify>
   </div>
   <div class="button-container">
+    <div class="button-container">
+      <!-- 我的钱包展开按钮 -->
+      <div class="mb-4">
+        <el-button
+          type="danger"
+          class="text-white font-semibold hover:underline"
+          @click="openMoneyDialog"
+          plain
+        >
+          <el-icon class="ml-1 mr-4"><CreditCard /></el-icon>
+          查看我的钱包
+        </el-button>
+        <el-dialog v-model="showMoneyDialog" width="30%">
+          <el-scrollbar max-height="450px">
+            <personal-wallet :resMoney="resMoney"></personal-wallet>
+          </el-scrollbar>
+        </el-dialog>
+      </div>
+    </div>
     <!-- 订单列表展开按钮 -->
     <div class="mb-4">
       <el-button
@@ -128,12 +147,15 @@ import { showProductsList } from "@/api/product.js";
 import { getUser } from "@/api/user.js";
 import { userStore } from "@/store/user.js";
 import { showCurrentUserFollowings } from "@/api/follow";
+import { showWallet } from "@/api/wallet";
+import PersonalWallet from "@c/cart/personalWallet.vue";
 export default {
   name: "personalMode",
   components: {
     OrderItem,
     ProductItem,
     followingList,
+    PersonalWallet,
   },
   props: {
     user_id: {
@@ -147,9 +169,11 @@ export default {
     const products = ref([]);
     const showOrderDialog = ref(false);
     const showProductDialog = ref(false);
+    const showMoneyDialog = ref(false);
     const avatar = ref("");
     const user_name = ref("");
     const phone = ref("");
+    const resMoney = ref(0);
     const user_id = props.user_id === -1 ? store.getToken : props.user_id;
     // Lifecycle hook
     onMounted(() => {
@@ -164,6 +188,22 @@ export default {
     });
 
     // Methods
+    const openMoneyDialog = () => {
+      showWallet(user_id).then((res) => {
+        if (res.success) {
+          console.log(res.data);
+          resMoney.value = res.data.money_sum;
+          showMoneyDialog.value = true;
+        } else {
+          ElMessage({
+            showClose: true,
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
+    };
+
     const openOrderDialog = () => {
       showCurrentUserOrders().then((res) => {
         if (res.success) {
@@ -236,6 +276,9 @@ export default {
       salesOrders,
       showSalesOrderDialog,
       openSalesOrderDialog,
+      showMoneyDialog,
+      openMoneyDialog,
+      resMoney,
     };
   },
 };

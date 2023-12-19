@@ -31,7 +31,8 @@ const MyItem = () => import("@/views/Item/MyItem.vue");
 //搜索界面
 const Search = () => import("@/views/search/search.vue");
 //商品详情界面
-const Pruductdetail = () => import("@/views/productBuyCenter/productdetail.vue");
+const ProductDetail = () =>
+  import("@/views/productBuyCenter/productdetail.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -63,7 +64,7 @@ const routes = [
     name: "404Page",
     component: Page404,
   },
-{
+  {
     path: "/ordersManagement",
     name: "OrdersManagement",
     component: OrdersManagement,
@@ -110,10 +111,10 @@ const routes = [
     component: Search,
   },
   {
-    path: "/Pruductdetail/:id",
-    name: "Pruductdetail",
-    component: Pruductdetail,
-    props: true
+    path: "/ProductDetail/:id",
+    name: "ProductDetail",
+    component: ProductDetail,
+    props: true,
   },
 ];
 
