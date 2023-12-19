@@ -64,7 +64,7 @@
   <!-- 修改个人信息弹窗 -->
   <div class="button-container">
     <div>
-      <div class="mb-4">
+      <div class="mb-4 mx-2">
         <el-button
           type="info"
           class="text-white font-semibold hover:underline"
