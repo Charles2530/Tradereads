@@ -30,6 +30,9 @@
           <el-tab-pane label="我的关注" name="Config">
             <follow-notice-list :books="books" />
           </el-tab-pane>
+          <el-tab-pane label="我的销售" name="Seller">
+            <seller-notice-list :messages="sellerMessages" />
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -63,6 +66,7 @@ import { userStore } from "@/store/user.js";
 import { createNotice, showCurrentNotices } from "@/api/notice.js";
 import PublicNoticeList from "@c/notice/PublicNoticeList.vue";
 import FollowNoticeList from "@c/notice/FollowNoticeList.vue";
+import SellerNoticeList from "@c/notice/SellerNoticeList.vue";
 const activeName = ref("first");
 const AllNotice = ref([]);
 const store = userStore();
@@ -79,6 +83,12 @@ const notices = computed(() => {
 const books = computed(() => {
   return AllNotice.value.filter((item) => {
     return item.notice_type === 2;
+  });
+});
+
+const sellerMessages = computed(() => {
+  return AllNotice.value.filter((item) => {
+    return item.notice_type === 3;
   });
 });
 
