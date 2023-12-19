@@ -52,11 +52,9 @@
     <div class="bought" @click="buything">
       
     </div>
-    <div class="goto" @click="deliverParams()">
+    <!-- <div class="goto" @click="deliverParams()">
       
-      <!-- <router-link to="/Pruductdetail"></router-link> -->
-
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -93,7 +91,7 @@
   position: absolute;
   height: 300px;
   width: 42%;
-  background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+  background: aliceblue url(../public/1.jpg) no-repeat center 0px;
   top: 15px;
   background-size: contain;
 
@@ -247,8 +245,8 @@ export default {
   },
   computed: {
     imgg: function () {
-      return "background-image: url(../../public/" + this.product_image + ");"
-      // return "background-image: url(../../public/" + "4.jpg" + ");"
+      //return "background-image: url(src/public/" + this.product_image + ");"
+      return "background-image: url(src/public/" + "4.jpg" + ");"
     }
   },
   methods: {
@@ -264,7 +262,7 @@ export default {
     openMessage(message) {
       ElMessage({
         showClose: true,
-        message: message,
+        message: "加入购物车成功！",
         type: "success",
       });
     },
@@ -315,7 +313,7 @@ export default {
       required: true,
     },
     product_image: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
