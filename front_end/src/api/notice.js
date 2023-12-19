@@ -17,4 +17,11 @@ export async function showCurrentNotices() {
   });
 }
 
+export async function unReadNotice() {
+  return await service({
+    url: "/have_new_notice",
+    method: "get",
+  });
+}
+
 //delete
