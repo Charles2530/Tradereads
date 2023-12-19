@@ -25,10 +25,17 @@
 <script>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { unReadNotice } from "@/api/notice";
+import { ElMessage } from "element-plus";
 export default {
   setup() {
     const router = useRouter();
     const hasNotice = ref(false);
+    unReadNotice().then((res) => {
+      if (res.success) {
+        hasNotice.value = res.data.have_new_notice;
+      }
+    });
     const goNotice = () => {
       hasNotice.value = false;
       router.push("/notice");
@@ -36,6 +43,7 @@ export default {
     return {
       goNotice,
       hasNotice,
+      unReadNotice,
     };
   },
 };
