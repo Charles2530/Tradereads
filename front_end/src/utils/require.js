@@ -1,7 +1,7 @@
 import axios from "axios";
 /* Mock 使用 */
-// let baseURL = import.meta.env.VITE_APP_BASE_API;
-let baseURL = "/api";
+let baseURL = import.meta.env.VITE_APP_BASE_API;
+// let baseURL = "/api";
 
 const service = axios.create({
   baseURL,

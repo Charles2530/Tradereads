@@ -17,11 +17,14 @@ class UploadController < ApplicationController
         message: Global::FAIL
       ) and return
     end
+    if smms_params['success'] == false
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
     user_detail = user.user_detail
     puts "data---------#{smms_params['data']}"
-    if user_detail.avatar != null
-
-    end
     user_detail.avatar = smms_params['data']['url']
     if user_detail.save
       render status: 200, json: response_json(

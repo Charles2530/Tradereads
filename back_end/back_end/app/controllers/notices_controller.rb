@@ -55,10 +55,20 @@ class NoticesController < ApplicationController
 
   def have_new_notice
     user = current_user
+    @notices = Notice.all
+    unless @notices
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS,
+        data: {
+          have_new_notice: false
+        }
+      ) and return
+    end
     @notices.each do |notice|
       if user.followings.include? notice.user
         notice_record = NoticeRecord.find_by(notice: notice, user: user)
-        if notice_record == null or notice_record.readed == false
+        if notice_record == nil or notice_record.readed == false
           render status: 200, json: response_json(
             true,
             message: Global::SUCCESS,
@@ -69,7 +79,7 @@ class NoticesController < ApplicationController
         end
       elsif notice.user.right == 1
         notice_record = NoticeRecord.find_by(notice: notice, user: user)
-        if notice_record == null or notice_record.readed == false
+        if notice_record == nil or notice_record.readed == false
           render status: 200, json: response_json(
             true,
             message: Global::SUCCESS,

@@ -31,8 +31,8 @@ class UsersController < ApplicationController
       user.save
       wallet.save
       user_detail.save
-      session[:current_userid] = user.id
-      puts "register ------------------------------ #{session[:current_userid]}"
+      set_current_user(User.find(user.id))
+      puts "register ------------------------------ #{current_user.id}"
       render status: 200, json: response_json(
         true,
         message: RegisterError::REGISTER_SUCCESS,
@@ -75,8 +75,8 @@ class UsersController < ApplicationController
       ) and return
     end
 
-    session[:current_userid] = user.id
-    puts "--------------#{session[:current_userid]}---------------------"
+    set_current_user(User.find(user.id))
+    puts "--------------#{current_user.id}---------------------"
     render status: 200, json: response_json(
       true,
       message: LoginError::LOGIN_SUCCESS,
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
 
   # GET /api/logout
   def logout
-    reset_session
+    set_current_user(nil)
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS
@@ -254,7 +254,6 @@ class UsersController < ApplicationController
     carts = []
     order = Order.new(user: current_user)
     puts order
-    puts "--------------#{session[:current_userid]}---------------------"
     unless order.valid?
       render json: response_json(
         false,

@@ -115,7 +115,8 @@ class ProductsController < ApplicationController
         product_price: product.price.to_f,
         product_state: product.state,
         seller_name: seller.user_detail.user_name,
-        seller_phone: seller.phone
+        seller_phone: seller.phone,
+        seller_id: seller.id
       }
     )
   end
