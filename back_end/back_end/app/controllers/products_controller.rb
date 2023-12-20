@@ -85,7 +85,8 @@ class ProductsController < ApplicationController
             product_press: product_detail.product_press,
             product_type: product_detail.product_type,
             seller_name: seller.user_detail.user_name,
-            sell_address: product.sell_address
+            sell_address: product.sell_address,
+            seller_id: seller.id
           }
         end
       }
@@ -411,51 +412,51 @@ class ProductsController < ApplicationController
   end
 
   # POST /api/products
-  def create
-    seller = current_user
+def create
+  seller = current_user
 
-    price, sell_address, store = params[:price], params[:sell_address], params[:store]
-    unless price || sell_address || store
-      render json: response_json(
-        false,
-        message: ProductError::CREATE_FAIL
-      ) and return
-    end
-
-    product = Product.new(user: seller,
-                          price: price,
-                          sell_address: sell_address,
-                          store: store,
-                          state: store == 0 ? "StockOut" : "Available",
-                          check_state: 0,
-                          score_per: 0.0)
-    name, image, press, type = params[:product_name], params[:product_image], params[:product_press], params[:product_type]
-    product_detail = ProductDetail.new(product: product,
-                                       product_name: name,
-                                       product_image: image,
-                                       product_press: press,
-                                       product_type: type)
-
-    notice = Notice.new(title: "新商品上新了", notice_type: 1, user: seller, content: "添加了商品 #{name}")
-    if product.valid? && product_detail.valid?
-      product.save
-      product_detail.save
-
-      render status: 200, json: response_json(
-        true,
-        message: ProductError::CREATE_SUCCEED,
-        data: {
-          product_id: product.id,
-          state: product.state
-        }
-      )
-    else
-      render json: response_json(
-        false,
-        message: ProductError::CREATE_FAIL
-      )
-    end
+  price, sell_address, store = params[:price], params[:sell_address], params[:store]
+  unless price || sell_address || store
+    render json: response_json(
+      false,
+      message: ProductError::CREATE_FAIL
+    ) and return
   end
+
+  product = Product.new(user: seller,
+                        price: price,
+                        sell_address: sell_address,
+                        store: store,
+                        state: store == 0 ? "StockOut" : "Available",
+                        check_state: 0,
+                        score_per: 0.0)
+  name, image, press, type = params[:product_name], params[:product_image], params[:product_press], params[:product_type]
+  product_detail = ProductDetail.new(product: product,
+                                     product_name: name,
+                                     product_image: image,
+                                     product_press: press,
+                                     product_type: type)
+
+  notice = Notice.new(title: "新商品上新了", notice_type: 1, user: seller, content: "添加了商品 #{name}")
+  if product.valid? && product_detail.valid?
+    product.save
+    product_detail.save
+
+    render status: 200, json: response_json(
+      true,
+      message: ProductError::CREATE_SUCCEED,
+      data: {
+        product_id: product.id,
+        state: product.state
+      }
+    )
+  else
+    render json: response_json(
+      false,
+      message: ProductError::CREATE_FAIL
+    )
+  end
+end
 
   # DELETE /api/products/1
   def destroy

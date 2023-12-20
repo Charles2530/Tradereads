@@ -287,6 +287,47 @@ class UsersController < ApplicationController
     )
   end
 
+  def choose_cart_to_order
+    user = current_user
+    cart_ids = params[:choose_carts]
+    carts = []
+    cart_ids.each do |cart_id|
+      carts << Cart.find(cart_id)
+    end
+    puts "------------------------------#{params}"
+    puts "-------------------------------#{carts}"
+    order = Order.new(user: user)
+    unless order.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    order_items = []
+    carts.carts.each do |cart|
+      state = "待支付"
+      order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
+      if order_item.valid?
+        order_items << order_item
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        ) and return
+      end
+    end
+
+    order.save
+    order_items.length.times do |i|
+      carts[i].destroy
+      order_items[i].save
+    end
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS
+    )
+  end
+
   def show_current_orders
     user = current_user
     total_prices = []
@@ -421,15 +462,15 @@ class UsersController < ApplicationController
       })
   end
 
-  def if_follow
-    user = User.find(params[:user_id])
-    render status: 200, json: response_json(
-      true,
-      message: ShowError::SHOW_SUCCEED,
-      data: {
-        if_follow: (User.find(user: current_user, following_user: user) != null)
-      })
-  end
+def if_follow
+  user = User.find(params[:user_id])
+  render status: 200, json: response_json(
+    true,
+    message: ShowError::SHOW_SUCCEED,
+    data: {
+      if_follow: (User.find(user: current_user, following_user: user) != null)
+    })
+end
 
   # GET /api/users
   def index
