@@ -9,7 +9,7 @@ class Product < ApplicationRecord
             :presence => { massage: "Price must exist." }
   validates :price, numericality: { :greater_than_or_equal_to => 0, :massage => "Price must be non-negative." }
   validates :sell_address,
-            :presence => { massage: "Price must exist." }
+            :presence => { massage: "Sell address must exist." }
   validates :store, presence: true
   validates :store, numericality: { only_integer: true, :greater_than_or_equal_to => 0, :massage => "Store must be non-negative." }
   validates :state, inclusion: { in: %w(Available StockOut) }

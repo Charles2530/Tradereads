@@ -19,8 +19,12 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def set_current_user(user)
+    ApplicationRecord.current_user = user
+  end
+
   def current_user
-    @current_user ||= User.find(session[:current_userid]) if session[:current_userid]
+    ApplicationRecord.current_user
   end
 
   def login_only
