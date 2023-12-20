@@ -119,21 +119,23 @@ export default {
     };
 
     const addToCart = () => {
-      addProductToCart(props.product.id, { count: count }).then((res) => {
-        if (res.success) {
-          ElMessage({
-            type: "success",
-            message: "添加购物车成功",
-          });
-        } else {
-          ElMessage({
-            showClose: true,
-            type: "error",
-            message: res.message,
-          });
+      addProductToCart(props.product.product_id, { count: count.value }).then(
+        (res) => {
+          if (res.success) {
+            ElMessage({
+              type: "success",
+              message: "添加购物车成功",
+            });
+          } else {
+            ElMessage({
+              showClose: true,
+              type: "error",
+              message: res.message,
+            });
+          }
+          dialogVisible.value = false;
         }
-        dialogVisible.value = false;
-      });
+      );
     };
 
     const goToProductDetails = (productId) => {

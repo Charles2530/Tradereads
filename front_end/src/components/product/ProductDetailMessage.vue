@@ -15,8 +15,7 @@
           <div v-if="comments.length === 0">暂无评价</div>
           <div v-else>
             <div v-for="(comment, index) in comments" :key="index" class="mb-4">
-              <el-rate v-model="comment.score" :max="5" disabled></el-rate>
-              <p class="text-lg">{{ comment.content }}</p>
+              <comment-display :comment="comment" />
             </div>
           </div>
         </el-col>
