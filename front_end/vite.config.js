@@ -30,7 +30,7 @@ export default defineConfig({
     // proxy: {
     //   "/api": {
     //     target: "http://localhost:3000",
-    //     // changeOrigin: true,
+    //     changeOrigin: true,
     //     rewrite: (path) => path.replace(/^\/api/, ""),
     //   },
     // },
@@ -40,5 +40,6 @@ export default defineConfig({
     //   "Access-Control-Allow-Headers":
     //     "X-Requested-With, content-type, Authorization",
     // },
+    // cors: true,
   },
 });

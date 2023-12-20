@@ -6,7 +6,7 @@
     <div>
       <el-card class="mb-4" v-for="notice in notices" :key="notice.id">
         <div>
-          <div v-if="notice.notice_readed">
+          <div v-if="!notice.notice_readed">
             <el-tag type="warning" round>
               <el-icon><ReadingLamp /></el-icon>
               未读</el-tag
