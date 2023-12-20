@@ -25,14 +25,12 @@ const FollowDetail = () => import("@/views/personalCenter/followDetail.vue");
 //购物车页面
 const Shopping = () => import("@/views/shopping/shopping.vue");
 //商品购买中心
-const ProductBuy = () => import("@/views/productBuyCenter/productBuy.vue");
+const ProductBuy = () => import("@/views/productBuyCenter/index.vue");
 //我的商品
-const MyItem = () => import("@/views/Item/MyItem.vue");
-//搜索界面
-const Search = () => import("@/views/search/search.vue");
+const DeveloperInfo = () => import("@/views/admin/DeveloperInfo.vue");
 //商品详情界面
 const ProductDetail = () =>
-  import("@/views/productBuyCenter/productdetail.vue");
+  import("@/views/productBuyCenter/productDetail.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -101,14 +99,9 @@ const routes = [
     component: ProductBuy,
   },
   {
-    path: "/MyItem",
-    name: "MyItem",
-    component: MyItem,
-  },
-  {
-    path: "/Search",
-    name: "Search",
-    component: Search,
+    path: "/DeveloperInfo",
+    name: "DeveloperInfo",
+    component: DeveloperInfo,
   },
   {
     path: "/ProductDetail/:id",

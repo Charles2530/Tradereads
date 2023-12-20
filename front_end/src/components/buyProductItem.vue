@@ -1,10 +1,8 @@
 <template>
   <div class="item1">
-    <div class="img" :style="imgg" @click="deliverParams()">
+    <div class="img" :style="imgg" @click="deliverParams()"></div>
 
-    </div>
-
-    <div div class=" seller">
+    <div div class="seller">
       <span class="bold">
         卖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家:
       </span>
@@ -23,15 +21,11 @@
       {{ product_name }}
     </div>
     <div class="num">
-      <span class="bold">
-        发货地址:
-      </span>
+      <span class="bold"> 发货地址: </span>
       {{ sell_address }}
     </div>
     <div class="press">
-      <span class="bold">
-        出&nbsp;版&nbsp;&nbsp;社:
-      </span>
+      <span class="bold"> 出&nbsp;版&nbsp;&nbsp;社: </span>
       {{ product_press }}
     </div>
     <div class="type">
@@ -41,17 +35,10 @@
       {{ product_type }}
     </div>
 
-
-    <div class="add" @click="count++">
-      
-    </div>
+    <div class="add" @click="count++"></div>
     <div class="count">{{ count }}</div>
-    <div class="sub" @click="count > 0 ? count-- : count">
-      
-    </div>
-    <div class="bought" @click="buything">
-      
-    </div>
+    <div class="sub" @click="count > 0 ? count-- : count"></div>
+    <div class="bought" @click="buything"></div>
     <!-- <div class="goto" @click="deliverParams()">
       
     </div> -->
@@ -86,7 +73,6 @@
   overflow: hidden;
 }
 
-
 .img {
   position: absolute;
   height: 300px;
@@ -94,7 +80,6 @@
   background: aliceblue url(../public/1.jpg) no-repeat center 0px;
   top: 15px;
   background-size: contain;
-
 }
 
 .seller {
@@ -104,7 +89,6 @@
   top: 20px;
   left: 43%;
   line-height: 30px;
-
 }
 
 .price {
@@ -132,7 +116,6 @@
   left: 43%;
   line-height: 30px;
   overflow: hidden;
-
 }
 
 .press {
@@ -154,7 +137,7 @@
 
 .add {
   position: absolute;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 20px;
   content: "\ea0a";
   top: 400px;
@@ -168,7 +151,7 @@
 
 .sub {
   position: absolute;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 20px;
   content: "\ea0b";
   top: 400px;
@@ -190,7 +173,7 @@
 .bought {
   position: absolute;
   position: absolute;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 30px;
   content: "\ea11";
   top: 440px;
@@ -200,7 +183,7 @@
 .goto {
   position: absolute;
   position: absolute;
-  font-family: 'icomoon';
+  font-family: "icomoon";
   font-size: 30px;
   content: "\ea34";
   top: 0px;
@@ -219,9 +202,8 @@
 </style>
 
 <script>
-
-import buyProductItem from '../components/buyProductItem.vue';
-import { addProductToCart } from '@/api/product.js'
+import buyProductItem from "../components/buyProductItem.vue";
+import { addProductToCart } from "@/api/product.js";
 export default {
   setup() {
     // Open notification
@@ -232,32 +214,31 @@ export default {
         type: "success",
       });
     };
-
   },
-  name: 'buyProductItem',
+  name: "buyProductItem",
   data() {
     return {
       test: "2.jpg",
       count: 0,
-      message: '',
+      message: "",
       project_title: "DataBase Project",
     };
   },
   computed: {
     imgg: function () {
       //return "background-image: url(src/public/" + this.product_image + ");"
-      return "background-image: url(src/public/" + "4.jpg" + ");"
-    }
+      return "background-image: url(src/public/" + "4.jpg" + ");";
+    },
   },
   methods: {
     deliverParams() {
-      let i = this.product_id
+      let i = this.product_id;
       this.$router.push({
-        name: "Productdetail",
+        name: "ProductDetail",
         params: {
-          id: i
-        }
-      })
+          id: i,
+        },
+      });
     },
     openMessage(message) {
       ElMessage({
@@ -269,18 +250,15 @@ export default {
     buything() {
       let t = { count: this.count };
       console.log("id是" + this.product_id);
-      addProductToCart(this.product_id, t).then(res => {
-
+      addProductToCart(this.product_id, t).then((res) => {
         if (res.success == true) {
-          this.openMessage(res.message)
+          this.openMessage(res.message);
           this.count = 0;
         }
       });
       this.message = t.message;
     },
-    opendetail() {
-
-    },
+    opendetail() {},
   },
   props: {
     product_name: {
@@ -313,11 +291,9 @@ export default {
       required: true,
     },
     product_image: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
 };
-
-
 </script>

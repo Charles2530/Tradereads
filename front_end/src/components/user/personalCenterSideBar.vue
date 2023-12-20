@@ -40,18 +40,6 @@
               >我的购物车</router-link
             >
           </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-style"><Setting /></i>
-            <router-link class="nav-title" to="/MyItem">我的商品</router-link>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <i class="el-icon-style">
-              <User></User>
-            </i>
-            <router-link class="nav-title" to="/personalCenter"
-              >订单信息</router-link
-            >
-          </el-menu-item>
         </div>
       </el-sub-menu>
       <div v-if="adminMode">
@@ -61,7 +49,7 @@
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
           <div class="item_container px-5">
-            <el-menu-item index="6">
+            <el-menu-item index="4">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
@@ -69,7 +57,7 @@
                 >订单管理</router-link
               >
             </el-menu-item>
-            <el-menu-item index="7">
+            <el-menu-item index="5">
               <i class="el-icon-style">
                 <Service />
               </i>
@@ -77,7 +65,7 @@
                 >审核订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="8">
+            <el-menu-item index="6">
               <i class="el-icon-style">
                 <List />
               </i>
@@ -85,10 +73,16 @@
                 >用户管理</router-link
               >
             </el-menu-item>
+            <el-menu-item index="7">
+              <i class="el-icon-style"><Setting /></i>
+              <router-link class="nav-title" to="/DeveloperInfo"
+                >开发者信息</router-link
+              >
+            </el-menu-item>
           </div>
         </el-sub-menu>
       </div>
-      <el-menu-item index="9">
+      <el-menu-item index="8">
         <template #title>
           <el-icon class="el-icon-notice">
             <BellFilled />
@@ -98,7 +92,7 @@
           </button>
         </template>
       </el-menu-item>
-      <el-menu-item index="10">
+      <el-menu-item index="9">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">
