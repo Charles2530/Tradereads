@@ -1,26 +1,23 @@
 <template>
-  <div>
-    <el-row gutter="2">
-      <el-col :span="8">
+  <div class="p-1 border rounded-lg shadow-lg product-item">
+    <el-row>
+      <el-col :span="24">
         <el-row>
-          <img
-            :src="product.product_image"
-            alt="Product Image"
-            class="w-48 h-48"
-          />
+          <img :src="product.product_image" alt="Product Image" />
         </el-row>
-        <el-row>
+        <el-row class="mx-2">
           <el-col :span="18">
-            <span class="text-lg font-bold">{{ product.product_name }}</span>
+            <span class="text-md font-bold">{{ product.product_name }}</span>
           </el-col>
           <el-col :span="6">
-            <span class="text-gray-600">价格: {{ product.price }}</span>
+            <span class="text-md text-gray-600">￥{{ product.price }}</span>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
   </div>
 </template>
+
 <script>
 export default {
   name: "buyProductItem",
@@ -33,3 +30,12 @@ export default {
   setup(props) {},
 };
 </script>
+
+<style scoped>
+.product-item {
+  width: 19%;
+  margin-bottom: 16px;
+  margin-right: 1%;
+  display: inline-block;
+}
+</style>
