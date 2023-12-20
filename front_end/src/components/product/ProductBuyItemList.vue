@@ -6,6 +6,7 @@
         <el-option label="商品出版社" value="product_press"></el-option>
         <el-option label="商家用户名" value="seller_name"></el-option>
         <el-option label="商品发货地址" value="sell_address"></el-option>
+        <el-option label="商品类型" value="product_type"></el-option>
       </el-select>
       <el-input
         v-model="searchKeyword"

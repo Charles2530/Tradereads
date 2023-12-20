@@ -25,14 +25,15 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-dialog v-model="dialogVisible" width="30%" @close="closeDialog">
+    <el-dialog v-model="dialogVisible" width="40%" @close="closeDialog">
       <div>
         <p class="text-2xl font-bold mb-8 flex justify-center">购买商品</p>
         <p class="text-xl my-2">商品名称: {{ product.product_name }}</p>
-        <p class="text-xl my-2">价格: ￥{{ product.price }}</p>
-        <p class="text-xl my-2">出版社: {{ product.product_press }}</p>
+        <p class="text-xl my-2">商品价格: ￥{{ product.price }}</p>
+        <p class="text-xl my-2">商品出版社: {{ product.product_press }}</p>
         <p class="text-xl my-2">商品类型: {{ product.product_type }}</p>
-        <p class="text-xl my-2">卖家: {{ product.seller_name }}</p>
+        <p class="text-xl my-2">商家用户名: {{ product.seller_name }}</p>
+        <p class="text-xl my-2">商家发货地址: {{ product.sell_address }}</p>
         <p class="text-xl my-2">
           购买数量:<el-input-number
             class="mx-2"
@@ -57,6 +58,7 @@
             plain
             >详细信息</el-button
           >
+          <el-button type="info" @click="followUser" plain> 关注用户</el-button>
         </div>
       </div>
     </el-dialog>
@@ -67,6 +69,7 @@
 import { ref } from "vue";
 import { addProductToCart } from "@/api/product.js";
 import { useRouter } from "vue-router";
+import { Follow } from "@/api/follow.js";
 export default {
   name: "buyProductItem",
   props: {
@@ -131,6 +134,24 @@ export default {
         },
       });
     };
+
+    const followUser = () => {
+      Follow(props.product.seller_id).then((res) => {
+        if (res.success) {
+          ElMessage({
+            type: "success",
+            message: "关注成功",
+          });
+        } else {
+          ElMessage({
+            showClose: true,
+            type: "error",
+            message: res.message,
+          });
+        }
+      });
+    };
+
     return {
       openPurchaseDialog,
       dialogVisible,
@@ -138,6 +159,7 @@ export default {
       buyProductFunc,
       addToCart,
       closeDialog,
+      followUser,
     };
   },
 };
