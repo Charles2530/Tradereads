@@ -26,7 +26,6 @@
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { unReadNotice } from "@/api/notice";
-import { ElMessage } from "element-plus";
 export default {
   setup() {
     const router = useRouter();
