@@ -360,9 +360,10 @@ class ProductsController < ApplicationController
       message: Global::SUCCESS,
       data: {
         comments: comments.collect do |comment|
+          user = comment.user
           {
             product_id: product.id,
-            user_id: comment.user_id,
+            user_name: user.user_detail.user_name,
             content: comment.content,
             score: comment.score,
             date: comment.created_at.to_s
