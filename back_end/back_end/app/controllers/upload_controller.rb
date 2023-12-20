@@ -3,6 +3,34 @@ class UploadController < ApplicationController
 
   include ApplicationHelper
 
+  def upload_image
+    baseurl = "https://sm.ms/api/v2"
+
+    post_params = { smfile: params[:file], format: "json" }
+    smms_params = post_smms(baseurl + "/upload", post_params)
+    puts "smms_params----#{smms_params}"
+    unless smms_params
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    if smms_params['success'] == false
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    puts "data---------#{smms_params['data']}"
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        image_url: smms_params['data']['url']
+      }
+    )
+  end
+
   def upload_avatar
 
     baseurl = "https://sm.ms/api/v2"

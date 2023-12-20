@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :notices
     resources :comments
     resources :followships
+    post :upload_image, to: 'upload#upload_image', as: :upload_image
     get :wallet, to: 'wallets#show_wallet', as: :show_wallet
     post :wallet_charge, to: 'wallets#wallet_charge', as: :wallet_charge
     post :register, to: 'users#register', as: :user_register

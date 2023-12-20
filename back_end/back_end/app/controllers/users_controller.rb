@@ -189,6 +189,7 @@ class UsersController < ApplicationController
   # GET /api/show_cart
   def show_cart
     user = current_user
+    puts "-----------------#{user.id}----------"
     total_price = 0
     user.carts.each do |cart|
       product = cart.product
@@ -377,7 +378,7 @@ class UsersController < ApplicationController
     user = current_user
     order_items = []
     # sell_orders = OrderItem.select('OrderItem.').joins(:products).where("products.user_id == ?", user.id)
-    OrderItem.each do |order_item|
+    OrderItem.all.each do |order_item|
       product = order_item.product
       if product.user == user
         order_items << order_item
