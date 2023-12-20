@@ -8,7 +8,7 @@
         <personal-center-side-bar />
       </div>
       <div class="container mx-auto p-4" style="position: relative; z-index: 0">
-        <div class="mb-4">
+        <div class="mb-4 ml-16">
           <h1 class="text-3xl font-semibold mb-2 text-white">二手书商品中心</h1>
           <p class="text-gray-200 notice-detail">快来选购你想要的二手书吧!</p>
         </div>

@@ -51,6 +51,12 @@
           <el-button type="danger" @click="closeDialog" plain
             >关闭弹窗</el-button
           >
+          <el-button
+            type="warning"
+            @click="goToProductDetails(product.product_id)"
+            plain
+            >详细信息</el-button
+          >
         </div>
       </div>
     </el-dialog>
@@ -60,6 +66,7 @@
 <script>
 import { ref } from "vue";
 import { addProductToCart } from "@/api/product.js";
+import { useRouter } from "vue-router";
 export default {
   name: "buyProductItem",
   props: {
@@ -69,6 +76,7 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter();
     const dialogVisible = ref(false);
     const count = ref(1);
     const openPurchaseDialog = () => {
@@ -113,9 +121,20 @@ export default {
         dialogVisible.value = false;
       });
     };
+
+    const goToProductDetails = (productId) => {
+      console.log(productId);
+      router.push({
+        name: "ProductDetail",
+        params: {
+          id: productId,
+        },
+      });
+    };
     return {
       openPurchaseDialog,
       dialogVisible,
+      goToProductDetails,
       buyProductFunc,
       addToCart,
       closeDialog,
