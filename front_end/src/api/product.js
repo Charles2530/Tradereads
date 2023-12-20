@@ -75,11 +75,8 @@ export async function showComments(product_id) {
   return await service({
     url: "/products/" + product_id + "/show_comments",
     method: "get",
-
   });
 }
-
-
 
 //delete
 export async function deleteProduct(product_id) {
@@ -88,5 +85,3 @@ export async function deleteProduct(product_id) {
     method: "delete",
   });
 }
-
-
