@@ -2,7 +2,7 @@
   <div>
     <div v-for="(product, index) in products" :key="product.product_id">
       <template v-if="index % 5 === 0">
-        <buy-product-item :product="product" />
+        <buy-product-item :product="product" class="edge" />
         <buy-product-item
           :product="products[index + 1]"
           v-if="index + 1 <= products.length - 1"
@@ -40,9 +40,7 @@ export default {
 </script>
 
 <style scoped>
-.row-divider {
-  height: 1px;
-  background-color: #e2e8f0;
-  margin-top: 16px;
+.edge {
+  margin-left: 3%;
 }
 </style>

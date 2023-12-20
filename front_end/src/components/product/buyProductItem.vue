@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .product-item {
-  width: 19%;
+  width: 18%;
   margin-bottom: 16px;
   margin-right: 1%;
   display: inline-block;
