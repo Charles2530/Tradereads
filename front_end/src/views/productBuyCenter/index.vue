@@ -8,7 +8,7 @@
         <personal-center-side-bar />
       </div>
       <div class="container mx-auto p-4" style="position: relative; z-index: 0">
-        <div class="mb-4 ml-16">
+        <div class="mb-4 ml-20">
           <h1 class="text-3xl font-semibold mb-2 text-white">二手书商品中心</h1>
           <p class="text-gray-200 notice-detail">快来选购你想要的二手书吧!</p>
           <el-button
@@ -16,7 +16,9 @@
             type="primary"
             plain
             @click="showAddProductDialog = true"
-            >发布商品</el-button
+          >
+            <el-icon class="ml-1 mr-4"><Connection /></el-icon>
+            发布商品</el-button
           >
         </div>
         <div class="user-management mx-20 bg-white rounded-xl">

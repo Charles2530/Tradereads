@@ -3,19 +3,35 @@
     <div class="p-1 border rounded-lg shadow-lg product-item">
       <product-detail :product="product" :product_id="product_id" />
     </div>
-
     <div class="p-1 border rounded-lg shadow-lg my-4">
       <el-row>
         <el-col :span="24">
           <p class="text-2xl font-bold mb-4 flex justify-center">用户评价</p>
-          <el-button type="success" @click="CommentDialog = true" plain>
+          <el-button
+            class="ml-3"
+            type="success"
+            @click="CommentDialog = true"
+            plain
+          >
             <el-icon class="ml-1 mr-2"><Comment /></el-icon>
             发布评论</el-button
           >
           <div v-if="comments.length === 0">暂无评价</div>
           <div v-else>
             <div v-for="(comment, index) in comments" :key="index" class="mb-4">
-              <comment-display :comment="comment" />
+              <div v-if="index % 2 == 0">
+                <el-row>
+                  <el-col :span="12">
+                    <comment-display :comment="comment" />
+                  </el-col>
+                  <el-col :span="12">
+                    <comment-display
+                      :comment="comments[index + 1]"
+                      v-if="index + 1 < comments.length"
+                    />
+                  </el-col>
+                </el-row>
+              </div>
             </div>
           </div>
         </el-col>

@@ -50,7 +50,7 @@ onMounted(() => {
 const cartProducts = ref([]);
 
 const selectIdArray = computed(() => {
-  return cartProducts.reduce((total, item) => {
+  return cartProducts.value.reduce((total, item) => {
     if (item.selected) {
       total.push(item.product_id);
     }
@@ -60,7 +60,8 @@ const selectIdArray = computed(() => {
 
 const addCartsToOrdersFunc = () => {
   addCartsToOrders({ choose_carts: selectIdArray.value }).then((res) => {
-    console.log(res.data);
+    console.log(selectIdArray.value);
+    console.log(res);
     if (res.success) {
       ElMessage({
         type: "success",
