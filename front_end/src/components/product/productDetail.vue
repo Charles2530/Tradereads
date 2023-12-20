@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-1 border rounded-lg shadow-lg my-4">
     <p class="text-2xl font-bold mb-8 flex justify-center">购买商品</p>
     <p class="text-xl my-2">商品名称: {{ product.product_name }}</p>
     <p class="text-xl my-2">商品价格: ￥{{ product.price }}</p>
@@ -9,10 +9,9 @@
     <p class="text-xl my-2">商家发货地址: {{ product.sell_address }}</p>
 
     <div class="mt-2">
-      <el-button type="warning" @click="goToProductDetails(product_id)" plain
-        >详细信息</el-button
+      <el-button type="warning" @click="followUser" plain>
+        查看商家信息</el-button
       >
-      <el-button type="info" @click="followUser" plain> 查看商家信息</el-button>
     </div>
   </div>
 </template>
@@ -33,7 +32,6 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-
     const followUser = () => {
       router.push({
         name: "FollowDetail",
@@ -43,18 +41,7 @@ export default {
       });
     };
 
-    const goToProductDetails = (product_id) => {
-      console.log(product_id);
-      router.push({
-        name: "ProductDetail",
-        params: {
-          product_id,
-        },
-      });
-    };
-
     return {
-      goToProductDetails,
       followUser,
     };
   },

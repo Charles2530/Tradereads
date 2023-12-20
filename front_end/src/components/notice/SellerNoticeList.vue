@@ -8,7 +8,7 @@
     <div>
       <el-card class="mb-4" v-for="message in messages" :key="message.id">
         <div>
-          <div v-if="message.notice_readed">
+          <div v-if="!message.notice_readed">
             <el-tag type="warning" round>
               <el-icon><ReadingLamp /></el-icon>
               未读</el-tag

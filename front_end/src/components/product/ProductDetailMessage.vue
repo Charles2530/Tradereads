@@ -15,8 +15,8 @@
           <div v-if="comments.length === 0">暂无评价</div>
           <div v-else>
             <div v-for="(comment, index) in comments" :key="index" class="mb-4">
-              <el-rate v-model="comment.rating" :max="5" disabled></el-rate>
-              <p class="text-lg">{{ comment.text }}</p>
+              <el-rate v-model="comment.score" :max="5" disabled></el-rate>
+              <p class="text-lg">{{ comment.content }}</p>
             </div>
           </div>
         </el-col>
@@ -27,9 +27,9 @@
         <el-row>
           <el-col :span="24">
             <p class="text-2xl font-bold mb-4">发表评论</p>
-            <el-rate v-model="newComment.rating" :max="5"></el-rate>
+            <el-rate v-model="newComment.score" :max="5"></el-rate>
             <el-input
-              v-model="newComment.text"
+              v-model="newComment.content"
               type="textarea"
               :rows="4"
               placeholder="请输入您的评论"
@@ -48,6 +48,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import { getProduct } from "@/api/product.js";
+import { showComment, addComment } from "@/api/comment.js";
 export default {
   name: "ProductDetailMessage",
   props: {
@@ -63,22 +64,42 @@ export default {
           product.value = res.data;
         }
       });
+      showComment(props.product_id).then((res) => {
+        if (res.success) {
+          console.log(res.data.comments);
+          comments.value = res.data.comments;
+        }
+      });
     });
     const product = ref([]);
     const comments = ref([]);
     const newComment = ref({
-      rating: 0,
-      text: "",
+      score: 0,
+      content: "",
     });
     const submitComment = () => {
-      const newComment = {
-        rating: this.newComment.rating,
-        text: this.newComment.text,
+      const newCommentJson = {
+        content: newComment.value.content,
+        score: newComment.value.score,
       };
-      this.comments.push(newComment);
+      comments.value.push(newCommentJson);
+      addComment(props.product_id, newCommentJson).then((res) => {
+        console.log(res);
+        if (res.success) {
+          ElMessage({
+            message: "评论成功",
+            type: "success",
+          });
+        } else {
+          ElMessage({
+            message: "评论失败",
+            type: "error",
+          });
+        }
+      });
 
-      this.newComment.rating = 0;
-      this.newComment.text = "";
+      newComment.value.score = 0;
+      newComment.value.content = "";
       CommentDialog.value = false;
     };
     const CommentDialog = ref(false);
