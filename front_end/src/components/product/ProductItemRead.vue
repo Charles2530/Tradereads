@@ -40,7 +40,7 @@
     </el-row>
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      @click="goToProductDetails(product.id)"
+      @click="goToProductDetails(product.product_id)"
     >
       详细信息
     </button>
@@ -68,12 +68,12 @@ export default {
       props.product.product_store > 0 ? "有货" : "售完"
     );
 
-    const goToProductDetails = (productId) => {
+    const goToProductDetails = (product_id) => {
       // Replace with your router logic or window location change
       router.push({
         name: "ProductDetail",
         params: {
-          id: productId,
+          product_id: product_id,
         },
       });
     };

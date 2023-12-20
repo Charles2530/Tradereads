@@ -7,14 +7,9 @@
     accept="image/*"
     :on-success="handleAvatarSuccess"
   >
-    <el-button
-      type="primary"
-      size="large"
-      class="mt-4 m-12 text-white font-semibold hover:underline"
-      plain
-    >
+    <el-button type="primary" plain>
       <el-icon class="mr-4"><Camera /></el-icon>
-      上传头像</el-button
+      上传商品图片</el-button
     >
   </el-upload>
 </template>
@@ -23,16 +18,11 @@ import { ref } from "vue";
 import { userStore } from "@/store/user.js";
 import { ElMessage } from "element-plus";
 export default {
-  name: "personalAvatarUpload",
+  name: "productImageUpload",
   setup() {
-    const store = userStore();
     const uploadRef = ref(null);
-    const url =
-      import.meta.env.VITE_APP_BASE_API +
-      //   "http://127.0.0.1:3000/api" +
-      "/users/" +
-      store.getToken +
-      "/upload_avatar";
+    const url = import.meta.env.VITE_APP_BASE_API + "/upload_image";
+    const uploadedImageUrl = ref("");
     const upload = () => {
       uploadRef.value.submit();
     };
@@ -42,7 +32,9 @@ export default {
           message: "上传成功",
           type: "success",
         });
-        window.location.reload();
+        uploadedImageUrl.value = res.data.image_url;
+        const imageUrl = uploadedImageUrl.value;
+        emit("image-uploaded", imageUrl);
       } else {
         ElMessage({
           message: res.message,
