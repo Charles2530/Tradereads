@@ -31,8 +31,8 @@ class UsersController < ApplicationController
       user.save
       wallet.save
       user_detail.save
-      session[:current_userid] = user.id
-      puts "register ------------------------------ #{session[:current_userid]}"
+      set_current_user(User.find(user.id))
+      puts "register ------------------------------ #{current_user.id}"
       render status: 200, json: response_json(
         true,
         message: RegisterError::REGISTER_SUCCESS,
@@ -75,8 +75,8 @@ class UsersController < ApplicationController
       ) and return
     end
 
-    session[:current_userid] = user.id
-    puts "--------------#{session[:current_userid]}---------------------"
+    set_current_user(User.find(user.id))
+    puts "--------------#{current_user.id}---------------------"
     render status: 200, json: response_json(
       true,
       message: LoginError::LOGIN_SUCCESS,
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
 
   # GET /api/logout
   def logout
-    reset_session
+    set_current_user(nil)
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS
@@ -254,7 +254,6 @@ class UsersController < ApplicationController
     carts = []
     order = Order.new(user: current_user)
     puts order
-    puts "--------------#{session[:current_userid]}---------------------"
     unless order.valid?
       render json: response_json(
         false,
@@ -264,6 +263,47 @@ class UsersController < ApplicationController
     order_items = []
     user.carts.each do |cart|
       carts << cart
+      state = "待支付"
+      order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
+      if order_item.valid?
+        order_items << order_item
+      else
+        render json: response_json(
+          false,
+          message: Global::FAIL
+        ) and return
+      end
+    end
+
+    order.save
+    order_items.length.times do |i|
+      carts[i].destroy
+      order_items[i].save
+    end
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS
+    )
+  end
+
+  def choose_cart_to_order
+    user = current_user
+    cart_ids = params[:choose_carts]
+    carts = []
+    cart_ids.each do |cart_id|
+      carts << Cart.find(cart_id)
+    end
+    puts "------------------------------#{params}"
+    puts "-------------------------------#{carts}"
+    order = Order.new(user: user)
+    unless order.valid?
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    order_items = []
+    carts.carts.each do |cart|
       state = "待支付"
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
       if order_item.valid?
@@ -421,15 +461,15 @@ class UsersController < ApplicationController
       })
   end
 
-  def if_follow
-    user = User.find(params[:user_id])
-    render status: 200, json: response_json(
-      true,
-      message: ShowError::SHOW_SUCCEED,
-      data: {
-        if_follow: (User.find(user: current_user, following_user: user) != null)
-      })
-  end
+def if_follow
+  user = User.find(params[:user_id])
+  render status: 200, json: response_json(
+    true,
+    message: ShowError::SHOW_SUCCEED,
+    data: {
+      if_follow: (User.find(user: current_user, following_user: user) != null)
+    })
+end
 
   # GET /api/users
   def index

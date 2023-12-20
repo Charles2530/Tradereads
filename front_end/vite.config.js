@@ -25,21 +25,17 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
-    // proxy: {
-    //   "/api": {
-    //     target: "http://localhost:3000",
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ""),
-    //   },
-    // },
-    // headers: {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-    //   "Access-Control-Allow-Headers":
-    //     "X-Requested-With, content-type, Authorization",
-    // },
-    // cors: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "X-Requested-With, content-type, Authorization",
+    },
   },
 });

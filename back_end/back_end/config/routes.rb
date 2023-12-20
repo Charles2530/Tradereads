@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post :login, to: 'users#login', as: :user_login
     get :logout, to: 'users#logout', as: :user_logout
     get :show_cart, to: 'users#show_cart', as: :user_show_cart
+    post :choose_cart_to_order, to: 'users#choose_cart_to_order', as: :user_choose_cart_to_order
     get :show_current_orders, to: 'users#show_current_orders', as: :user_show_current_orders
     get :show_sell_orders, to: 'users#show_sell_orders', as: :user_show_sell_orders
     get :carts_to_orders, to: 'users#carts_to_orders', as: :user_carts_to_orders
