@@ -141,7 +141,7 @@ export default {
       router.push({
         name: "ProductDetail",
         params: {
-          id: productId,
+          product_id: productId,
         },
       });
     };
@@ -154,6 +154,7 @@ export default {
       addToCart,
       closeDialog,
       followUser,
+      count,
     };
   },
 };

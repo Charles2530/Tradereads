@@ -104,7 +104,7 @@ const routes = [
     component: DeveloperInfo,
   },
   {
-    path: "/ProductDetail/:id",
+    path: "/ProductDetail/:product_id",
     name: "ProductDetail",
     component: ProductDetail,
     props: true,
