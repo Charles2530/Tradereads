@@ -11,7 +11,11 @@
         <div class="mb-4 ml-16">
           <h1 class="text-3xl font-semibold mb-2 text-white">二手书商品中心</h1>
           <p class="text-gray-200 notice-detail">快来选购你想要的二手书吧!</p>
-          <el-button type="primary" plain @click="showAddProductDialog = true"
+          <el-button
+            class="mt-2"
+            type="primary"
+            plain
+            @click="showAddProductDialog = true"
             >发布商品</el-button
           >
         </div>
@@ -32,7 +36,7 @@
           <el-input-number v-model="newProduct.store"></el-input-number>
         </el-form-item>
         <el-form-item label="商品名称" prop="product_name">
-          <el-input v-model="newProduct.product_name"></el-input>
+          <product-image-upload @image-uploaded="handleImageUploaded" />
         </el-form-item>
         <el-form-item label="商品图片" prop="product_image">
           <el-input v-model="newProduct.product_image"></el-input>
@@ -56,6 +60,7 @@
 import { ref, onMounted } from "vue";
 import { showAllProducts, addProduct } from "@/api/product.js";
 import productBuyItemList from "@c/product/productBuyItemList.vue";
+import productImageUpload from "@c/product/productImageUpload.vue";
 const products = ref([]);
 
 onMounted(() => {
@@ -67,14 +72,17 @@ onMounted(() => {
 });
 const showAddProductDialog = ref(false);
 const newProduct = ref({
-  price: "",
+  price: 0,
   sell_address: "",
-  store: "",
+  store: 0,
   product_name: "",
   product_image: "",
   product_press: "",
   product_type: "",
 });
+const handleImageUploaded = (imageUrl) => {
+  newProduct.value.product_image = imageUrl;
+};
 const addProductFunc = () => {
   addProduct(newProduct.value).then((res) => {
     if (res.success) {
