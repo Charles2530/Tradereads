@@ -29,6 +29,7 @@ export default {
     const uploadRef = ref(null);
     const url =
       import.meta.env.VITE_APP_BASE_API +
+      //   "http://127.0.0.1:3000/api" +
       "/users/" +
       store.getToken +
       "/upload_avatar";

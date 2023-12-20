@@ -49,6 +49,7 @@
 
 <script>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 export default {
   name: "ProductItemRead",
   props: {
@@ -58,6 +59,7 @@ export default {
     },
   },
   setup(props) {
+    const router = useRouter();
     const stockClass = computed(() => ({
       "text-red-500": props.product.product_store === 0,
       "text-green-500": props.product.product_store > 0,
@@ -68,7 +70,12 @@ export default {
 
     const goToProductDetails = (productId) => {
       // Replace with your router logic or window location change
-      // this.$router.push(`/product/${productId}`);
+      router.push({
+        name: "ProductDetail",
+        params: {
+          id: productId,
+        },
+      });
     };
 
     // Expose the properties and methods to the template

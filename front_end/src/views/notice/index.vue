@@ -1,62 +1,66 @@
 <template>
-  <div
-    class="bg-notice-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
-  >
-    <div style="position: relative; z-index: 1">
-      <personal-center-side-bar />
-    </div>
-    <div class="container mx-auto p-4" style="position: relative; z-index: 0">
-      <div class="mb-4">
-        <h1 class="text-3xl font-semibold mb-2 text-white">二手书交易公告栏</h1>
-        <p class="text-gray-400 notice-detail">浏览最新的二手书信息。</p>
-      </div>
-      <!-- <div v-if="store.getRight === 1"> -->
-      <div>
-        <el-button
-          @click="showCreateNoticeDialog"
-          type="success"
-          class="btn-create-notice"
-          plain
-        >
-          <el-icon class="mr-3"><EditPen /></el-icon>
-          发布公告
-        </el-button>
-      </div>
-      <div>
-        <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane label="公共通知" name="first"
-            ><public-notice-list :notices="notices"
-          /></el-tab-pane>
-          <el-tab-pane label="我的关注" name="Config">
-            <follow-notice-list :books="books" />
-          </el-tab-pane>
-          <el-tab-pane label="我的销售" name="Seller">
-            <seller-notice-list :messages="sellerMessages" />
-          </el-tab-pane>
-        </el-tabs>
-      </div>
-    </div>
-  </div>
   <div>
-    <el-dialog v-model="createNoticeDialog" width="50%">
-      <el-form
-        :model="newNotice"
-        ref="createNoticeForm"
-        :rules="createNoticeFormRules"
-      >
-        <el-text class="mx-1 launch-notice" type="info">发布公告</el-text>
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="newNotice_title"></el-input>
-        </el-form-item>
-        <el-form-item label="内容" prop="content">
-          <el-input type="textarea" v-model="newNotice_content"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="dialog-footer">
-        <el-button @click="createNoticeDialog = false">取消</el-button>
-        <el-button type="primary" @click="createNoticeFunc">发布</el-button>
+    <div
+      class="bg-notice-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
+    >
+      <div style="position: relative; z-index: 1">
+        <personal-center-side-bar />
       </div>
-    </el-dialog>
+      <div class="container mx-auto p-4" style="position: relative; z-index: 0">
+        <div class="mb-4">
+          <h1 class="text-3xl font-semibold mb-2 text-white">
+            二手书交易公告栏
+          </h1>
+          <p class="text-gray-400 notice-detail">浏览最新的二手书信息。</p>
+        </div>
+        <!-- <div v-if="store.getRight === 1"> -->
+        <div>
+          <el-button
+            @click="showCreateNoticeDialog"
+            type="success"
+            class="btn-create-notice"
+            plain
+          >
+            <el-icon class="mr-3"><EditPen /></el-icon>
+            发布公告
+          </el-button>
+        </div>
+        <div>
+          <el-tabs v-model="activeName" class="demo-tabs">
+            <el-tab-pane label="公共通知" name="first"
+              ><public-notice-list :notices="notices"
+            /></el-tab-pane>
+            <el-tab-pane label="我的关注" name="Config">
+              <follow-notice-list :books="books" />
+            </el-tab-pane>
+            <el-tab-pane label="我的销售" name="Seller">
+              <seller-notice-list :messages="sellerMessages" />
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
+    </div>
+    <div>
+      <el-dialog v-model="createNoticeDialog" width="50%">
+        <el-form
+          :model="newNotice"
+          ref="createNoticeForm"
+          :rules="createNoticeFormRules"
+        >
+          <el-text class="mx-1 launch-notice" type="info">发布公告</el-text>
+          <el-form-item label="标题" prop="title">
+            <el-input v-model="newNotice_title"></el-input>
+          </el-form-item>
+          <el-form-item label="内容" prop="content">
+            <el-input type="textarea" v-model="newNotice_content"></el-input>
+          </el-form-item>
+        </el-form>
+        <div class="dialog-footer">
+          <el-button @click="createNoticeDialog = false">取消</el-button>
+          <el-button type="primary" @click="createNoticeFunc">发布</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 

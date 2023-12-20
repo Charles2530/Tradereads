@@ -8,7 +8,7 @@
     <div>
       <el-card class="mb-4" v-for="book in books" :key="book.id">
         <div>
-          <div v-if="book.notice_readed">
+          <div v-if="!book.notice_readed">
             <el-tag type="warning" round>
               <el-icon><ReadingLamp /></el-icon>
               未读</el-tag

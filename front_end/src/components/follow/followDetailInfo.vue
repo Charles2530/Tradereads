@@ -51,6 +51,27 @@
               <strong>身份:</strong>
               {{ loginInfo.right === 1 ? "管理员" : "用户" }}
             </div>
+            <div class="isRight info-item">
+              <el-button
+                type="primary"
+                @click="followUser"
+                plain
+                v-if="!followStatus"
+              >
+                <el-icon class="ml-1 mr-4"><Avatar /></el-icon>
+                点击关注</el-button
+              >
+              <el-button
+                class="ml-1 mr-4"
+                type="danger"
+                @click="followUser"
+                plain
+                v-else
+              >
+                <el-icon class="ml-1 mr-4"><Avatar /></el-icon>
+                取消关注</el-button
+              >
+            </div>
           </el-col>
           <el-col :span="9" class="float-right">
             <div>
@@ -100,6 +121,8 @@ import { getUser } from "@/api/user.js";
 import { useRouter } from "vue-router";
 import { showProductsList } from "@/api/product.js";
 import ProductItemRead from "@c/product/ProductItemRead.vue";
+import { Follow, IsFollow } from "@/api/follow.js";
+
 export default {
   name: "followDetailInfo",
   props: {
@@ -113,6 +136,7 @@ export default {
     // Lifecycle hook
     onMounted(() => {
       createdUserInformation();
+      getFollowStatus();
     });
     const products = ref([]);
     const showProductDialog = ref(false);
@@ -126,6 +150,44 @@ export default {
             showClose: true,
             message: res.message,
             type: "error",
+          });
+        }
+      });
+    };
+    const followStatus = ref(false);
+    const getFollowStatus = () => {
+      IsFollow(props.user_id).then((res) => {
+        if (res.success) {
+          console.log(res.data.if_follow);
+          followStatus.value = res.data.if_follow;
+        } else {
+          ElMessage({
+            showClose: true,
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
+    };
+    const followUser = () => {
+      Follow(props.user_id).then((res) => {
+        if (res.success) {
+          if (!followStatus.value) {
+            ElMessage({
+              type: "success",
+              message: "关注成功",
+            });
+          } else {
+            ElMessage({
+              type: "success",
+              message: "取消关注成功",
+            });
+          }
+        } else {
+          ElMessage({
+            showClose: true,
+            type: "error",
+            message: res.message,
           });
         }
       });
@@ -178,6 +240,8 @@ export default {
       showProductDialog,
       openProductDialog,
       ProductItemRead,
+      followUser,
+      followStatus,
     };
   },
 };
