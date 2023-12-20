@@ -53,7 +53,7 @@ export default {
     const totalPrice = computed(() => {
       return props.products.reduce((total, item) => {
         if (item.selected) {
-          return total + item.product_price;
+          return total + item.product_price * item.product_number;
         }
         return total;
       }, 0);
@@ -66,12 +66,11 @@ export default {
 
     const stockStatus = (productStore) => (productStore > 0 ? "有货" : "售完");
 
-    const goToProductDetails = (productId) => {
-      console.log(productId);
+    const goToProductDetails = (product_id) => {
       router.push({
         name: "ProductDetail",
         params: {
-          id: productId,
+          product_id: product_id,
         },
       });
     };
