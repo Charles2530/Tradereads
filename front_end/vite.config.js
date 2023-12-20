@@ -23,23 +23,22 @@ export default defineConfig({
       "@css": resolve(__dirname, "src/css"),
     },
   },
-  //线上接口
-  //   server:{
-  //     port : 8002,
-  //     open : true,
-  //     proxy :{
-  //         '/api':{
-  //             target: 'http://localhost:3000',
-  //             changeOrigin: true,
-  //             rewrite: (path) => path.replace(/^\/api/, '')
-  //         }
-  //     },
-  //     cors:true
-  //   },
-  //本地接口
   server: {
     proxy: {
       "/api": "http://localhost:3000",
     },
+    // proxy: {
+    //   "/api": {
+    //     target: "http://localhost:3000",
+    //     // changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
+    // headers: {
+    //   "Access-Control-Allow-Origin": "*",
+    //   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    //   "Access-Control-Allow-Headers":
+    //     "X-Requested-With, content-type, Authorization",
+    // },
   },
 });

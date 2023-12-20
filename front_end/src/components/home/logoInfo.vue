@@ -1,21 +1,23 @@
 <template>
-  <div class="logo-container">
-    <el-row>
-      <el-col :span="8"
-        ><img
-          ref="logo"
-          src="@/assets/img/logo_blank.jpg"
-          alt="Logo"
-          class="h-10 w-12 mr-2 mt-2 float-left"
-      /></el-col>
-      <el-col :span="16"
-        ><h3 class="text-lg font-semibold ml-4 mr-16 mt-4 website-name">
-          {{ websiteName }}
-        </h3>
-      </el-col>
-    </el-row>
+  <div>
+    <div class="logo-container">
+      <el-row>
+        <el-col :span="8"
+          ><img
+            ref="logo"
+            src="@/assets/img/logo_blank.jpg"
+            alt="Logo"
+            class="h-10 w-12 mr-2 mt-2 float-left"
+        /></el-col>
+        <el-col :span="16"
+          ><h3 class="text-lg font-semibold ml-4 mr-16 mt-4 website-name">
+            {{ websiteName }}
+          </h3>
+        </el-col>
+      </el-row>
+    </div>
+    <el-divider class="divider"></el-divider>
   </div>
-  <el-divider class="divider"></el-divider>
 </template>
 
 <script>
