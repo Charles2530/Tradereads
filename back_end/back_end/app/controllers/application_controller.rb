@@ -11,9 +11,11 @@ class ApplicationController < ActionController::API
     else
       @admin = User.new(right: 1, phone: "13612345678")
       detail = UserDetail.new(user: @admin, password: "adminadmin", user_name: "admin", gender: "male",
-                              pay_type: "Alipay")
+                              pay_type: "alipay")
+      wallet = Wallet.new(user: @admin, money_sum: 0.00)
       @admin.save
       detail.save
+      wallet.save
     end
   end
 

@@ -60,10 +60,10 @@
 </template>
 
 <style>
-@import url("../../css/base.css");
+@import url("../../css//base.css");
 @import url("../../css/shopping.css");
-.header1 {
 
+.header1 {
     width: 100%;
     height: 100px;
     border-radius: 40px;
@@ -82,7 +82,7 @@
     position: relative;
     height: 400px;
     width: 30%;
-    background: aliceblue url(../../public/b6f14a73538b2836af10722a34e23627.jpg) no-repeat center 0px;
+    background: aliceblue url(../../public/1.jpg) no-repeat center 0px;
     top: 60px;
     left: 80px;
     background-size: contain;
@@ -341,13 +341,14 @@ export default {
     data() {
         return {
             score: 0,
+            product_id: 1,
             product_image: "1.jpg",
-            price: 0,
-            product_name: "",
-            product_press: "",
-            product_state: "",
-            seller_name: "",
-            seller_phone: "",
+            price: 62,
+            product_name: "造现参",
+            product_press: "dolor occaecat aute aliqua",
+            product_state: "aliquip culpa",
+            seller_name: "门达到合军处",
+            seller_phone: "18684594537",
             comments: [],
             count: 0,
             search: "说说你的想法",
@@ -385,7 +386,10 @@ export default {
             this.search = "";
         },
         disappear(event) {
-            this.search = "说说你的看法";
+            if (this.search == "") {
+                this.search = "说说你的看法";
+            }
+
         },
         one() {
             const b1 = document.querySelector('.one1');
@@ -454,10 +458,13 @@ export default {
         },
         pushcomment() {
             let t = { content: this.search, score: this.score };
-            addProductToCart(this.product_id, t).then(res => {
+            console.log(t)
+            console.log(this.product_id)
+            addComment(this.product_id, t).then(res => {
                 if (res.success == true) {
                     this.openMessage(res.message)
                     this.score = 0;
+                    this.search = "说说你的看法"
                     const b1 = document.querySelector('.one1');
                     b1.style.color = 'gray'
                     const b2 = document.querySelector('.two1');
@@ -475,14 +482,16 @@ export default {
 
     computed: {
         imgg: function () {
-            //return "background-image: url(../../../public/" + this.product_image + ");"
-            return "background-image: url(../../../public/" + "1.jpg" + ");"
+            //return "background-image: url(../../public/" + this.product_image + ");"
+            return "background-image: url(../../public/" + "1.jpg" + ");"
         }
     },
     mounted() {
         getProduct(this.$route.params.id).then(res => {
+            console.log(this.$route)
             console.log(res.data);
-            this.price = res.data.product_price;
+            this.product_id = this.$route.params.id;
+            this.price = res.data.price;
             this.product_name = res.data.product_name;
             this.product_press = res.data.product_press;
             this.product_state = res.data.product_state;
