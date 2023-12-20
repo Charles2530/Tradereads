@@ -290,6 +290,12 @@ class UsersController < ApplicationController
   def choose_cart_to_order
     user = current_user
     cart_ids = params[:choose_carts]
+    unless cart_ids
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
     carts = []
     cart_ids.each do |cart_id|
       carts << Cart.find(cart_id)
