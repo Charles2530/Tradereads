@@ -10,17 +10,7 @@
 <style>
 @import url("../../css/base.css");
 
-.item {
-  position: relative;
-  float: left;
-  width: 23%;
-  height: 500px;
-  margin: 14px;
-  border-radius: 40px;
-  background: aliceblue url(../public/b6f14a73538b2836af10722a34e23627.jpg)
-    no-repeat center 0px;
-  background-size: 300px;
-}
+
 
 .seller {
   position: absolute;

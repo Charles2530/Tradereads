@@ -55,6 +55,7 @@ class NoticesController < ApplicationController
 
   def have_new_notice
     user = current_user
+    @notices = Notice.all
     @notices.each do |notice|
       if user.followings.include? notice.user
         notice_record = NoticeRecord.find_by(notice: notice, user: user)
