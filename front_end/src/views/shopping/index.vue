@@ -59,7 +59,7 @@ const selectIdArray = computed(() => {
 });
 
 const addCartsToOrdersFunc = () => {
-  addCartsToOrders({ choose_carts: selectIdArray }).then((res) => {
+  addCartsToOrders({ choose_carts: selectIdArray.value }).then((res) => {
     console.log(res.data);
     if (res.success) {
       ElMessage({
