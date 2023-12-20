@@ -12,9 +12,10 @@
             <el-button
               class="ml-8 my-2"
               type="success"
-              @click="addCartsToOrdersFunc()"
               plain
+              @click="addCartsToOrdersFunc()"
             >
+              <el-icon class="ml-1 mr-4"><Service /></el-icon>
               添加商品到订单
             </el-button>
           </div>

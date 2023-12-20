@@ -22,34 +22,44 @@
         :inactive-action-icon="Hide"
       />
     </div>
-    <div v-for="(product, index) in filteredProducts" :key="product.product_id">
+    <div
+      v-for="(product, index) in productListPerPage"
+      :key="product.product_id"
+    >
       <template v-if="index % 5 === 0">
         <buy-product-item :product="product" class="edge" />
         <buy-product-item
-          :product="filteredProducts[index + 1]"
-          v-if="index + 1 <= filteredProducts.length - 1"
+          :product="productListPerPage[index + 1]"
+          v-if="index + 1 <= productListPerPage.length - 1"
         />
         <buy-product-item
-          :product="filteredProducts[index + 2]"
-          v-if="index + 2 <= filteredProducts.length - 1"
+          :product="productListPerPage[index + 2]"
+          v-if="index + 2 <= productListPerPage.length - 1"
         />
         <buy-product-item
-          :product="filteredProducts[index + 3]"
-          v-if="index + 3 <= filteredProducts.length - 1"
+          :product="productListPerPage[index + 3]"
+          v-if="index + 3 <= productListPerPage.length - 1"
         />
         <buy-product-item
-          :product="filteredProducts[index + 4]"
-          v-if="index + 4 <= filteredProducts.length - 1"
+          :product="productListPerPage[index + 4]"
+          v-if="index + 4 <= productListPerPage.length - 1"
         />
       </template>
     </div>
+    <el-pagination
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="filteredProducts.length"
+      @current-change="handlePageChange"
+      class="px-6 py-2"
+    />
   </div>
 </template>
 
 <script>
 import buyProductItem from "@c/product/buyProductItem.vue";
 import { Hide, View } from "@element-plus/icons-vue";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 export default {
   components: { buyProductItem },
   name: "ProductBuyItemList",
@@ -60,8 +70,11 @@ export default {
     },
   },
   setup(props) {
+    const pageSize = ref(10);
+    const currentPage = ref(1);
     const searchType = ref("");
     const searchKeyword = ref("");
+    const Match = ref(true);
     const filteredProducts = computed(() => {
       if (searchType.value && searchKeyword.value) {
         if (Match.value) {
@@ -77,7 +90,19 @@ export default {
         return props.products;
       }
     });
-    const Match = ref(true);
+    const search = () => {
+      currentPage.value = 1;
+    };
+    watch(searchKeyword, search);
+    watch(searchType, search);
+    const productListPerPage = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value;
+      const end = currentPage.value * pageSize.value;
+      return filteredProducts.value.slice(start, end);
+    });
+    const handlePageChange = (newPage) => {
+      currentPage.value = newPage;
+    };
     return {
       searchType,
       searchKeyword,
@@ -85,6 +110,11 @@ export default {
       Match,
       Hide,
       View,
+      currentPage,
+      handlePageChange,
+      productListPerPage,
+      search,
+      pageSize,
     };
   },
 };

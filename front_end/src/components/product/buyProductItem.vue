@@ -58,7 +58,9 @@
             plain
             >详细信息</el-button
           >
-          <el-button type="info" @click="followUser" plain> 关注用户</el-button>
+          <el-button type="info" @click="followUser" plain>
+            查看商家信息</el-button
+          >
         </div>
       </div>
     </el-dialog>
@@ -69,7 +71,6 @@
 import { ref } from "vue";
 import { addProductToCart } from "@/api/product.js";
 import { useRouter } from "vue-router";
-import { Follow } from "@/api/follow.js";
 export default {
   name: "buyProductItem",
   props: {
@@ -107,6 +108,16 @@ export default {
       });
     };
 
+    const followUser = () => {
+      console.log(props.user_id);
+      router.push({
+        name: "FollowDetail",
+        params: {
+          user_id: props.product.seller_id,
+        },
+      });
+    };
+
     const addToCart = () => {
       addProductToCart(props.product.id, { count: count }).then((res) => {
         if (res.success) {
@@ -132,23 +143,6 @@ export default {
         params: {
           id: productId,
         },
-      });
-    };
-
-    const followUser = () => {
-      Follow(props.product.seller_id).then((res) => {
-        if (res.success) {
-          ElMessage({
-            type: "success",
-            message: "关注成功",
-          });
-        } else {
-          ElMessage({
-            showClose: true,
-            type: "error",
-            message: res.message,
-          });
-        }
       });
     };
 
