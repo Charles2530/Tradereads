@@ -5,33 +5,21 @@
     </div>
 
     <div class="seller1">
-      <span class="bold">
-        卖家:
-      </span>
+      <span class="bold"> 卖家: </span>
       {{ seller_name }}
     </div>
     <div class="price1">
-      <span class="bold">
-        价格:
-      </span>
+      <span class="bold"> 价格: </span>
       ￥{{ product_price }}
     </div>
     <div class="name1">
-      <span class="bold">
-        书名:
-      </span>
+      <span class="bold"> 书名: </span>
       {{ product_name }}
     </div>
     <div class="num1">
-      <span class="bold">
-        数量:
-      </span>
+      <span class="bold"> 数量: </span>
       {{ product_number }}
     </div>
-
-
-
-
   </div>
 </template>
 
@@ -51,8 +39,6 @@
   box-shadow: 10px 10px 3px rgba(141, 138, 138, 0.3);
 }
 
-
-
 .bold {
   font-weight: bold;
 }
@@ -65,7 +51,6 @@
   top: 2px;
   background-size: contain;
   border-radius: 30px;
-
 }
 
 .seller1 {
@@ -102,11 +87,8 @@
 </style>
 
 <script>
-
-
 export default {
-
-  name: 'shoppingItem',
+  name: "shoppingItem",
   data() {
     return {
       test: "2.jpg",
@@ -116,8 +98,8 @@ export default {
   computed: {
     imgg: function () {
       //return "background-image: url(src/public/" + this.product_image + ");"
-      return "background-image: url(src/public/" + "2.jpg" + ");"
-    }
+      return "background-image: url(src/public/" + "2.jpg" + ");";
+    },
   },
   props: {
     seller_name: {
@@ -141,10 +123,6 @@ export default {
       required: true,
     },
   },
-  mounted() {
-
-  }
+  mounted() {},
 };
-
-
 </script>

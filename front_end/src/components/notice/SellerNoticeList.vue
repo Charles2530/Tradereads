@@ -1,38 +1,42 @@
 <template>
-  <div v-if="messages.length === 0">
-    <h1 class="text-2xl text-center text-white font-bold">当前没有销售通知</h1>
-  </div>
   <div>
-    <el-card class="mb-4" v-for="message in messages" :key="message.id">
-      <div>
-        <div v-if="message.notice_readed">
-          <el-tag type="warning" round>
-            <el-icon><ReadingLamp /></el-icon>
-            未读</el-tag
-          >
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <h2 class="text-xl font-semibold">{{ message.notice_title }}</h2>
-        <span class="text-gray-500">{{ message.notice_create_time }}</span>
-      </div>
-      <p class="text-gray-700 mt-2">{{ message.notice_content }}</p>
-      <div class="mt-4 flex justify-end">
+    <div v-if="messages.length === 0">
+      <h1 class="text-2xl text-center text-white font-bold">
+        当前没有销售通知
+      </h1>
+    </div>
+    <div>
+      <el-card class="mb-4" v-for="message in messages" :key="message.id">
         <div>
-          <el-button
-            type="primary"
-            class="text-white font-semibold hover:underline"
-            @click="viewDetails(message.notice_user_id)"
-            plain
-          >
-            <el-icon class="ml-1 mr-4"><Finished /></el-icon>
-            点击查看&nbsp;
-            <strong> {{ message.notice_user_name }} </strong>
-            &nbsp;的店铺新品</el-button
-          >
+          <div v-if="message.notice_readed">
+            <el-tag type="warning" round>
+              <el-icon><ReadingLamp /></el-icon>
+              未读</el-tag
+            >
+          </div>
         </div>
-      </div>
-    </el-card>
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">{{ message.notice_title }}</h2>
+          <span class="text-gray-500">{{ message.notice_create_time }}</span>
+        </div>
+        <p class="text-gray-700 mt-2">{{ message.notice_content }}</p>
+        <div class="mt-4 flex justify-end">
+          <div>
+            <el-button
+              type="primary"
+              class="text-white font-semibold hover:underline"
+              @click="viewDetails(message.notice_user_id)"
+              plain
+            >
+              <el-icon class="ml-1 mr-4"><Finished /></el-icon>
+              点击查看&nbsp;
+              <strong> {{ message.notice_user_name }} </strong>
+              &nbsp;的店铺新品</el-button
+            >
+          </div>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
