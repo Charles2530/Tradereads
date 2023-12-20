@@ -21,6 +21,17 @@
         :active-action-icon="View"
         :inactive-action-icon="Hide"
       />
+      <div class="float-right mt-1 mx-2">
+        <el-select v-model="filterType" placeholder="商品排序" class="mx-2">
+          <el-option label="商品价格" value="price"></el-option>
+          <el-option label="商品评论数" value="comment"></el-option>
+          <el-option label="商家评分" value="score"></el-option>
+        </el-select>
+        <el-select v-model="filterOrder" placeholder="排序维度">
+          <el-option label="降序" value="DESC"></el-option>
+          <el-option label="升序" value="ASC"></el-option>
+        </el-select>
+      </div>
     </div>
     <div
       v-for="(product, index) in productListPerPage"
@@ -60,6 +71,7 @@
 import buyProductItem from "@c/product/buyProductItem.vue";
 import { Hide, View } from "@element-plus/icons-vue";
 import { ref, computed, watch } from "vue";
+import { showAllProducts } from "@/api/product.js";
 export default {
   components: { buyProductItem },
   name: "ProductBuyItemList",
@@ -74,27 +86,42 @@ export default {
     const currentPage = ref(1);
     const searchType = ref("");
     const searchKeyword = ref("");
+    const filterType = ref("");
+    const filterOrder = ref("");
     const Match = ref(true);
     const filteredProducts = computed(() => {
+      const originProducts = ref(props.products);
       if (searchType.value && searchKeyword.value) {
         if (Match.value) {
-          return props.products.filter((product) =>
+          originProducts.value = props.products.filter((product) =>
             product[searchType.value].includes(searchKeyword.value)
           );
         } else {
-          return props.products.filter(
+          originProducts.value = props.products.filter(
             (product) => product[searchType.value] == searchKeyword.value
           );
         }
-      } else {
-        return props.products;
       }
+      if (filterType.value || filterOrder.value) {
+        showAllProducts({
+          show_following: 0,
+          show_order_base: filterType.value,
+          show_order: filterOrder.value,
+        }).then((res) => {
+          if (res.success) {
+            originProducts.value = res.data.products;
+          }
+        });
+      }
+      return originProducts.value;
     });
     const search = () => {
       currentPage.value = 1;
     };
     watch(searchKeyword, search);
     watch(searchType, search);
+    watch(filterOrder, search);
+    watch(filterType, search);
     const productListPerPage = computed(() => {
       const start = (currentPage.value - 1) * pageSize.value;
       const end = currentPage.value * pageSize.value;
@@ -115,6 +142,8 @@ export default {
       productListPerPage,
       search,
       pageSize,
+      filterOrder,
+      filterType,
     };
   },
 };
