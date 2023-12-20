@@ -10,7 +10,7 @@
           <p class="text-4xl font-bold mb-8 flex justify-center">我的购物车</p>
           <div>
             <el-button
-              class="ml-4"
+              class="ml-8 my-2"
               type="success"
               @click="addCartsToOrdersFunc()"
               plain
@@ -29,10 +29,9 @@
 
 <script setup>
 import shoppingItemList from "@c/shopping/shoppingItemList.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { showCurrentUserCart, addCartsToOrders } from "@/api/cart.js";
 import NavigationBar from "@c/home/NavigationBar.vue";
-import { ElMessage } from "element-plus";
 onMounted(() => {
   showCurrentUserCart().then((res) => {
     if (res.success) {
@@ -48,18 +47,26 @@ onMounted(() => {
   });
 });
 const cartProducts = ref([]);
+
+const selectIdArray = computed(() => {
+  return cartProducts.reduce((total, item) => {
+    if (item.selected) {
+      total.push(item.product_id);
+    }
+    return total;
+  }, []);
+});
+
 const addCartsToOrdersFunc = () => {
-  addCartsToOrders().then((res) => {
+  addCartsToOrders({ choose_carts: selectIdArray }).then((res) => {
+    console.log(res.data);
     if (res.success) {
       ElMessage({
-        showClose: true,
         type: "success",
-        message: res.message,
+        message: "添加订单成功",
       });
-      location.reload();
     } else {
       ElMessage({
-        showClose: true,
         type: "error",
         message: res.message,
       });
