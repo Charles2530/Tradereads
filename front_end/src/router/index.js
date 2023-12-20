@@ -23,7 +23,7 @@ const Notice = () => import("@/views/notice/index.vue");
 // 关注用户详情页
 const FollowDetail = () => import("@/views/personalCenter/followDetail.vue");
 //购物车页面
-const Shopping = () => import("@/views/shopping/shopping.vue");
+const Shopping = () => import("@/views/shopping/index.vue");
 //商品购买中心
 const ProductBuy = () => import("@/views/productBuyCenter/index.vue");
 //我的商品

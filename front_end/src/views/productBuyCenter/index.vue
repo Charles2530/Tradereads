@@ -12,12 +12,28 @@
           <h1 class="text-3xl font-semibold mb-2 text-white">二手书商品中心</h1>
           <p class="text-gray-200 notice-detail">快来选购你想要的二手书吧!</p>
         </div>
+        <div class="user-management mx-20 bg-white rounded-xl">
+          <product-buy-item-list :products="products" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted } from "vue";
+import { showAllProducts } from "@/api/product.js";
+import productBuyItemList from "@c/product/productBuyItemList.vue";
+const products = ref([]);
+
+onMounted(() => {
+  showAllProducts({ show_following: 0 }).then((res) => {
+    if (res.success) {
+      products.value = res.data.products;
+    }
+  });
+});
+</script>
 
 <style>
 .notice-detail:hover {
