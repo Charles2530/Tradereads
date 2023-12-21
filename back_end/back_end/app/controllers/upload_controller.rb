@@ -3,6 +3,40 @@ class UploadController < ApplicationController
 
   include ApplicationHelper
 
+  def upload_image
+    baseurl = "https://sm.ms/api/v2"
+
+    post_params = { smfile: params[:file], format: "json" }
+    smms_params = post_smms(baseurl + "/upload", post_params)
+    puts "smms_params----#{smms_params}"
+    unless smms_params
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    if smms_params['success'] == false
+      if smms_params['image_repeated']
+        url = smms_params['images']
+      else
+        render json: response_json(
+          false,
+          message: "上传失败"
+        ) and return
+      end
+    else
+      url = smms_params['data']['url']
+    end
+    puts "data---------#{smms_params['data']}"
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        image_url: url
+      }
+    )
+  end
+
   def upload_avatar
 
     baseurl = "https://sm.ms/api/v2"
@@ -14,18 +48,24 @@ class UploadController < ApplicationController
     unless smms_params
       render json: response_json(
         false,
-        message: Global::FAIL
+        message: "上传失败"
       ) and return
     end
     if smms_params['success'] == false
-      render json: response_json(
-        false,
-        message: Global::FAIL
-      ) and return
+      if smms_params['image_repeated']
+        url = smms_params['images']
+      else
+        render json: response_json(
+          false,
+          message: "上传失败"
+        ) and return
+      end
+    else
+      url = smms_params['data']['url']
     end
     user_detail = user.user_detail
     puts "data---------#{smms_params['data']}"
-    user_detail.avatar = smms_params['data']['url']
+    user_detail.avatar = url
     if user_detail.save
       render status: 200, json: response_json(
         true,
@@ -34,7 +74,7 @@ class UploadController < ApplicationController
     else
       render json: response_json(
         false,
-        message: Global::FAIL
+        message: "上传失败"
       )
     end
   end

@@ -4,12 +4,13 @@ Rails.application.routes.draw do
     resources :notices
     resources :comments
     resources :followships
+    post :upload_image, to: 'upload#upload_image', as: :upload_image
     get :wallet, to: 'wallets#show_wallet', as: :show_wallet
     post :wallet_charge, to: 'wallets#wallet_charge', as: :wallet_charge
     post :register, to: 'users#register', as: :user_register
     post :login, to: 'users#login', as: :user_login
     get :logout, to: 'users#logout', as: :user_logout
-    get :show_cart, to: 'users#show_cart', as: :user_show_cart
+    get :show_cart, to: 'products#show_cart', as: :user_show_cart
     post :choose_cart_to_order, to: 'users#choose_cart_to_order', as: :user_choose_cart_to_order
     get :show_current_orders, to: 'users#show_current_orders', as: :user_show_current_orders
     get :show_sell_orders, to: 'users#show_sell_orders', as: :user_show_sell_orders
@@ -42,6 +43,8 @@ Rails.application.routes.draw do
       post :modify_store, to: 'products#modify_store', as: :product_modify_store
       post :modify_price, to: 'products#modify_price', as: :product_modify_price
       post :modify_sell_address, to: 'products#modify_sell_address', as: :product_modify_sell_address
+      post :modify_product_name, to: 'products#modify_product_name', as: :modify_product_name
+      delete :remove_from_cart, to: 'products#remove_from_cart', as: :remove_from_cart
       post :add_product_to_cart, to: 'products#add_product_to_cart', as: :product_add_product_to_cart
       post :buy_product, to: 'products#buy_product', as: :buy_product
       post :add_comment, to: 'products#add_comment', as: :product_add_comment
