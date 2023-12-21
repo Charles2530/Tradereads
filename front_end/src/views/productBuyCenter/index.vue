@@ -115,7 +115,7 @@ const addProductFunc = () => {
     if (res.success) {
       console.log(res.data);
       ElMessage({
-        message: "添加商品成功",
+        message: "商品已进入审核列表",
         type: "success",
       });
       showAddProductDialog.value = false;
