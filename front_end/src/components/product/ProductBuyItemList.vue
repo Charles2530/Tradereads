@@ -8,11 +8,37 @@
         <el-option label="商品发货地址" value="sell_address"></el-option>
         <el-option label="商品类型" value="product_type"></el-option>
       </el-select>
-      <el-input
-        v-model="searchKeyword"
-        placeholder="请输入关键字"
-        style="width: 200px; margin-left: 10px"
-      ></el-input>
+      <template v-if="searchType !== 'product_type'">
+        <el-input
+          v-model="searchKeyword"
+          placeholder="请输入关键字"
+          style="width: 200px; margin-left: 10px"
+        ></el-input>
+      </template>
+      <template v-else>
+        <el-select
+          v-model="searchKeyword"
+          placeholder="请选择类型"
+          style="width: 200px; margin-left: 10px"
+        >
+          <el-option
+            v-for="selected in [
+              '杂志',
+              '教科书',
+              '小说',
+              '童话',
+              '戏剧',
+              '数学',
+              '计算机',
+              '漫画',
+              '自传',
+            ]"
+            :key="selected"
+            :label="selected"
+            :value="selected"
+          ></el-option>
+        </el-select>
+      </template>
       <el-switch
         class="mx-4 mb-2"
         v-model="Match"
@@ -96,6 +122,7 @@ export default {
           ? ref(orderProducts)
           : ref(props.products);
       if (searchType.value && searchKeyword.value) {
+        console.log(searchType.value);
         if (Match.value) {
           originProducts.value = originProducts.value.filter((product) =>
             product[searchType.value].includes(searchKeyword.value)

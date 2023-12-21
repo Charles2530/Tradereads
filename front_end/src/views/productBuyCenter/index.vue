@@ -47,7 +47,24 @@
           <el-input v-model="newProduct.product_press"></el-input>
         </el-form-item>
         <el-form-item label="商品类型" prop="product_type">
-          <el-input v-model="newProduct.product_type"></el-input>
+          <el-select v-model="newProduct.product_type" placeholder="请选择类型">
+            <el-option
+              v-for="selected in [
+                '杂志',
+                '教科书',
+                '小说',
+                '童话',
+                '戏剧',
+                '数学',
+                '计算机',
+                '漫画',
+                '自传',
+              ]"
+              :key="selected"
+              :label="selected"
+              :value="selected"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div class="dialog-footer mt-6">
