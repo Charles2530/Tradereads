@@ -33,6 +33,14 @@ export async function modifySellAddress(product_id, params) {
   });
 }
 
+export async function modifyProductName(product_id, params) {
+  return await service({
+    url: "/products/" + product_id + "/modify_product_name",
+    method: "post",
+    params,
+  });
+}
+
 export async function addProductToCart(product_id, params) {
   return await service({
     url: "/products/" + product_id + "/add_product_to_cart",

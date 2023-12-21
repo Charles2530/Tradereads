@@ -7,14 +7,18 @@
         </el-row>
         <el-row align="middle" class="mx-2">
           <el-col :span="12">
-            <span class="text-md font-bold">{{ product.product_name }}</span>
+            <span class="text-md font-bold text-gray-400">{{
+              product.product_name
+            }}</span>
           </el-col>
           <el-col :span="6">
-            <span class="text-md text-gray-600">￥{{ product.price }}</span>
+            <span class="text-md text-red-500 font-bold"
+              >￥{{ product.price }}</span
+            >
           </el-col>
           <el-col :span="6">
             <el-button
-              type="info"
+              type="warning"
               @click="openPurchaseDialog()"
               plain
               class="my-1"
@@ -25,7 +29,7 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-dialog v-model="dialogVisible" width="40%" @close="closeDialog">
+    <el-dialog v-model="dialogVisible" width="35%" @close="closeDialog">
       <div>
         <p class="text-2xl font-bold mb-8 flex justify-center">购买商品</p>
         <p class="text-xl my-2">商品名称: {{ product.product_name }}</p>
@@ -48,9 +52,6 @@
           >
           <el-button type="success" @click="addToCart" plain
             >加入购物车</el-button
-          >
-          <el-button type="danger" @click="closeDialog" plain
-            >关闭弹窗</el-button
           >
           <el-button
             type="warning"
@@ -85,9 +86,6 @@ export default {
     const count = ref(1);
     const openPurchaseDialog = () => {
       dialogVisible.value = true;
-    };
-    const closeDialog = () => {
-      dialogVisible.value = false;
     };
 
     const buyProductFunc = () => {
@@ -148,15 +146,19 @@ export default {
       });
     };
 
+    const closeDialog = () => {
+      dialogVisible.value = false;
+    };
+
     return {
       openPurchaseDialog,
       dialogVisible,
       goToProductDetails,
       buyProductFunc,
       addToCart,
-      closeDialog,
       followUser,
       count,
+      closeDialog,
     };
   },
 };

@@ -84,19 +84,6 @@
       </div>
       <div class="mb-4">
         <label
-          for="product_image"
-          class="block text-sm font-medium text-gray-700"
-          >商品图片</label
-        >
-        <el-input
-          type="text"
-          id="product_image"
-          v-model="editableProduct.product_image"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-        />
-      </div>
-      <div class="mb-4">
-        <label
           for="product_store"
           class="block text-sm font-medium text-gray-700"
           >库存</label
@@ -145,6 +132,7 @@ import {
   modifyStorage,
   modifyPrice,
   modifySellAddress,
+  modifyProductName,
 } from "@/api/product.js";
 
 export default {
@@ -174,12 +162,12 @@ export default {
     );
     const router = useRouter();
 
-    const goToProductDetails = (productId) => {
+    const goToProductDetails = (product_id) => {
       // Replace with your router logic or window location change
       router.push({
         name: "ProductDetail",
         params: {
-          id: productId,
+          product_id: product_id,
         },
       });
     };
@@ -201,6 +189,20 @@ export default {
         console.log(res);
         if (res.success) {
           console.log("修改价格成功");
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
+
+      modifyProductName(editableProduct.product_id, {
+        new_name: editableProduct.product_name,
+      }).then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log("修改名称成功");
         } else {
           ElMessage({
             message: res.message,

@@ -26,33 +26,56 @@
         </div>
       </div>
     </div>
-    <el-dialog title="添加商品" v-model="showAddProductDialog" width="30%">
+    <el-dialog v-model="showAddProductDialog" width="30%">
       <el-form :model="newProduct" ref="newProductForm" label-width="120px">
-        <el-form-item label="价格" prop="price">
+        <el-form-item label="商品价格" prop="price">
           <el-input-number v-model="newProduct.price"></el-input-number>
         </el-form-item>
-        <el-form-item label="出售地址" prop="sell_address">
+        <el-form-item label="发货地址" prop="sell_address">
           <el-input v-model="newProduct.sell_address"></el-input>
         </el-form-item>
-        <el-form-item label="库存" prop="store">
+        <el-form-item label="商品库存" prop="store">
           <el-input-number v-model="newProduct.store"></el-input-number>
         </el-form-item>
         <el-form-item label="商品名称" prop="product_name">
-          <product-image-upload @image-uploaded="handleImageUploaded" />
+          <el-input v-model="newProduct.product_name"></el-input>
         </el-form-item>
         <el-form-item label="商品图片" prop="product_image">
-          <el-input v-model="newProduct.product_image"></el-input>
+          <product-image-upload @image-uploaded="handleImageUploaded" />
         </el-form-item>
         <el-form-item label="商品出版社" prop="product_press">
           <el-input v-model="newProduct.product_press"></el-input>
         </el-form-item>
         <el-form-item label="商品类型" prop="product_type">
-          <el-input v-model="newProduct.product_type"></el-input>
+          <el-select v-model="newProduct.product_type" placeholder="请选择类型">
+            <el-option
+              v-for="selected in [
+                '杂志',
+                '教科书',
+                '小说',
+                '童话',
+                '戏剧',
+                '数学',
+                '计算机',
+                '漫画',
+                '自传',
+              ]"
+              :key="selected"
+              :label="selected"
+              :value="selected"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div class="dialog-footer mt-6">
-        <el-button type="primary" @click="addProductFunc">添加商品</el-button>
-        <el-button @click="showAddProductDialog = false">取消</el-button>
+        <el-button type="primary" @click="addProductFunc">
+          <el-icon class="mr-1"><Plus /></el-icon>
+          添加商品</el-button
+        >
+        <el-button type="info" @click="showAddProductDialog = false">
+          <el-icon class="mr-1"><Minus /></el-icon>
+          取消添加</el-button
+        >
       </div>
     </el-dialog>
   </div>

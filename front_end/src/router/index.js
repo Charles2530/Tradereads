@@ -122,8 +122,12 @@ router.beforeEach((to, from, next) => {
   if (store.$token) {
     next();
   } else {
-    /* 目前未添加数据库，之后补充在完成数据后添加直接跳转登录页 */
-    if (routes.some((item) => new RegExp("^" + item.path).test(to.path))) {
+    console.log(to.path);
+    if (
+      routes.some((item) =>
+        new RegExp("^" + item.path.split("/:")[0] + "(?:/.*)?$").test(to.path)
+      )
+    ) {
       next();
     } else {
       next({ name: "404Page" });
