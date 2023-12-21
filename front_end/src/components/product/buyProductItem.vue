@@ -7,14 +7,18 @@
         </el-row>
         <el-row align="middle" class="mx-2">
           <el-col :span="12">
-            <span class="text-md font-bold">{{ product.product_name }}</span>
+            <span class="text-md font-bold text-gray-400">{{
+              product.product_name
+            }}</span>
           </el-col>
           <el-col :span="6">
-            <span class="text-md text-gray-600">￥{{ product.price }}</span>
+            <span class="text-md text-red-500 font-bold"
+              >￥{{ product.price }}</span
+            >
           </el-col>
           <el-col :span="6">
             <el-button
-              type="info"
+              type="warning"
               @click="openPurchaseDialog()"
               plain
               class="my-1"
@@ -142,6 +146,10 @@ export default {
       });
     };
 
+    const closeDialog = () => {
+      dialogVisible.value = false;
+    };
+
     return {
       openPurchaseDialog,
       dialogVisible,
@@ -150,6 +158,7 @@ export default {
       addToCart,
       followUser,
       count,
+      closeDialog,
     };
   },
 };

@@ -43,7 +43,7 @@
           <el-menu-item index="4">
             <i class="el-icon-style"><Setting /></i>
             <router-link class="nav-title" to="/DeveloperInfo"
-              >开发者信息</router-link
+              >客服中心</router-link
             >
           </el-menu-item>
         </div>

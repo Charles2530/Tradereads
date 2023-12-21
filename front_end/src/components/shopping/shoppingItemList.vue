@@ -19,7 +19,10 @@
         :inactive-action-icon="Hide"
       />
       <span class="text-2xl ml-250 p-2">
-        已选择的商品总价: ￥{{ totalPrice }}</span
+        已选择的商品总价:
+        <span class="text-md text-red-500 font-bold"
+          >￥{{ totalPrice }}</span
+        ></span
       >
     </div>
 
@@ -53,16 +56,31 @@
               label="商品数量"
               prop="product_number"
             ></el-table-column>
-            <el-table-column label="操作" width="120" align="center">
+            <el-table-column label="操作" width="160" align="center">
               <template #default="{ row }">
-                <el-button
-                  type="primary"
-                  @click="goToProductDetails(row.product_id)"
-                  plain
-                >
-                  <el-icon class="mr-1"><Link /></el-icon>
-                  详细信息</el-button
-                >
+                <div>
+                  <el-button
+                    type="primary"
+                    @click="goToProductDetails(row.product_id)"
+                    plain
+                  >
+                    <el-icon class="mr-1"><Link /></el-icon>
+                    详细信息</el-button
+                  >
+                </div>
+                <div class="mt-2">
+                  <el-popconfirm
+                    title="确定将所选商品移出购物车吗?"
+                    @confirm="deleteProductFromCart(row.product_id)"
+                  >
+                    <template #reference>
+                      <el-button type="danger" plain>
+                        <el-icon class="mr-1"><Delete /></el-icon>
+                        删除商品
+                      </el-button>
+                    </template>
+                  </el-popconfirm>
+                </div>
               </template>
             </el-table-column>
             <el-table-column label="加入订单" width="120" align="center">
@@ -122,6 +140,10 @@ export default {
         },
       });
     };
+
+    const deleteProductFromCart = (product_id) => {
+      console.log(product_id);
+    };
     //search
     const searchType = ref("");
     const searchKeyword = ref("");
@@ -154,6 +176,7 @@ export default {
       searchKeyword,
       searchType,
       Match,
+      deleteProductFromCart,
     };
   },
 };
