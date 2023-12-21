@@ -106,6 +106,8 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Close, Check, Hide, View } from "@element-plus/icons-vue";
+import { removeFromCart } from "@/api/cart.js";
+import { ElMessage } from "element-plus";
 export default {
   name: "ShoppingItemList",
   props: {
@@ -143,6 +145,19 @@ export default {
 
     const deleteProductFromCart = (product_id) => {
       console.log(product_id);
+      removeFromCart(product_id).then((res) => {
+        if (res.success) {
+          ElMessage({
+            message: "删除成功",
+            type: "success",
+          });
+        } else {
+          ElMessage({
+            message: res.message,
+            type: "error",
+          });
+        }
+      });
     };
     //search
     const searchType = ref("");
