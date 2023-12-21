@@ -119,7 +119,6 @@ const addProductFunc = () => {
         type: "success",
       });
       showAddProductDialog.value = false;
-      products.value.push(res.data);
     } else {
       ElMessage({
         message: res.message,
