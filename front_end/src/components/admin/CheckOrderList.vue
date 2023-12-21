@@ -1,7 +1,5 @@
 <template>
   <div class="mx-100 mt-20 bg-white rounded-xl">
-    <h1 class="text-4xl font-bold mb-8 flex justify-center">商品审核中心</h1>
-    <el-divider></el-divider>
     <div>
       <div class="items-center">
         <el-switch
