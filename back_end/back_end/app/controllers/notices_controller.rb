@@ -67,7 +67,7 @@ class NoticesController < ApplicationController
     end
     @notices.each do |notice|
       if user.followings.include? notice.user
-        unless NoticeRecord.exists?(notice: notice, user: user)
+        if NoticeRecord.exists?(notice: notice, user: user)
           notice_record = NoticeRecord.find_by(notice: notice, user: user)
           if notice_record.readed == false
             render status: 200, json: response_json(
@@ -80,7 +80,7 @@ class NoticesController < ApplicationController
           end
         end
       elsif notice.user.right == 1
-        unless NoticeRecord.exists?(notice: notice, user: user)
+        if NoticeRecord.exists?(notice: notice, user: user)
           notice_record = NoticeRecord.find_by(notice: notice, user: user)
           if notice_record.readed == false
             render status: 200, json: response_json(
@@ -98,7 +98,7 @@ class NoticesController < ApplicationController
       true,
       message: Global::SUCCESS,
       data: {
-        have_new_notice: false
+        have_new_notice: true
       }
     )
   end
