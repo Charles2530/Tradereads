@@ -1,6 +1,5 @@
 <template>
   <div class="bg-blue-200/70">
-    <navigation-bar />
     <div
       class="bg-cart-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
     >

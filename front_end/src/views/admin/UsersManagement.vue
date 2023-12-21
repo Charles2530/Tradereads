@@ -5,11 +5,10 @@
     <div style="position: relative; z-index: 1">
       <personal-center-side-bar />
     </div>
-    <div
-      class="user-management mx-20 bg-white rounded-xl"
-      style="position: relative; z-index: 0"
-    >
-      <user-management-list :userList="users" />
+    <div style="position: relative; z-index: 0">
+      <div class="user-management mx-20 bg-white rounded-xl">
+        <user-management-list :userList="users" />
+      </div>
     </div>
   </div>
 </template>

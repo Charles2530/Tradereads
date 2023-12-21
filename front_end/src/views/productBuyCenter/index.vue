@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navigation-bar></navigation-bar>
     <div
       class="bg-productBuyCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
     >

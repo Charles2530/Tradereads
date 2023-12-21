@@ -1,6 +1,5 @@
 <template>
   <div class="order-list-page mt-20">
-    <h1 class="text-4xl font-bold mb-8 flex justify-center">订单列表</h1>
     <div class="search-box">
       <el-row>
         <div class="mx-2">
