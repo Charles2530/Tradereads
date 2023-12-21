@@ -43,6 +43,8 @@ Rails.application.routes.draw do
       post :modify_store, to: 'products#modify_store', as: :product_modify_store
       post :modify_price, to: 'products#modify_price', as: :product_modify_price
       post :modify_sell_address, to: 'products#modify_sell_address', as: :product_modify_sell_address
+      post :modify_product_name, to: 'products#modify_product_name', as: :modify_product_name
+      delete :remove_from_cart, to: 'products#remove_from_cart', as: :remove_from_cart
       post :add_product_to_cart, to: 'products#add_product_to_cart', as: :product_add_product_to_cart
       post :buy_product, to: 'products#buy_product', as: :buy_product
       post :add_comment, to: 'products#add_comment', as: :product_add_comment

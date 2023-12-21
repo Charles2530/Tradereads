@@ -289,16 +289,16 @@ class UsersController < ApplicationController
 
   def choose_cart_to_order
     user = current_user
-    cart_ids = params[:choose_carts]
-    unless cart_ids
+    product_ids = params[:choose_carts]
+    unless product_ids
       render json: response_json(
         false,
         message: Global::FAIL
       ) and return
     end
     carts = []
-    cart_ids.each do |cart_id|
-      carts << Cart.find(cart_id)
+    product_ids.each do |product_id|
+      carts << Cart.find_by(product_id: product_id)
     end
     puts "------------------------------#{params}"
     puts "-------------------------------#{carts}"
@@ -310,7 +310,7 @@ class UsersController < ApplicationController
       ) and return
     end
     order_items = []
-    carts.carts.each do |cart|
+    carts.each do |cart|
       state = "待支付"
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
       if order_item.valid?

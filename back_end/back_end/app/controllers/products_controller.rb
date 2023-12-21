@@ -114,6 +114,8 @@ class ProductsController < ApplicationController
         product_press: product_detail.product_press,
         product_price: product.price.to_f,
         product_state: product.state,
+        product_type: product_detail.product_type,
+        sell_address: product.sell_address,
         seller_name: seller.user_detail.user_name,
         seller_phone: seller.phone,
         seller_id: seller.id
@@ -189,7 +191,7 @@ class ProductsController < ApplicationController
     end
     new_address = params[:new_address]
 
-    product.sell_address = new_address
+    product.product_detail.sell_address = new_address
     if product.save
       render status: 200, json: response_json(
         true,
@@ -199,6 +201,32 @@ class ProductsController < ApplicationController
       render json: response_json(
         false,
         message: ProductError::MODIFY_ADDRESS_FAIL
+      )
+    end
+  end
+
+  def modify_product_name
+    @product = Product.find(params[:product_id])
+    product = @product
+    puts is_seller
+    unless is_seller
+      render json: response_json(
+        false,
+        message: ProductError::MODIFY_UNAVAILABLE
+      ) and return
+    end
+    new_name = params[:new_name]
+
+    product.product_detail.product_name = new_name
+    if product.save
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
       )
     end
   end
@@ -241,6 +269,29 @@ class ProductsController < ApplicationController
       render json: response_json(
         false,
         message: CartError::ADD_FAIL
+      )
+    end
+  end
+
+  def remove_from_cart
+    product = Product.find(params[:product_id])
+    user = current_user
+    cart = Cart.find_by(user: user, product: product)
+    unless cart
+      render json: response_json(
+        false,
+        message: Global::FAIL
+      ) and return
+    end
+    if cart.destroy
+      render status: 200, json: response_json(
+        true,
+        message: Global::SUCCESS
+      )
+    else
+      render json: response_json(
+        false,
+        message: Global::FAIL
       )
     end
   end
