@@ -70,7 +70,7 @@
 
 <script>
 import { ref } from "vue";
-import { addProductToCart } from "@/api/product.js";
+import { addProductToCart, buyProduct } from "@/api/product.js";
 import { useRouter } from "vue-router";
 export default {
   name: "buyProductItem",

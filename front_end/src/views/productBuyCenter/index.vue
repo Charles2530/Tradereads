@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navigation-bar></navigation-bar>
     <div
       class="bg-productBuyCenter-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
     >
@@ -29,7 +28,10 @@
     <el-dialog v-model="showAddProductDialog" width="30%">
       <el-form :model="newProduct" ref="newProductForm" label-width="120px">
         <el-form-item label="商品价格" prop="price">
-          <el-input-number v-model="newProduct.price"></el-input-number>
+          <el-input-number
+            v-model="newProduct.price"
+            :precision="2"
+          ></el-input-number>
         </el-form-item>
         <el-form-item label="发货地址" prop="sell_address">
           <el-input v-model="newProduct.sell_address"></el-input>
@@ -117,7 +119,6 @@ const addProductFunc = () => {
         type: "success",
       });
       showAddProductDialog.value = false;
-      products.value.push(res.data);
     } else {
       ElMessage({
         message: res.message,

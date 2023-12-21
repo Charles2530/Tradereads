@@ -151,6 +151,7 @@ export default {
             message: "删除成功",
             type: "success",
           });
+          location.reload();
         } else {
           ElMessage({
             message: res.message,
