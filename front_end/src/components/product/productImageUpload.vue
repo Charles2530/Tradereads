@@ -20,7 +20,7 @@ import { ref } from "vue";
 import { ElMessage } from "element-plus";
 export default {
   name: "productImageUpload",
-  setup() {
+  setup(props, { emit }) {
     const uploadRef = ref(null);
     const url = import.meta.env.VITE_APP_BASE_API + "/upload_image";
     const uploadedImageUrl = ref("");
