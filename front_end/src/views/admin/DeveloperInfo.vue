@@ -8,33 +8,18 @@
         <personal-center-side-bar />
       </div>
       <div class="container mx-auto" style="position: relative; z-index: 0">
-        <h1 class="text-2xl font-bold text-white mb-4">开发者模式</h1>
-
-        <!-- 开发者信息板块 -->
-        <div class="mb-6">
-          <div class="bg-white shadow-md rounded p-4">
-            <h2 class="text-2xl font-semibold mb-3 flex justify-center">
-              开发者信息
-            </h2>
-            <div>
-              <!-- 开发者信息内容 -->
-              <p class="mb-2 text-xl"><strong>开发者1：</strong> 杜金阳</p>
-              <p class="mb-2 text-xl"><strong>开发者2：</strong> 黄泓亮</p>
-              <p class="mb-2 text-xl"><strong>开发者3：</strong> 叶锦轩</p>
-              <!-- 添加更多开发者信息 -->
-            </div>
-          </div>
-        </div>
+        <h1 class="text-2xl font-bold text-white mb-4">客服中心</h1>
 
         <!-- 提交测试日志功能板块 -->
         <div class="bg-white shadow-md rounded p-4">
-          <h2 class="text-2xl font-semibold mb-3">提交测试日志</h2>
+          <h2 class="text-2xl font-semibold mb-3">提交建议</h2>
           <p class="my-2 text-gray-400">
             在这里你可以提交对我们系统的反馈或者建议!
           </p>
+          <p class="my-2 text-gray-400">在这里你也可以提交对某些商家的投诉!</p>
           <div class="mb-4">
             <label class="block mb-2 text-xl">
-              日志内容:
+              建议内容:
               <textarea
                 v-model="logText"
                 class="block w-full border-gray-300 rounded-md p-2 transition border focus:border-blue-500"
@@ -49,6 +34,21 @@
           >
             提交日志
           </button>
+        </div>
+        <!-- 开发者信息板块 -->
+        <div class="mb-6">
+          <div class="bg-white shadow-md rounded p-4">
+            <h2 class="text-2xl font-semibold mb-3 flex justify-center">
+              开发者信息
+            </h2>
+            <div>
+              <!-- 开发者信息内容 -->
+              <p class="mb-2 text-xl"><strong>开发者1：</strong> 杜金阳</p>
+              <p class="mb-2 text-xl"><strong>开发者2：</strong> 黄泓亮</p>
+              <p class="mb-2 text-xl"><strong>开发者3：</strong> 叶锦轩</p>
+              <!-- 添加更多开发者信息 -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
