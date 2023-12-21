@@ -20,10 +20,10 @@
               @click="addCartsToOrdersFunc()"
             >
               <el-icon class="ml-1 mr-4"><Service /></el-icon>
-              添加商品到订单
+              点击购买商品
             </el-button>
           </div>
-          <div class="bg-white ml-8">
+          <div>
             <shopping-item-list :products="cartProducts" />
           </div>
         </div>
@@ -69,7 +69,7 @@ const addCartsToOrdersFunc = () => {
     if (res.success) {
       ElMessage({
         type: "success",
-        message: "添加订单成功",
+        message: "商品购买成功",
       });
     } else {
       ElMessage({

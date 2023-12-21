@@ -52,7 +52,11 @@
             <el-input v-model="newNotice_title"></el-input>
           </el-form-item>
           <el-form-item label="内容" prop="content">
-            <el-input type="textarea" v-model="newNotice_content"></el-input>
+            <textarea
+              v-model="newNotice_content"
+              class="block w-full border-gray-300 rounded-md p-2 transition border focus:border-blue-500"
+              rows="6"
+            ></textarea>
           </el-form-item>
         </el-form>
         <div class="dialog-footer">

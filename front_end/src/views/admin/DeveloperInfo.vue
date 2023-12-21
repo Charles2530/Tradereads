@@ -2,54 +2,74 @@
   <div class="min-h-screen bg-gray-100 p-4">
     <div class="container mx-auto">
       <h1 class="text-2xl font-bold text-gray-800 mb-4">开发者模式</h1>
+
+      <!-- 开发者信息板块 -->
+      <div class="mb-6">
+        <div class="bg-white shadow-md rounded p-4">
+          <h2 class="text-2xl font-semibold mb-3 flex justify-center">
+            开发者信息
+          </h2>
+          <div>
+            <!-- 开发者信息内容 -->
+            <p class="mb-2 text-xl"><strong>开发者1：</strong> 杜金阳</p>
+            <p class="mb-2 text-xl"><strong>开发者2：</strong> 黄泓亮</p>
+            <p class="mb-2 text-xl"><strong>开发者3：</strong> 叶锦轩</p>
+            <!-- 添加更多开发者信息 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 提交测试日志功能板块 -->
       <div class="bg-white shadow-md rounded p-4">
-        <h2 class="text-xl font-semibold mb-3">系统日志</h2>
-        <div class="overflow-auto h-64 mb-4 p-2 bg-gray-200">
-          <!-- 日志输出 -->
-          <pre>{{ systemLogs }}</pre>
+        <h2 class="text-2xl font-semibold mb-3">提交测试日志</h2>
+        <div class="mb-4">
+          <label class="block mb-2 text-xl">
+            日志内容:
+            <textarea
+              v-model="logText"
+              class="block w-full border-gray-300 rounded-md p-2 transition border focus:border-blue-500"
+              rows="8"
+            ></textarea>
+          </label>
         </div>
 
-        <h2 class="text-xl font-semibold mb-3">功能测试</h2>
         <button
-          @click="testFunction"
+          @click="submitLog"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          执行测试
+          提交日志
         </button>
-
-        <h2 class="mt-6 text-xl font-semibold mb-3">配置设置</h2>
-        <div>
-          <!-- 配置选项 -->
-          <label class="block mb-2">
-            <input
-              type="checkbox"
-              v-model="configOptions.debugMode"
-              class="mr-2"
-            />
-            调试模式
-          </label>
-          <!-- 更多配置 -->
-        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-
-const systemLogs = ref("这里将显示系统日志...");
-const configOptions = ref({
-  debugMode: false,
-  // 其他配置选项
-});
-
-const testFunction = () => {
-  systemLogs.value = "执行了测试功能...";
-  // 实现测试功能的逻辑
+<script>
+import { ElMessage } from "element-plus";
+export default {
+  data() {
+    return {
+      logText: "",
+    };
+  },
+  methods: {
+    submitLog() {
+      if (this.logText.trim() !== "") {
+        console.log("提交日志内容:", this.logText);
+        this.logText = "";
+        ElMessage({
+          showClose: true,
+          type: "success",
+          message: "日志提交成功",
+        });
+      } else {
+        ElMessage({
+          showClose: true,
+          type: "error",
+          message: "日志内容不能为空",
+        });
+      }
+    },
+  },
 };
 </script>
-
-<style scoped>
-/* Tailwind CSS 样式 */
-</style>
