@@ -105,6 +105,7 @@ export default {
             message: "评论成功",
             type: "success",
           });
+          location.reload();
         } else {
           ElMessage({
             message: "评论失败",

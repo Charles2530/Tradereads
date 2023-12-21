@@ -6,7 +6,12 @@
       <personal-center-side-bar />
     </div>
     <div style="position: relative; z-index: 0">
-      <check-order-list :products="checkOrders"></check-order-list>
+      <h1 class="text-4xl font-bold text-white mb-8 flex justify-center">
+        商品审核中心
+      </h1>
+      <div>
+        <check-order-list :products="checkOrders"></check-order-list>
+      </div>
     </div>
   </div>
 </template>

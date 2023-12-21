@@ -183,6 +183,7 @@ export default {
               message: "取消关注成功",
             });
           }
+          location.reload();
         } else {
           ElMessage({
             showClose: true,
