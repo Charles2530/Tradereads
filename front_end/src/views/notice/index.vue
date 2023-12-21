@@ -27,14 +27,20 @@
         </div>
         <div>
           <el-tabs v-model="activeName" class="demo-tabs">
-            <el-tab-pane label="公共通知" name="first"
-              ><public-notice-list :notices="notices"
-            /></el-tab-pane>
+            <el-tab-pane label="公共通知" name="first">
+              <el-scrollbar max-height="500px">
+                <public-notice-list :notices="notices" />
+              </el-scrollbar>
+            </el-tab-pane>
             <el-tab-pane label="我的关注" name="Config">
-              <follow-notice-list :books="books" />
+              <el-scrollbar max-height="500px">
+                <follow-notice-list :books="books" />
+              </el-scrollbar>
             </el-tab-pane>
             <el-tab-pane label="我的销售" name="Seller">
-              <seller-notice-list :messages="sellerMessages" />
+              <el-scrollbar max-height="500px">
+                <seller-notice-list :messages="sellerMessages" />
+              </el-scrollbar>
             </el-tab-pane>
           </el-tabs>
         </div>

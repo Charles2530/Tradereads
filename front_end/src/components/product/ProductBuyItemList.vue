@@ -89,35 +89,50 @@ export default {
     const filterType = ref("");
     const filterOrder = ref("");
     const Match = ref(true);
+    const orderProducts = ref([]);
     const filteredProducts = computed(() => {
-      const originProducts = ref(props.products);
+      const originProducts =
+        filterOrder.value || filterType.value
+          ? ref(orderProducts)
+          : ref(props.products);
       if (searchType.value && searchKeyword.value) {
         if (Match.value) {
-          originProducts.value = props.products.filter((product) =>
+          originProducts.value = originProducts.value.filter((product) =>
             product[searchType.value].includes(searchKeyword.value)
           );
         } else {
-          originProducts.value = props.products.filter(
+          originProducts.value = originProducts.value.filter(
             (product) => product[searchType.value] == searchKeyword.value
           );
         }
       }
-      if (filterType.value || filterOrder.value) {
-        showAllProducts({
-          show_following: 0,
-          show_order_base: filterType.value,
-          show_order: filterOrder.value,
-        }).then((res) => {
-          if (res.success) {
-            originProducts.value = res.data.products;
-          }
-        });
-      }
       return originProducts.value;
     });
+    watch(
+      [filterType, filterOrder],
+      ([newFilterType, newFilterOrder], [oldFilterType, oldFilterOrder]) => {
+        if (
+          (newFilterType || newFilterOrder) &&
+          (newFilterType !== oldFilterType || newFilterOrder !== oldFilterOrder)
+        ) {
+          showAllProducts({
+            show_following: 0,
+            show_order_base: newFilterType,
+            show_order: newFilterOrder,
+          }).then((res) => {
+            if (res.success) {
+              orderProducts.value = res.data.products;
+            }
+          });
+        }
+      }
+    );
     const search = () => {
       currentPage.value = 1;
     };
+    watch([searchType, searchKeyword, Match, filterType, filterOrder], () => {
+      filteredProducts.value;
+    });
     watch(searchKeyword, search);
     watch(searchType, search);
     watch(filterOrder, search);

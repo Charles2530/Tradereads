@@ -24,58 +24,60 @@
     </div>
 
     <el-divider />
-    <el-scrollbar max-height="500px">
-      <div class="p-8 center-table">
-        <el-table :data="filteredProducts" style="width: 97%">
-          <el-table-column
-            label="商品名称"
-            prop="product_name"
-          ></el-table-column>
-          <el-table-column label="商品图片">
-            <template #default="{ row }">
-              <img
-                :src="row.product_image"
-                alt="Product Image"
-                class="w-36 h-36"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="商品单价"
-            prop="product_price"
-          ></el-table-column>
-          <el-table-column
-            label="卖家名称"
-            prop="seller_name"
-          ></el-table-column>
-          <el-table-column
-            label="商品数量"
-            prop="product_number"
-          ></el-table-column>
-          <el-table-column label="操作" width="120">
-            <template #default="{ row }">
-              <el-button
-                type="primary"
-                @click="goToProductDetails(row.product_id)"
-                >详细信息</el-button
-              >
-            </template>
-          </el-table-column>
-          <el-table-column label="加入订单" width="120">
-            <template #default="{ row }">
-              <el-switch
-                v-model="row.selected"
-                class="mt-2"
-                style="margin-left: 12px"
-                inline-prompt
-                :active-icon="Check"
-                :inactive-icon="Close"
-              />
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </el-scrollbar>
+    <div>
+      <el-scrollbar max-height="500px">
+        <div class="px-8 py-2">
+          <el-table :data="filteredProducts" style="width: 97%">
+            <el-table-column
+              label="商品名称"
+              prop="product_name"
+            ></el-table-column>
+            <el-table-column label="商品图片">
+              <template #default="{ row }">
+                <img
+                  :src="row.product_image"
+                  alt="Product Image"
+                  class="w-36 h-36"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="商品单价"
+              prop="product_price"
+            ></el-table-column>
+            <el-table-column
+              label="卖家名称"
+              prop="seller_name"
+            ></el-table-column>
+            <el-table-column
+              label="商品数量"
+              prop="product_number"
+            ></el-table-column>
+            <el-table-column label="操作" width="120">
+              <template #default="{ row }">
+                <el-button
+                  type="primary"
+                  @click="goToProductDetails(row.product_id)"
+                  >详细信息</el-button
+                >
+              </template>
+            </el-table-column>
+            <el-table-column label="加入订单" width="120">
+              <template #default="{ row }">
+                <el-switch
+                  v-model="row.selected"
+                  class="mt-2"
+                  style="margin-left: 12px"
+                  inline-prompt
+                  :active-icon="Check"
+                  :inactive-icon="Close"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-scrollbar>
+    </div>
   </div>
 </template>
 
@@ -153,12 +155,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.center-table {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  height: 100vh;
-}
-</style>
