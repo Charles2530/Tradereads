@@ -55,10 +55,20 @@ class ProductsController < ApplicationController
         products = products.sort {|a, b| a.score_per <=> b.score_per }
       end
     else
-      products = Product.all
+      if show_order == "ASC" # 降序
+        products = Product.order(id: :asc)
+      else # 升序 / 默认
+        products = Product.order(id: :desc)
+      end
     end
 
-    products = products.where(check_state: 1)
+    temp = products
+    products = []
+    temp.each do |product|
+      if product.check_state == 1
+        products << product
+      end
+    end
 
     if show_following == 1
       temp = products
@@ -105,6 +115,7 @@ class ProductsController < ApplicationController
     end
     product_detail = ProductDetail.find_by(product: product)
     seller = User.find_by(id: product.user_id)
+    puts "-------------------product_price: #{product.price}---------------------"
     render status: 200, json: response_json(
       true,
       message: ProductError::SHOW_PRODUCT_SUCCEED,
@@ -112,7 +123,7 @@ class ProductsController < ApplicationController
         product_name: product_detail.product_name,
         product_image: product_detail.product_image,
         product_press: product_detail.product_press,
-        product_price: product.price.to_f,
+        price: product.price,
         product_state: product.state,
         product_type: product_detail.product_type,
         sell_address: product.sell_address,
@@ -191,7 +202,7 @@ class ProductsController < ApplicationController
     end
     new_address = params[:new_address]
 
-    product.product_detail.sell_address = new_address
+    product.sell_address = new_address
     if product.save
       render status: 200, json: response_json(
         true,
@@ -253,8 +264,8 @@ class ProductsController < ApplicationController
       product.state = "StockOut"
     end
     buyer = current_user
-    cart = Cart.find_by(user: buyer, product: product)
-    if cart
+    if Cart.exists?(user: buyer, product: product)
+      cart = Cart.find_by(user: buyer, product: product)
       cart.number += count
     else
       cart = Cart.new(user: buyer, product: product, number: count)
@@ -276,13 +287,13 @@ class ProductsController < ApplicationController
   def remove_from_cart
     product = Product.find(params[:product_id])
     user = current_user
-    cart = Cart.find_by(user: user, product: product)
-    unless cart
+    unless Cart.exists?(user: user, product: product)
       render json: response_json(
         false,
         message: Global::FAIL
       ) and return
     end
+    cart = Cart.find_by(user: user, product: product)
     if cart.destroy
       render status: 200, json: response_json(
         true,
@@ -294,6 +305,41 @@ class ProductsController < ApplicationController
         message: Global::FAIL
       )
     end
+  end
+
+  def show_cart
+    puts "-----------------#{current_user.id}----------"
+    total_price = 0
+    carts = Cart.where(user: current_user)
+    carts.each do |cart|
+      product = cart.product
+      price = product.price
+      total_price += price * cart.number
+    end
+    puts "------------------show carts #{current_user.id}"
+    puts "------------------total_price #{total_price}"
+    puts "------------------user.carts.length #{current_user.carts.length}"
+    render status: 200, json: response_json(
+      true,
+      message: ShowError::SHOW_SUCCEED,
+      data: {
+        total_price: total_price,
+        products: carts.collect do |cart|
+          product = cart.product
+          product_detail = ProductDetail.find_by(product: product)
+          seller = product.user
+          detail = seller.user_detail
+          {
+            product_id: product.id,
+            product_name: product_detail.product_name,
+            product_image: product_detail.product_image,
+            seller_name: detail.user_name,
+            product_price: product.price,
+            product_number: cart.number
+          }
+        end
+      }
+    )
   end
 
   def buy_product
@@ -450,8 +496,10 @@ class ProductsController < ApplicationController
         ) and return
       end
     end
+    notice = Notice.new(title: "新商品上新了", notice_type: 2, user: product.user, content: "添加了商品 #{product.product_detail.product_name}")
     product.check_state = 1
     if product.save
+      notice.save
       render status: 200, json: response_json(
         true,
         message: Global::SUCCESS
@@ -490,11 +538,9 @@ def create
                                      product_press: press,
                                      product_type: type)
 
-  notice = Notice.new(title: "新商品上新了", notice_type: 1, user: seller, content: "添加了商品 #{name}")
   if product.valid? && product_detail.valid?
     product.save
     product_detail.save
-
     render status: 200, json: response_json(
       true,
       message: ProductError::CREATE_SUCCEED,

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   # POST /api/register
   def register
-    if User.find_by(phone: params[:phone])
+    if User.exists?(phone: params[:phone])
       render json: response_json(
         false,
         message: RegisterError::EXISTED_USER
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       user.save
       wallet.save
       user_detail.save
-      set_current_user(User.find(user.id))
+      set_current_user(user.id)
       puts "register ------------------------------ #{current_user.id}"
       render status: 200, json: response_json(
         true,
@@ -59,14 +59,14 @@ class UsersController < ApplicationController
         ) and return
     end
 
-    user = User.find_by(phone: params[:phone])
-    unless user
+    unless User.exists?(phone: params[:phone])
       render json: response_json(
         false,
         message: LoginError::USER_NOT_EXISTED
         ) and return
     end
 
+    user = User.find_by(phone: params[:phone])
     user_detail = user.user_detail
     unless user_detail.password == _password
       render json: response_json(
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
       ) and return
     end
 
-    set_current_user(User.find(user.id))
+    set_current_user(user.id)
     puts "--------------#{current_user.id}---------------------"
     render status: 200, json: response_json(
       true,
@@ -186,38 +186,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /api/show_cart
-  def show_cart
-    user = current_user
-    puts "-----------------#{user.id}----------"
-    total_price = 0
-    user.carts.each do |cart|
-      product = cart.product
-      price = product.price
-      total_price += price * cart.number
-    end
-    render status: 200, json: response_json(
-      true,
-      message: ShowError::SHOW_SUCCEED,
-      data: {
-        total_price: total_price,
-        products: user.carts.collect do |cart|
-          product = cart.product
-          product_detail = ProductDetail.find_by(product: product)
-          seller = product.user
-          detail = seller.user_detail
-          {
-            product_id: product.id,
-            product_name: product_detail.product_name,
-            product_image: product_detail.product_image,
-            seller_name: detail.user_name,
-            product_price: product.price,
-            product_number: cart.number
-          }
-        end
-      }
-    )
-  end
 
   # GET /api/users/<user_id>/show_product_list
   def show_product_list
@@ -293,10 +261,16 @@ class UsersController < ApplicationController
     unless product_ids
       render json: response_json(
         false,
-        message: Global::FAIL
+        message: "请选择需要购买的商品！"
       ) and return
     end
     carts = []
+    if product_ids.length == 0
+      render json: response_json(
+        false,
+        message: "请选择需要购买的商品！"
+      ) and return
+    end
     product_ids.each do |product_id|
       carts << Cart.find_by(product_id: product_id)
     end
@@ -337,8 +311,9 @@ class UsersController < ApplicationController
   def show_current_orders
     user = current_user
     total_prices = []
-    puts user.orders.length
-    user.orders.each do |order|
+    orders = Order.where(user: user)
+    puts orders.length
+    orders.each do |order|
       total_price = 0
       order.order_items.each do |item|
         product = item.product
@@ -352,7 +327,7 @@ class UsersController < ApplicationController
       true,
       message: ShowError::SHOW_SUCCEED,
       data: {
-        orders: user.orders.collect do |order|
+        orders: orders.collect do |order|
           i += 1
           {
             order_id: order.id,
@@ -424,11 +399,11 @@ class UsersController < ApplicationController
         message: FollowError::CANNOT_FOLLOW_SELF
       ) and return
     end
-    if Followship.find(user: current_user, following_user: user)
-      followship = Followship.find(user: current_user, following_user: user)
+    if Followship.exists?(follower: current_user, following: user)
+      followship = Followship.find_by(follower: current_user, following: user)
       if followship.destroy
         render status: 200, json: response_json(
-          false,
+          true,
           message: Global::SUCCESS
         )
       else
@@ -437,11 +412,12 @@ class UsersController < ApplicationController
           message: Global::FAIL
         )
       end
+      return
     end
-    followship = Followship.new(user: current_user, following_user: user)
+    followship = Followship.new(follower: current_user, following: user)
     if followship.save
       render status: 200, json: response_json(
-        false,
+        true,
         message: Global::SUCCESS
       )
     else
@@ -470,12 +446,17 @@ class UsersController < ApplicationController
 
 def if_follow
   user = User.find(params[:user_id])
+  judge = false
+  if Followship.exists?(follower: current_user, following: user)
+    judge = true
+  end
   render status: 200, json: response_json(
     true,
     message: ShowError::SHOW_SUCCEED,
     data: {
-      if_follow: (User.find(user: current_user, following_user: user) != null)
-    })
+      if_follow: judge
+    }
+  )
 end
 
   # GET /api/users

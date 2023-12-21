@@ -19,12 +19,12 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def set_current_user(user)
-    ApplicationRecord.current_user = user
+  def set_current_user(user_id)
+    ApplicationRecord.current_user_id = user_id
   end
 
   def current_user
-    ApplicationRecord.current_user
+    User.find(ApplicationRecord.current_user_id)
   end
 
   def login_only
