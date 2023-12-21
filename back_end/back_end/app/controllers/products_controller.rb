@@ -358,12 +358,27 @@ class ProductsController < ApplicationController
         message: CartError::NOT_ENOUGH_STORE
       ) and return
     end
+
+    buyer = current_user
+    wallet = buyer.wallet
+
+    need_price = count * product.price
+    if need_price > wallet.money_sum
+      render json: response_json(
+        false,
+        message: "余额不足"
+      ) and return
+    end
+
+    wallet.money_sum -= need_price
+
     product.store -= count
     if product.store == 0
       product.state = "StockOut"
     end
 
-    buyer = current_user
+
+
     order = Order.new(user: buyer)
     unless order.valid?
       render json: response_json(
@@ -371,7 +386,7 @@ class ProductsController < ApplicationController
         message: Global::FAIL
       ) and return
     end
-    state = "待支付"
+    state = "待发货"
     order_item = OrderItem.new(product: product, number: count, state: state, order: order)
     unless order_item.valid?
       render json: response_json(
@@ -380,8 +395,14 @@ class ProductsController < ApplicationController
       ) and return
     end
 
+    notice = Notice.new(title: "有新的销售记录！", notice_type: 3, user: product.user,
+                        content: "#{buyer.user_detail.user_name} 购买了您的商品 #{product.product_detail.product_name}\n总计 #{count} 件，#{need_price} 元")
+
     order.save
     order_item.save
+    product.save
+    wallet.save
+    notice.save
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS

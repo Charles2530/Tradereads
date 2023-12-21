@@ -229,11 +229,24 @@ class UsersController < ApplicationController
         message: Global::FAIL
       ) and return
     end
+
+    wallet = user.wallet
+
+    need_price = 0
+
+
     order_items = []
+    notices = []
+
     user.carts.each do |cart|
       carts << cart
-      state = "待支付"
+      state = "待发货"
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
+      need_price += cart.product.price * cart.number
+
+      notice = Notice.new(title: "有新的销售记录！", notice_type: 3, user: cart.product.user,
+                          content: "#{user.user_detail.user_name} 购买了您的商品 #{cart.product.product_detail.product_name}\n总计 #{cart.number} 件，#{cart.product.price * cart.number} 元")
+      notices << notice
       if order_item.valid?
         order_items << order_item
       else
@@ -244,11 +257,22 @@ class UsersController < ApplicationController
       end
     end
 
+    if need_price > wallet.money_sum
+      render json: response_json(
+        false,
+        message: "余额不足"
+      ) and return
+    end
+
+    wallet.money_sum -= need_price
+
     order.save
     order_items.length.times do |i|
       carts[i].destroy
       order_items[i].save
+      notices[i].save
     end
+    wallet.save
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS
@@ -256,6 +280,7 @@ class UsersController < ApplicationController
   end
 
   def choose_cart_to_order
+    # TODO wallet
     user = current_user
     product_ids = params[:choose_carts]
     unless product_ids
@@ -285,7 +310,7 @@ class UsersController < ApplicationController
     end
     order_items = []
     carts.each do |cart|
-      state = "待支付"
+      state = "待发货"
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
       if order_item.valid?
         order_items << order_item
