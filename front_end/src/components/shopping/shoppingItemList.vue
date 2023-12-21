@@ -53,16 +53,19 @@
               label="商品数量"
               prop="product_number"
             ></el-table-column>
-            <el-table-column label="操作" width="120">
+            <el-table-column label="操作" width="120" align="center">
               <template #default="{ row }">
                 <el-button
                   type="primary"
                   @click="goToProductDetails(row.product_id)"
-                  >详细信息</el-button
+                  plain
+                >
+                  <el-icon class="mr-1"><Link /></el-icon>
+                  详细信息</el-button
                 >
               </template>
             </el-table-column>
-            <el-table-column label="加入订单" width="120">
+            <el-table-column label="加入订单" width="120" align="center">
               <template #default="{ row }">
                 <el-switch
                   v-model="row.selected"
