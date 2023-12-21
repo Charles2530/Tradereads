@@ -13,8 +13,7 @@
           </h1>
           <p class="text-gray-400 notice-detail">浏览最新的二手书信息。</p>
         </div>
-        <!-- <div v-if="store.getRight === 1"> -->
-        <div>
+        <div v-if="store.getRight === 1">
           <el-button
             @click="showCreateNoticeDialog"
             type="success"
