@@ -117,10 +117,11 @@ export default {
     const Match = ref(true);
     const orderProducts = ref([]);
     const filteredProducts = computed(() => {
-      const originProducts =
+      const originProducts = ref([]);
+      originProducts.value =
         filterOrder.value || filterType.value
-          ? ref(orderProducts)
-          : ref(props.products);
+          ? orderProducts.value
+          : props.products;
       if (searchType.value && searchKeyword.value) {
         console.log(searchType.value);
         if (Match.value) {
