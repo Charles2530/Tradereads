@@ -104,6 +104,7 @@ const addCartsToOrdersFunc = () => {
         type: "success",
         message: "商品购买成功",
       });
+      location.reload();
     } else {
       ElMessage({
         type: "error",
