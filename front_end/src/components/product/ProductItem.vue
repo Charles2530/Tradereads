@@ -174,12 +174,12 @@ export default {
     );
     const router = useRouter();
 
-    const goToProductDetails = (productId) => {
+    const goToProductDetails = (product_id) => {
       // Replace with your router logic or window location change
       router.push({
         name: "ProductDetail",
         params: {
-          id: productId,
+          product_id: product_id,
         },
       });
     };

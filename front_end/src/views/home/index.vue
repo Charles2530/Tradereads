@@ -1,7 +1,7 @@
 <template>
   <div class="bg-home-background home">
     <div>
-<h1 class="home_sub_title">Tradereads</h1>
+      <h1 class="home_sub_title">Tradereads</h1>
       <p class="home_sub">
         一个平台 帮助每一位北航人售购闲置二手书!<br />
         <router-link to="/login" class="home_sub"></router-link>
@@ -16,8 +16,8 @@
 </template>
 
 <style>
-@import url("../../css/base.css");
-@import url("../../css/home.css");
+@import url("@css/base.css");
+@import url("@css/home.css");
 </style>
 
 <script>
