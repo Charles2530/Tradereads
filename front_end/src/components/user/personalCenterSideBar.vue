@@ -68,7 +68,7 @@
                 <Service />
               </i>
               <router-link class="nav-title" to="/checkOrdersView"
-                >审核订单</router-link
+                >审核商品</router-link
               >
             </el-menu-item>
             <el-menu-item index="7">

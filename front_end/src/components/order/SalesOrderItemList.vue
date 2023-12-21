@@ -68,7 +68,15 @@
             </el-select>
           </div>
           <div class="ml-2">
-            <el-button type="primary" @click="modifyOrderState">
+            <el-button
+              type="primary"
+              @click="
+                modifyOrderState(
+                  scope.row.order_item_id,
+                  scope.row.order_item_state
+                )
+              "
+            >
               <el-icon class="mr-3"><Connection /></el-icon>
               修改订单状态</el-button
             >
@@ -132,9 +140,9 @@ export default {
       window.location.reload();
     };
 
-    const modifyOrderState = () => {
-      modifyOrderStatus(props.order.order_item_id, {
-        new_state: props.order.order_item_state,
+    const modifyOrderState = (order_item_id, order_item_state) => {
+      modifyOrderStatus(order_item_id, {
+        new_state: order_item_state,
       })
         .then((res) => {
           if (res.success) {
