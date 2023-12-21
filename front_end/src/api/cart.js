@@ -16,3 +16,10 @@ export async function showCurrentUserCart() {
     method: "get",
   });
 }
+
+export async function clearCurrentUserCart() {
+  return await service({
+    url: "/carts_to_orders",
+    method: "get",
+  });
+}

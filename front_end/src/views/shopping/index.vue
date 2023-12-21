@@ -13,15 +13,28 @@
             我的购物车
           </p>
           <div>
-            <el-button
-              class="ml-8 my-2"
-              type="success"
-              plain
-              @click="addCartsToOrdersFunc()"
+            <el-popconfirm
+              title="确定要购买所选商品吗?"
+              @confirm="addCartsToOrdersFunc"
             >
-              <el-icon class="ml-1 mr-4"><Service /></el-icon>
-              点击购买商品
-            </el-button>
+              <template #reference>
+                <el-button class="ml-8 my-2" type="success" plain>
+                  <el-icon class="ml-1 mr-4"><Service /></el-icon>
+                  点击购买商品
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+              title="确定要购买购物车内所有商品吗?"
+              @confirm="clearCart"
+            >
+              <template #reference>
+                <el-button type="primary" plain>
+                  <el-icon class="ml-1 mr-4"><Remove /></el-icon>
+                  清空购物车</el-button
+                >
+              </template>
+            </el-popconfirm>
           </div>
           <div>
             <shopping-item-list :products="cartProducts" />
@@ -35,7 +48,11 @@
 <script setup>
 import shoppingItemList from "@c/shopping/shoppingItemList.vue";
 import { onMounted, ref, computed } from "vue";
-import { showCurrentUserCart, addCartsToOrders } from "@/api/cart.js";
+import {
+  showCurrentUserCart,
+  addCartsToOrders,
+  clearCurrentUserCart,
+} from "@/api/cart.js";
 import NavigationBar from "@c/home/NavigationBar.vue";
 onMounted(() => {
   showCurrentUserCart().then((res) => {
@@ -61,6 +78,23 @@ const selectIdArray = computed(() => {
     return total;
   }, []);
 });
+
+const clearCart = () => {
+  clearCurrentUserCart().then((res) => {
+    if (res.success) {
+      ElMessage({
+        type: "success",
+        message: "清空购物车成功",
+      });
+      location.reload();
+    } else {
+      ElMessage({
+        type: "error",
+        message: res.message,
+      });
+    }
+  });
+};
 
 const addCartsToOrdersFunc = () => {
   addCartsToOrders({ choose_carts: selectIdArray.value }).then((res) => {
