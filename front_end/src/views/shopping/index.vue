@@ -1,25 +1,42 @@
 <template>
   <div class="bg-blue-200/70">
     <navigation-bar />
-    <div class="p-4 min-h-screen pl-12">
+    <div
+      class="bg-cart-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
+    >
       <div style="position: relative; z-index: 1">
         <personal-center-side-bar />
       </div>
       <div style="position: relative; z-index: 0">
         <div>
-          <p class="text-4xl font-bold mb-8 flex justify-center">我的购物车</p>
+          <p class="text-4xl font-bold mb-8 flex justify-center text-white">
+            我的购物车
+          </p>
           <div>
-            <el-button
-              class="ml-8 my-2"
-              type="success"
-              plain
-              @click="addCartsToOrdersFunc()"
+            <el-popconfirm
+              title="确定要购买所选商品吗?"
+              @confirm="addCartsToOrdersFunc"
             >
-              <el-icon class="ml-1 mr-4"><Service /></el-icon>
-              添加商品到订单
-            </el-button>
+              <template #reference>
+                <el-button class="ml-8 my-2" type="success" plain>
+                  <el-icon class="ml-1 mr-4"><Service /></el-icon>
+                  点击购买商品
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+              title="确定要购买购物车内所有商品吗?"
+              @confirm="clearCart"
+            >
+              <template #reference>
+                <el-button type="primary" plain>
+                  <el-icon class="ml-1 mr-4"><Remove /></el-icon>
+                  清空购物车</el-button
+                >
+              </template>
+            </el-popconfirm>
           </div>
-          <div class="bg-white ml-8">
+          <div>
             <shopping-item-list :products="cartProducts" />
           </div>
         </div>
@@ -31,7 +48,11 @@
 <script setup>
 import shoppingItemList from "@c/shopping/shoppingItemList.vue";
 import { onMounted, ref, computed } from "vue";
-import { showCurrentUserCart, addCartsToOrders } from "@/api/cart.js";
+import {
+  showCurrentUserCart,
+  addCartsToOrders,
+  clearCurrentUserCart,
+} from "@/api/cart.js";
 import NavigationBar from "@c/home/NavigationBar.vue";
 onMounted(() => {
   showCurrentUserCart().then((res) => {
@@ -58,6 +79,23 @@ const selectIdArray = computed(() => {
   }, []);
 });
 
+const clearCart = () => {
+  clearCurrentUserCart().then((res) => {
+    if (res.success) {
+      ElMessage({
+        type: "success",
+        message: "清空购物车成功",
+      });
+      location.reload();
+    } else {
+      ElMessage({
+        type: "error",
+        message: res.message,
+      });
+    }
+  });
+};
+
 const addCartsToOrdersFunc = () => {
   addCartsToOrders({ choose_carts: selectIdArray.value }).then((res) => {
     console.log(selectIdArray.value);
@@ -65,7 +103,7 @@ const addCartsToOrdersFunc = () => {
     if (res.success) {
       ElMessage({
         type: "success",
-        message: "添加订单成功",
+        message: "商品购买成功",
       });
     } else {
       ElMessage({

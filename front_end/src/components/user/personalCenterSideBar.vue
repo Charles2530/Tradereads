@@ -40,6 +40,12 @@
               >我的购物车</router-link
             >
           </el-menu-item>
+          <el-menu-item index="4">
+            <i class="el-icon-style"><Setting /></i>
+            <router-link class="nav-title" to="/DeveloperInfo"
+              >客服中心</router-link
+            >
+          </el-menu-item>
         </div>
       </el-sub-menu>
       <div v-if="adminMode">
@@ -49,7 +55,7 @@
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
           <div class="item_container px-5">
-            <el-menu-item index="4">
+            <el-menu-item index="5">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
@@ -57,7 +63,7 @@
                 >订单管理</router-link
               >
             </el-menu-item>
-            <el-menu-item index="5">
+            <el-menu-item index="6">
               <i class="el-icon-style">
                 <Service />
               </i>
@@ -65,18 +71,12 @@
                 >审核订单</router-link
               >
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="7">
               <i class="el-icon-style">
                 <List />
               </i>
               <router-link class="nav-title" to="/usersManagement"
                 >用户管理</router-link
-              >
-            </el-menu-item>
-            <el-menu-item index="7">
-              <i class="el-icon-style"><Setting /></i>
-              <router-link class="nav-title" to="/DeveloperInfo"
-                >开发者信息</router-link
               >
             </el-menu-item>
           </div>
@@ -117,8 +117,7 @@ export default {
     const activeMenu = ref("0");
     const store = userStore();
     const router = useRouter();
-    // const adminMode = store.getRight === 1;
-    const adminMode = true;
+    const adminMode = store.getRight === 1;
     const Logout = () => {
       logout().then((res) => {
         console.log(res);

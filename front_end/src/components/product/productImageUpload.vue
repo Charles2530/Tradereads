@@ -6,25 +6,30 @@
     :show-file-list="false"
     accept="image/*"
     :on-success="handleAvatarSuccess"
+    :before-upload="beforeUpload"
   >
     <el-button type="primary" plain>
-      <el-icon class="mr-4"><Camera /></el-icon>
-      上传商品图片</el-button
+      <el-icon v-if="!uploading" class="mr-4"><Camera /></el-icon>
+      <el-icon v-else class="mr-4"><Loading /></el-icon>
+      {{ uploading ? "上传中..." : "上传商品图片" }}</el-button
     >
   </el-upload>
 </template>
 <script>
 import { ref } from "vue";
-import { userStore } from "@/store/user.js";
 import { ElMessage } from "element-plus";
 export default {
   name: "productImageUpload",
-  setup() {
+  setup(props, { emit }) {
     const uploadRef = ref(null);
     const url = import.meta.env.VITE_APP_BASE_API + "/upload_image";
     const uploadedImageUrl = ref("");
     const upload = () => {
       uploadRef.value.submit();
+    };
+    let uploading = false;
+    const beforeUpload = () => {
+      uploading = true;
     };
     const handleAvatarSuccess = (res) => {
       if (res.success) {
@@ -47,6 +52,8 @@ export default {
       url,
       upload,
       handleAvatarSuccess,
+      uploading,
+      beforeUpload,
     };
   },
 };

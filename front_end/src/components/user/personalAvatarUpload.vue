@@ -6,6 +6,7 @@
     :show-file-list="false"
     accept="image/*"
     :on-success="handleAvatarSuccess"
+    :before-upload="beforeUpload"
   >
     <el-button
       type="primary"
@@ -13,9 +14,10 @@
       class="mt-4 m-12 text-white font-semibold hover:underline"
       plain
     >
-      <el-icon class="mr-4"><Camera /></el-icon>
-      上传头像</el-button
-    >
+      <el-icon v-if="!uploading" class="mr-4"><Camera /></el-icon>
+      <el-icon v-else class="mr-4"><Loading /></el-icon>
+      {{ uploading ? "上传中..." : "上传头像" }}
+    </el-button>
   </el-upload>
 </template>
 <script>
@@ -29,12 +31,15 @@ export default {
     const uploadRef = ref(null);
     const url =
       import.meta.env.VITE_APP_BASE_API +
-      //   "http://127.0.0.1:3000/api" +
       "/users/" +
       store.getToken +
       "/upload_avatar";
     const upload = () => {
       uploadRef.value.submit();
+    };
+    let uploading = false;
+    const beforeUpload = () => {
+      uploading = true;
     };
     const handleAvatarSuccess = (res) => {
       if (res.success) {
@@ -54,7 +59,9 @@ export default {
       uploadRef,
       url,
       upload,
+      beforeUpload,
       handleAvatarSuccess,
+      uploading,
     };
   },
 };
