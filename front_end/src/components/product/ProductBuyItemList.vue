@@ -8,11 +8,37 @@
         <el-option label="商品发货地址" value="sell_address"></el-option>
         <el-option label="商品类型" value="product_type"></el-option>
       </el-select>
-      <el-input
-        v-model="searchKeyword"
-        placeholder="请输入关键字"
-        style="width: 200px; margin-left: 10px"
-      ></el-input>
+      <template v-if="searchType !== 'product_type'">
+        <el-input
+          v-model="searchKeyword"
+          placeholder="请输入关键字"
+          style="width: 200px; margin-left: 10px"
+        ></el-input>
+      </template>
+      <template v-else>
+        <el-select
+          v-model="searchKeyword"
+          placeholder="请选择类型"
+          style="width: 200px; margin-left: 10px"
+        >
+          <el-option
+            v-for="selected in [
+              '杂志',
+              '教科书',
+              '小说',
+              '童话',
+              '戏剧',
+              '数学',
+              '计算机',
+              '漫画',
+              '自传',
+            ]"
+            :key="selected"
+            :label="selected"
+            :value="selected"
+          ></el-option>
+        </el-select>
+      </template>
       <el-switch
         class="mx-4 mb-2"
         v-model="Match"
@@ -89,35 +115,51 @@ export default {
     const filterType = ref("");
     const filterOrder = ref("");
     const Match = ref(true);
+    const orderProducts = ref([]);
     const filteredProducts = computed(() => {
-      const originProducts = ref(props.products);
+      const originProducts =
+        filterOrder.value || filterType.value
+          ? ref(orderProducts)
+          : ref(props.products);
       if (searchType.value && searchKeyword.value) {
+        console.log(searchType.value);
         if (Match.value) {
-          originProducts.value = props.products.filter((product) =>
+          originProducts.value = originProducts.value.filter((product) =>
             product[searchType.value].includes(searchKeyword.value)
           );
         } else {
-          originProducts.value = props.products.filter(
+          originProducts.value = originProducts.value.filter(
             (product) => product[searchType.value] == searchKeyword.value
           );
         }
       }
-      if (filterType.value || filterOrder.value) {
-        showAllProducts({
-          show_following: 0,
-          show_order_base: filterType.value,
-          show_order: filterOrder.value,
-        }).then((res) => {
-          if (res.success) {
-            originProducts.value = res.data.products;
-          }
-        });
-      }
       return originProducts.value;
     });
+    watch(
+      [filterType, filterOrder],
+      ([newFilterType, newFilterOrder], [oldFilterType, oldFilterOrder]) => {
+        if (
+          (newFilterType || newFilterOrder) &&
+          (newFilterType !== oldFilterType || newFilterOrder !== oldFilterOrder)
+        ) {
+          showAllProducts({
+            show_following: 0,
+            show_order_base: newFilterType,
+            show_order: newFilterOrder,
+          }).then((res) => {
+            if (res.success) {
+              orderProducts.value = res.data.products;
+            }
+          });
+        }
+      }
+    );
     const search = () => {
       currentPage.value = 1;
     };
+    watch([searchType, searchKeyword, Match, filterType, filterOrder], () => {
+      filteredProducts.value;
+    });
     watch(searchKeyword, search);
     watch(searchType, search);
     watch(filterOrder, search);

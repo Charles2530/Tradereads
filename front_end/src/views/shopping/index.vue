@@ -1,13 +1,17 @@
 <template>
   <div class="bg-blue-200/70">
     <navigation-bar />
-    <div class="p-4 min-h-screen pl-12">
+    <div
+      class="bg-cart-background bg-cover bg-center bg-no-repeat p-4 min-h-screen pl-12"
+    >
       <div style="position: relative; z-index: 1">
         <personal-center-side-bar />
       </div>
       <div style="position: relative; z-index: 0">
         <div>
-          <p class="text-4xl font-bold mb-8 flex justify-center">我的购物车</p>
+          <p class="text-4xl font-bold mb-8 flex justify-center text-white">
+            我的购物车
+          </p>
           <div>
             <el-button
               class="ml-8 my-2"
@@ -16,10 +20,10 @@
               @click="addCartsToOrdersFunc()"
             >
               <el-icon class="ml-1 mr-4"><Service /></el-icon>
-              添加商品到订单
+              点击购买商品
             </el-button>
           </div>
-          <div class="bg-white ml-8">
+          <div>
             <shopping-item-list :products="cartProducts" />
           </div>
         </div>
@@ -65,7 +69,7 @@ const addCartsToOrdersFunc = () => {
     if (res.success) {
       ElMessage({
         type: "success",
-        message: "添加订单成功",
+        message: "商品购买成功",
       });
     } else {
       ElMessage({

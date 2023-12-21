@@ -16,6 +16,9 @@ export default {
         "productBuyCenter-background":
           "url('/src/assets/img/productBuyCenter-background.jpg')",
         "detail-background": "url('/src/assets/img/detail-background.jpg')",
+        "cart-background": "url('/src/assets/img/cart-background.jpg')",
+        "developer-background":
+          "url('/src/assets/img/developer-background.jpg')",
       },
       margin: {
         18: "4.5rem",
