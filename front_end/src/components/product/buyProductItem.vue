@@ -89,7 +89,7 @@ export default {
     };
 
     const buyProductFunc = () => {
-      buyProduct(props.product.product_id, { count: count }).then((res) => {
+      buyProduct(props.product.product_id, { count: count.value }).then((res) => {
         if (res.success) {
           ElMessage({
             type: "success",
