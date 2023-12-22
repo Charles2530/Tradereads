@@ -38,7 +38,10 @@
           <strong>商品名称: </strong> {{ product.product_name }}
         </p>
         <p class="text-xl my-2">
-          <strong>商品价格: </strong> ￥{{ product.price }}
+          <strong>商品价格: </strong>
+          <span class="text-md text-red-500 font-bold"
+            >￥{{ product.price }}</span
+          >
         </p>
         <p class="text-xl my-2">
           <strong>商品出版社: </strong> {{ product.product_press }}

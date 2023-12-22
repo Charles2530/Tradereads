@@ -1,16 +1,31 @@
 <template>
   <div class="p-1 border rounded-lg shadow-lg my-4">
-    <p class="text-2xl font-bold mb-8 flex justify-center">购买商品</p>
+    <p class="text-3xl font-bold mb-8 flex justify-center">购买商品</p>
 
     <div class="flex">
       <!-- 商品信息部分 -->
       <div class="flex-grow">
-        <p class="text-xl my-2">商品名称: {{ product.product_name }}</p>
-        <p class="text-xl my-2">商品价格: ￥{{ product.price }}</p>
-        <p class="text-xl my-2">商品出版社: {{ product.product_press }}</p>
-        <p class="text-xl my-2">商品类型: {{ product.product_type }}</p>
-        <p class="text-xl my-2">商家用户名: {{ product.seller_name }}</p>
-        <p class="text-xl my-2">商家发货地址: {{ product.sell_address }}</p>
+        <p class="text-xl my-2">
+          <strong>商品名称: </strong>{{ product.product_name }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品价格:</strong>
+          <span class="text-md text-red-500 font-bold"
+            >￥{{ product.price }}</span
+          >
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品出版社: </strong>{{ product.product_press }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品类型: </strong>{{ product.product_type }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商家用户名: </strong>{{ product.seller_name }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商家发货地址: </strong>{{ product.sell_address }}
+        </p>
 
         <div class="mt-2">
           <el-button type="warning" @click="followUser" plain>
