@@ -86,14 +86,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { showAllProducts, addProduct } from "@/api/product.js";
+import { useRouter } from "vue-router";
 import productBuyItemList from "@c/product/productBuyItemList.vue";
 import productImageUpload from "@c/product/productImageUpload.vue";
 const products = ref([]);
-
+const router = useRouter();
 onMounted(() => {
   showAllProducts({ show_following: 0 }).then((res) => {
     if (res.success) {
       products.value = res.data.products;
+    } else {
+      router.push({ path: "/404" });
     }
   });
 });

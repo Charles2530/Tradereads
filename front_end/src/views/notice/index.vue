@@ -77,12 +77,14 @@
 import { onMounted, ref, computed, nextTick } from "vue";
 import { userStore } from "@/store/user.js";
 import { createNotice, showCurrentNotices } from "@/api/notice.js";
+import { useRouter } from "vue-router";
 import PublicNoticeList from "@c/notice/PublicNoticeList.vue";
 import FollowNoticeList from "@c/notice/FollowNoticeList.vue";
 import SellerNoticeList from "@c/notice/SellerNoticeList.vue";
 const activeName = ref("first");
 const AllNotice = ref([]);
 const store = userStore();
+const router = useRouter();
 onMounted(() => {
   getNotices();
 });
@@ -118,6 +120,7 @@ const getNotices = () => {
         type: "error",
         message: res.message,
       });
+      router.push({ path: "/404" });
     }
   });
 };

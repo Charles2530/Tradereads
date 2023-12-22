@@ -20,8 +20,10 @@
 import { showExamineList } from "@/api/examine.js";
 import { ref, onMounted } from "vue";
 import CheckOrderList from "@c/admin/CheckOrderList.vue";
+import { useRouter } from "vue-router";
 //methods
 const checkOrders = ref([]);
+const router = useRouter();
 
 onMounted(() => {
   showExamineList().then((res) => {
@@ -33,6 +35,7 @@ onMounted(() => {
         message: res.message,
         type: "error",
       });
+      router.push({ path: "/404" });
     }
   });
 });
