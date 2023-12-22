@@ -371,6 +371,8 @@ class ProductsController < ApplicationController
     end
 
     wallet.money_sum -= need_price
+    product.user.wallet.money_sum += need_price
+
 
     product.store -= count
     if product.store == 0
@@ -398,6 +400,7 @@ class ProductsController < ApplicationController
     notice = Notice.new(title: "有新的销售记录！", notice_type: 3, user: product.user,
                         content: "#{buyer.user_detail.user_name} 购买了您的商品 #{product.product_detail.product_name}\n总计 #{count} 件，#{need_price} 元")
 
+    product.user.wallet.save
     order.save
     order_item.save
     product.save
