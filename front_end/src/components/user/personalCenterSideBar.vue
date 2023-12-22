@@ -117,7 +117,7 @@ export default {
     const activeMenu = ref("0");
     const store = userStore();
     const router = useRouter();
-    const adminMode = store.getRight === 1;
+    const adminMode = store.getRight == 1;
     const Logout = () => {
       logout().then((res) => {
         console.log(res);
