@@ -19,6 +19,4 @@ const locale = langComponent[lang];
 onMounted(() => {
   proxy.$i18n.locale = lang;
 });
-const store = userStore();
-store.initialize();
 </script>
