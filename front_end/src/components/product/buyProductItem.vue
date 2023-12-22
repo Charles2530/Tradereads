@@ -6,7 +6,7 @@
           <img
             :src="product.product_image"
             alt="Product Image"
-            class="w-48 h-60"
+            class="w-48 h-60 ml-5"
           />
         </el-row>
         <el-row align="middle" class="mx-2">
