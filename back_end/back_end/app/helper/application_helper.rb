@@ -74,9 +74,9 @@ module ApplicationHelper
   module CartError
     extend Global
 
-    NOT_ENOUGH_STORE = "There are not enough products in store."
-    ADD_FAIL = "Add fails."
-    ADD_SUCCEED = "Products have been added to cart."
+    NOT_ENOUGH_STORE = "库存不足"
+    ADD_FAIL = "加入失败"
+    ADD_SUCCEED = "商品已加入购物车"
   end
 
   def response_json(success, message: nil, data: nil)

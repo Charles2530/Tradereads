@@ -4,8 +4,6 @@ class UserDetail < ApplicationRecord
   validates :user_name, presence: true,
             length: { in: 2..10,  :message => "Please set your name more than 1 letters and less than 11 letters." }
 
-  # TODO SecurePassword
-
   validates :password, presence: true
   validates :password,
             length: { in: 6..20, message: "The length of password must >=6 and <=20 ." }
