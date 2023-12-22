@@ -78,6 +78,14 @@ class NoticesController < ApplicationController
               }
             ) and return
           end
+        else
+          render status: 200, json: response_json(
+            true,
+            message: Global::SUCCESS,
+            data: {
+              have_new_notice: true
+            }
+          ) and return
         end
       elsif notice.user.right == 1
         if NoticeRecord.exists?(notice: notice, user: user)
@@ -91,14 +99,23 @@ class NoticesController < ApplicationController
               }
             ) and return
           end
+        else
+          render status: 200, json: response_json(
+            true,
+            message: Global::SUCCESS,
+            data: {
+              have_new_notice: true
+            }
+          ) and return
         end
+
       end
     end
     render status: 200, json: response_json(
       true,
       message: Global::SUCCESS,
       data: {
-        have_new_notice: true
+        have_new_notice: false
       }
     )
   end
