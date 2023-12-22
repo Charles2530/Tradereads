@@ -28,7 +28,6 @@ class ProductsController < ApplicationController
   end
 
   def show_products
-    @products = Product.all
     show_following = params[:show_following]
     show_order_base = params[:show_order_base]
     show_order = params[:show_order]
@@ -138,7 +137,7 @@ class ProductsController < ApplicationController
   def modify_store
     @product = Product.find(params[:product_id])
     product = @product
-    unless is_seller
+    unless product.user == current_user
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
@@ -166,9 +165,9 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_price
   def modify_price
-    @product = Product.find(params[:product_id])
-    product = @product
-    unless is_seller
+    product = Product.find(params[:product_id])
+
+    unless product.user == current_user
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
@@ -191,10 +190,8 @@ class ProductsController < ApplicationController
 
   # POST /api/products/<product_id>/modify_sell_address
   def modify_sell_address
-    @product = Product.find(params[:product_id])
-    product = @product
-    puts is_seller
-    unless is_seller
+    product = Product.find(params[:product_id])
+    unless product.user == current_user
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
@@ -217,10 +214,9 @@ class ProductsController < ApplicationController
   end
 
   def modify_product_name
-    @product = Product.find(params[:product_id])
-    product = @product
-    puts is_seller
-    unless is_seller
+    product = Product.find(params[:product_id])
+
+    unless product.user == current_user
       render json: response_json(
         false,
         message: ProductError::MODIFY_UNAVAILABLE
@@ -271,6 +267,7 @@ class ProductsController < ApplicationController
       cart = Cart.new(user: buyer, product: product, number: count)
     end
 
+    product.save
     if cart.save
       render status: 200, json: response_json(
         true,
@@ -294,6 +291,9 @@ class ProductsController < ApplicationController
       ) and return
     end
     cart = Cart.find_by(user: user, product: product)
+    product.store += cart.number
+    product.state = "Available"
+    product.save
     if cart.destroy
       render status: 200, json: response_json(
         true,
@@ -607,9 +607,5 @@ end
     # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:price, :sell_address, :store)
-    end
-
-    def is_seller
-      @product.user == current_user
     end
 end

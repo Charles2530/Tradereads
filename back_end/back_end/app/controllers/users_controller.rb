@@ -189,8 +189,7 @@ class UsersController < ApplicationController
 
   # GET /api/users/<user_id>/show_product_list
   def show_product_list
-    @user = User.find(params[:user_id])
-    user = @user
+    user =  User.find(params[:user_id])
     unless user
       render json: response_json(
         false,
