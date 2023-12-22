@@ -72,6 +72,7 @@
             @click="personalMessageInfo"
             plain
           >
+            <el-icon class="ml-1 mr-4"><ChatLineRound /></el-icon>
             修改个人信息
           </el-button>
         </div>
@@ -116,6 +117,7 @@
           @click="openUserPassword = true"
           plain
         >
+          <el-icon class="ml-1 mr-4"><Unlock /></el-icon>
           修改用户密码
         </el-button>
       </div>

@@ -7,8 +7,8 @@
           v-model="showApproved"
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
           active-text="显示已审核"
-          :active-action-icon="View"
-          :inactive-action-icon="Hide"
+          :active-action-icon="Check"
+          :inactive-action-icon="Close"
         />
         <div class="float-right">
           <el-select v-model="searchType" placeholder="选择搜索维度">
@@ -30,6 +30,8 @@
               --el-switch-off-color: #ff4949;
             "
             active-text="模糊匹配"
+            :active-action-icon="View"
+            :inactive-action-icon="Hide"
           />
         </div>
       </div>
@@ -111,7 +113,9 @@
                 type="primary"
                 plain
                 size="small"
-                >通过该审核</el-button
+              >
+                <el-icon class="mr-3"><Check /></el-icon>
+                通过该审核</el-button
               >
             </div>
             <div>
@@ -121,7 +125,9 @@
                 type="danger"
                 plain
                 size="small"
-                >拒绝该审核</el-button
+              >
+                <el-icon class="mr-3"><Close /></el-icon>
+                拒绝该审核</el-button
               >
             </div>
           </template>
@@ -147,7 +153,7 @@
 <script>
 import { ref, computed, watch } from "vue";
 import { ExamineProduct } from "@/api/examine.js";
-import { Hide, View } from "@element-plus/icons-vue";
+import { Hide, View, Check, Close } from "@element-plus/icons-vue";
 export default {
   name: "CheckOrderList",
   props: {
@@ -265,6 +271,8 @@ export default {
       disapproveProduct,
       Hide,
       View,
+      Check,
+      Close,
       approvedPage,
       pendingPage,
       handleApprovedPageChange,

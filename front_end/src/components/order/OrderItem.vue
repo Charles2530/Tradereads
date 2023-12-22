@@ -31,7 +31,7 @@
                 @confirm="deleteThisOrder"
               >
                 <template #reference>
-                  <el-button type="danger">取消订单</el-button>
+                  <el-button type="danger" :icon="Delete" circle />
                 </template>
               </el-popconfirm>
             </div>
@@ -56,6 +56,7 @@
 
 <script>
 import { deleteOrder } from "@/api/order.js";
+import { Delete } from "@element-plus/icons-vue";
 export default {
   name: "OrderItem",
   props: {
@@ -76,8 +77,8 @@ export default {
       required: true,
     },
   },
-  methods: {
-    deleteThisOrder() {
+  setup() {
+    const deleteThisOrder = () => {
       deleteOrder(this.order_id)
         .then((res) => {
           console.log(res);
@@ -97,7 +98,11 @@ export default {
           console.log(err);
         });
       window.location.reload();
-    },
+    };
+    return {
+      deleteThisOrder,
+      Delete,
+    };
   },
 };
 </script>

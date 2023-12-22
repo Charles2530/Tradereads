@@ -1,16 +1,16 @@
 <template>
   <div class="p-4">
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
-      <div class="pb-4 border-b border-gray-200 mb-4">
+      <div class="pb-4 border-b border-gray-800 mb-4">
         <el-row :gutter="22">
-          <el-col :span="4">
+          <el-col :span="5">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >买家: {{ buyer_id }}</span
               >
             </div>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="5">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
                 >总价: {{ total_price }}</span
@@ -24,14 +24,14 @@
               >
             </div>
           </el-col>
-          <el-col :span="2">
-            <div class="mt-2">
+          <el-col :span="1">
+            <div class="mt-2 mr-4">
               <el-popconfirm
                 title="确定要删除此订单吗?"
                 @confirm="deleteThisOrder"
               >
                 <template #reference>
-                  <el-button type="danger">删除订单</el-button>
+                  <el-button type="danger" :icon="Delete" circle />
                 </template>
               </el-popconfirm>
             </div>
@@ -56,6 +56,7 @@
 
 <script>
 import { deleteOrder } from "@/api/order.js";
+import { Delete } from "@element-plus/icons-vue";
 export default {
   name: "OrderItemAdmin",
   props: {
@@ -80,8 +81,8 @@ export default {
       required: true,
     },
   },
-  methods: {
-    deleteThisOrder() {
+  setup() {
+    const deleteThisOrder = () => {
       deleteOrder(this.order_id)
         .then((res) => {
           console.log(res);
@@ -101,7 +102,11 @@ export default {
           console.log(err);
         });
       window.location.reload();
-    },
+    };
+    return {
+      deleteThisOrder,
+      Delete,
+    };
   },
 };
 </script>
