@@ -33,15 +33,27 @@
       </div>
     </el-card>
 
-    <el-dialog title="充值" v-model="showRechargeDialog">
-      <el-input v-model="rechargeAmount" placeholder="充值金额"></el-input>
-      <span class="dialog-footer">
-        <el-button @click="showRechargeDialog = false">取消</el-button>
-        <el-button type="primary" @click="recharge">充值</el-button>
-      </span>
+    <el-dialog title="充值" v-model="showRechargeDialog" width="30%">
+      <el-input-number
+        class="my-5"
+        v-model="rechargeAmount"
+        placeholder="充值金额"
+        :precision="2"
+        size="large"
+      ></el-input-number>
+      <div>
+        <span class="dialog-footer">
+          <el-button @click="showRechargeDialog = false">取消</el-button>
+          <el-button type="primary" @click="recharge">充值</el-button>
+        </span>
+      </div>
     </el-dialog>
 
-    <el-dialog title="修改支付方式" v-model="showPaymentMethodDialog">
+    <el-dialog
+      title="修改支付方式"
+      v-model="showPaymentMethodDialog"
+      width="30%"
+    >
       <el-form ref="paymentForm" :model="paymentMethod" label-width="120px">
         <el-form-item label="支付方式">
           <el-select v-model="paymentMethod.type" placeholder="请选择支付方式">
@@ -51,7 +63,7 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <span class="dialog-footer">
+      <span class="dialog-footer flex justify-center">
         <el-button @click="showPaymentMethodDialog = false">取消</el-button>
         <el-button type="primary" @click="updatePaymentMethod">保存</el-button>
       </span>
