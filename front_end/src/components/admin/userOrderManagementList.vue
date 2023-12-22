@@ -90,7 +90,7 @@ export default {
         );
       }
     });
-    const pageSize = ref(5);
+    const pageSize = ref(3);
     const currentPage = ref(1);
     const filteredOrdersPerPage = computed(() => {
       const start = (currentPage.value - 1) * pageSize.value;

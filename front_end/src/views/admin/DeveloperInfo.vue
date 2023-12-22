@@ -8,7 +8,9 @@
         <personal-center-side-bar />
       </div>
       <div class="container mx-auto" style="position: relative; z-index: 0">
-        <h1 class="text-2xl font-bold text-white mb-4">客服中心</h1>
+        <h1 class="text-4xl font-bold text-white mb-4 flex justify-center">
+          客服中心
+        </h1>
 
         <!-- 提交测试日志功能板块 -->
         <div class="bg-white shadow-md rounded p-4">
@@ -27,13 +29,10 @@
               ></textarea>
             </label>
           </div>
-
-          <button
-            @click="submitLog"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
+          <el-button type="primary" @click="submitLog" plain>
+            <el-icon class="mr-3"><FolderRemove /></el-icon>
             提交日志
-          </button>
+          </el-button>
         </div>
         <!-- 开发者信息板块 -->
         <div class="mb-6">

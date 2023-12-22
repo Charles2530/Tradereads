@@ -29,37 +29,55 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-dialog v-model="dialogVisible" width="35%" @close="closeDialog">
+    <el-dialog v-model="dialogVisible" width="40%" @close="closeDialog">
       <div>
-        <p class="text-2xl font-bold mb-8 flex justify-center">购买商品</p>
-        <p class="text-xl my-2">商品名称: {{ product.product_name }}</p>
-        <p class="text-xl my-2">商品价格: ￥{{ product.price }}</p>
-        <p class="text-xl my-2">商品出版社: {{ product.product_press }}</p>
-        <p class="text-xl my-2">商品类型: {{ product.product_type }}</p>
-        <p class="text-xl my-2">商家用户名: {{ product.seller_name }}</p>
-        <p class="text-xl my-2">商家发货地址: {{ product.sell_address }}</p>
+        <p class="text-2xl font-bold mb-8 flex justify-center">
+          <strong>购买商品</strong>
+        </p>
         <p class="text-xl my-2">
-          购买数量:<el-input-number
-            class="mx-2"
-            v-model="count"
-            :min="1"
-            :max="30"
-          />
+          <strong>商品名称: </strong> {{ product.product_name }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品价格: </strong>
+          <span class="text-md text-red-500 font-bold"
+            >￥{{ product.price }}</span
+          >
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品出版社: </strong> {{ product.product_press }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商品类型: </strong> {{ product.product_type }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商家用户名: </strong> {{ product.seller_name }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>商家发货地址: </strong> {{ product.sell_address }}
+        </p>
+        <p class="text-xl my-2">
+          <strong>购买数量: </strong
+          ><el-input-number class="mx-2" v-model="count" :min="1" :max="30" />
         </p>
         <div class="mt-2">
-          <el-button type="primary" @click="buyProductFunc" plain
-            >立即购买</el-button
+          <el-button type="primary" @click="buyProductFunc" plain>
+            <el-icon class="mr-3"><Discount /></el-icon>
+            立即购买</el-button
           >
-          <el-button type="success" @click="addToCart" plain
-            >加入购物车</el-button
+          <el-button type="success" @click="addToCart" plain>
+            <el-icon class="mr-3"><DataAnalysis /></el-icon>
+            加入购物车</el-button
           >
           <el-button
             type="warning"
             @click="goToProductDetails(product.product_id)"
             plain
-            >详细信息</el-button
+          >
+            <el-icon class="mr-3"><More /></el-icon>
+            详细信息</el-button
           >
           <el-button type="info" @click="followUser" plain>
+            <el-icon class="mr-3"><Odometer /></el-icon>
             查看商家信息</el-button
           >
         </div>
@@ -89,21 +107,23 @@ export default {
     };
 
     const buyProductFunc = () => {
-      buyProduct(props.product.product_id, { count: count.value }).then((res) => {
-        if (res.success) {
-          ElMessage({
-            type: "success",
-            message: "购买成功",
-          });
-        } else {
-          ElMessage({
-            showClose: true,
-            type: "error",
-            message: res.message,
-          });
+      buyProduct(props.product.product_id, { count: count.value }).then(
+        (res) => {
+          if (res.success) {
+            ElMessage({
+              type: "success",
+              message: "购买成功",
+            });
+          } else {
+            ElMessage({
+              showClose: true,
+              type: "error",
+              message: res.message,
+            });
+          }
+          dialogVisible.value = false;
         }
-        dialogVisible.value = false;
-      });
+      );
     };
 
     const followUser = () => {

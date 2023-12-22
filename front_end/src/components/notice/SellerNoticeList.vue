@@ -23,15 +23,15 @@
         <div class="mt-4 flex justify-end">
           <div>
             <el-button
-              type="primary"
+              type="success"
               class="text-white font-semibold hover:underline"
               @click="viewDetails(message.notice_user_id)"
               plain
             >
-              <el-icon class="ml-1 mr-4"><Finished /></el-icon>
+              <el-icon class="ml-1 mr-4"><Position /></el-icon>
               点击查看&nbsp;
               <strong> {{ message.notice_user_name }} </strong>
-              &nbsp;的店铺新品</el-button
+              &nbsp;的个人中心</el-button
             >
           </div>
         </div>
