@@ -13,7 +13,7 @@
           </h1>
           <p class="text-gray-400 notice-detail">浏览最新的二手书信息。</p>
         </div>
-        <div v-if="store.getRight === 1">
+        <div v-if="store.getRight == 1">
           <el-button
             @click="showCreateNoticeDialog"
             type="success"
@@ -109,6 +109,8 @@ const getNotices = () => {
   showCurrentNotices().then((res) => {
     if (res.success) {
       console.log(res.data.notices);
+      console.log(store.getRight);
+      console.log(store.getRight == 1);
       AllNotice.value = res.data.notices;
     } else {
       ElMessage({
