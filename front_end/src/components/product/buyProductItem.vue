@@ -3,7 +3,11 @@
     <el-row>
       <el-col :span="24">
         <el-row>
-          <img :src="product.product_image" alt="Product Image" />
+          <img
+            :src="product.product_image"
+            alt="Product Image"
+            class="w-48 h-60"
+          />
         </el-row>
         <el-row align="middle" class="mx-2">
           <el-col :span="12">
