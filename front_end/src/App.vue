@@ -8,6 +8,7 @@ import { ElConfigProvider } from "element-plus";
 import { getCurrentInstance, onMounted } from "vue";
 import zh_cn from "element-plus/es/locale/lang/zh-cn";
 import en from "element-plus/es/locale/lang/en";
+import { userStore } from "@/store/user";
 const langComponent = {
   zh_CN: zh_cn,
   en: en,
@@ -18,4 +19,6 @@ const locale = langComponent[lang];
 onMounted(() => {
   proxy.$i18n.locale = lang;
 });
+const store = userStore();
+store.initialize();
 </script>

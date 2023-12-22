@@ -11,6 +11,16 @@ export const userStore = defineStore({
   },
   // 方法
   actions: {
+    initialize() {
+      const storedToken = localStorage.getItem("token");
+      const storedRight = localStorage.getItem("right");
+      if (storedToken) {
+        this.token = storedToken;
+      }
+      if (storedRight) {
+        this.right = storedRight;
+      }
+    },
     setUserInfo(data) {
       this.token = data.token;
       localStorage.setItem("token", this.token);
@@ -29,14 +39,14 @@ export const userStore = defineStore({
   // getters
   getters: {
     getToken() {
-      return this.token;
+      return localStorage.getItem("token");
     },
     // 0: 普通用户 1: 管理员
     getRight() {
-      return this.right;
+      return localStorage.getItem("right");
     },
     isLogin() {
-      return this.token !== "";
+      return localStorage.getItem("token") !== "";
     },
   },
 });
