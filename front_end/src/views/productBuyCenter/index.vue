@@ -19,6 +19,15 @@
             <el-icon class="ml-1 mr-4"><Connection /></el-icon>
             发布商品</el-button
           >
+          <el-button
+            class="mt-2"
+            type="success"
+            plain
+            @click="showTypeDialog = true"
+          >
+            <el-icon class="ml-1 mr-4"><Management /></el-icon>
+            类别视图</el-button
+          >
         </div>
         <div class="user-management mx-20 bg-white rounded-xl">
           <product-buy-item-list :products="products" />
@@ -80,12 +89,16 @@
         >
       </div>
     </el-dialog>
+    <el-dialog v-model="showTypeDialog" width="70%">
+      <product-type-table :statistics="typeData" />
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { showAllProducts, addProduct } from "@/api/product.js";
+import { showProductTypeTable } from "@/api/statistic.js";
 import { useRouter } from "vue-router";
 import productBuyItemList from "@c/product/productBuyItemList.vue";
 import productImageUpload from "@c/product/productImageUpload.vue";
@@ -99,8 +112,15 @@ onMounted(() => {
       router.push({ path: "/404" });
     }
   });
+  showProductTypeTable().then((res) => {
+    if (res.success) {
+      console.log(res.data.statistics);
+      typeData.value = res.data.statistics;
+    }
+  });
 });
 const showAddProductDialog = ref(false);
+const typeData = ref([]);
 const newProduct = ref({
   price: 0,
   sell_address: "",
@@ -113,6 +133,7 @@ const newProduct = ref({
 const handleImageUploaded = (imageUrl) => {
   newProduct.value.product_image = imageUrl;
 };
+const showTypeDialog = ref(false);
 const addProductFunc = () => {
   addProduct(newProduct.value).then((res) => {
     if (res.success) {
