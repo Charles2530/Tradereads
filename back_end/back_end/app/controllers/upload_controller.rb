@@ -79,6 +79,30 @@ class UploadController < ApplicationController
     end
   end
 
+  def product_type_number
+    names = %w(杂志 教科书 小说 童话 戏剧 数学 计算机 漫画 自传)
+    values = []
+    names.each do |name|
+      values << ProductDetail.where(product_type: name).length
+    end
+    i = -1
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        statistics: names.collect do |name|
+          i += 1
+          {
+            value: values[i],
+            name: name
+          }
+        end
+      }
+    )
+
+
+  end
+
 
   def post_smms(url, params)
     res = RestClient::Request.execute(

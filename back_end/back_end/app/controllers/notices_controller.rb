@@ -10,7 +10,7 @@ class NoticesController < ApplicationController
     user = current_user
     notices = []
     @notices.each do |notice|
-      if user.followings.include? notice.user
+      if user.followings.include?(notice.user) || (notice.notice_type == 3 && notice.user == user)
         notices << notice
       elsif notice.user.right == 1
         notices << notice
@@ -66,7 +66,7 @@ class NoticesController < ApplicationController
       ) and return
     end
     @notices.each do |notice|
-      if user.followings.include? notice.user
+      if user.followings.include?(notice.user) || (notice.notice_type == 3 && notice.user == user)
         if NoticeRecord.exists?(notice: notice, user: user)
           notice_record = NoticeRecord.find_by(notice: notice, user: user)
           if notice_record.readed == false
@@ -142,7 +142,7 @@ class NoticesController < ApplicationController
     if notice.save
       render status: 200, json: response_json(
         true,
-        message: Global::SUCCESS,
+        message: "公告已发布！",
         data: {
           notice_id: notice.id,
           notice_create_time: notice.created_at.to_s
@@ -150,7 +150,7 @@ class NoticesController < ApplicationController
       )
     else
       render status: 200, json: response_json(
-        true,
+        false,
         message: Global::FAIL
       )
     end

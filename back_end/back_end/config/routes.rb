@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :product_details
 
     post :show_products, to: 'products#show_products', as: :show_products
+    get :product_type_number, to: 'upload#product_type_number', as: :product_type_number
     scope "products" do
       get :check_product, to: 'products#get_product_list', as: :product_check_list
     end
