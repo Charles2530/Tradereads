@@ -189,8 +189,7 @@ class UsersController < ApplicationController
 
   # GET /api/users/<user_id>/show_product_list
   def show_product_list
-    @user = User.find(params[:user_id])
-    user = @user
+    user =  User.find(params[:user_id])
     unless user
       render json: response_json(
         false,
@@ -280,7 +279,6 @@ class UsersController < ApplicationController
   end
 
   def choose_cart_to_order
-    # TODO wallet
     user = current_user
     product_ids = params[:choose_carts]
     unless product_ids
@@ -290,6 +288,7 @@ class UsersController < ApplicationController
       ) and return
     end
     carts = []
+    need_price = 0
     if product_ids.length == 0
       render json: response_json(
         false,
@@ -309,9 +308,16 @@ class UsersController < ApplicationController
       ) and return
     end
     order_items = []
+    notices = []
+
+    wallet = user.wallet
     carts.each do |cart|
       state = "待发货"
       order_item = OrderItem.new(product: cart.product, number: cart.number, state: state, order: order)
+      need_price += cart.product.price * cart.number
+      notice = Notice.new(title: "有新的销售记录！", notice_type: 3, user: cart.product.user,
+                          content: "#{user.user_detail.user_name} 购买了您的商品 #{cart.product.product_detail.product_name}\n总计 #{cart.number} 件，#{cart.product.price * cart.number} 元")
+      notices << notice
       if order_item.valid?
         order_items << order_item
       else
@@ -322,10 +328,21 @@ class UsersController < ApplicationController
       end
     end
 
+    if need_price > wallet.money_sum
+      render json: response_json(
+        false,
+        message: "余额不足"
+      ) and return
+    end
+
+    wallet.money_sum -= need_price
+
+    wallet.save
     order.save
     order_items.length.times do |i|
       carts[i].destroy
       order_items[i].save
+      notices[i].save
     end
     render status: 200, json: response_json(
       true,
