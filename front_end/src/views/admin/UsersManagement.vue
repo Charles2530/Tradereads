@@ -17,8 +17,9 @@
 import { onMounted, ref } from "vue";
 import { showAllUserList } from "@/api/user";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 const users = ref([]);
-
+const router = useRouter();
 onMounted(() => {
   showAllUserList().then((res) => {
     if (res.success) {
@@ -29,6 +30,7 @@ onMounted(() => {
         message: res.message,
         type: "error",
       });
+      router.push({ path: "/404" });
     }
   });
 });

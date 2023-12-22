@@ -47,12 +47,12 @@
 <script setup>
 import shoppingItemList from "@c/shopping/shoppingItemList.vue";
 import { onMounted, ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import {
   showCurrentUserCart,
   addCartsToOrders,
   clearCurrentUserCart,
 } from "@/api/cart.js";
-import NavigationBar from "@c/home/NavigationBar.vue";
 onMounted(() => {
   showCurrentUserCart().then((res) => {
     if (res.success) {
@@ -64,10 +64,12 @@ onMounted(() => {
         type: "error",
         message: res.message,
       });
+      router.push({ path: "/404" });
     }
   });
 });
 const cartProducts = ref([]);
+const router = useRouter();
 
 const selectIdArray = computed(() => {
   return cartProducts.value.reduce((total, item) => {

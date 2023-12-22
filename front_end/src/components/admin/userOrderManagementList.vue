@@ -53,6 +53,7 @@ import { ref, computed, onMounted } from "vue";
 import OrderItemAdmin from "@c/order/OrderItemAdmin.vue";
 import { showAllOrders } from "@/api/order";
 import { Hide, View } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 export default {
   name: "OrderListPage",
   setup() {
@@ -61,6 +62,7 @@ export default {
     });
     const all_orders = ref([]);
     const searchQuery = ref("");
+    const router = useRouter();
     const showAllOrderList = () => {
       showAllOrders().then((res) => {
         if (res.success) {
@@ -72,6 +74,7 @@ export default {
             message: res.message,
             type: "error",
           });
+          router.push("/404");
         }
       });
     };
