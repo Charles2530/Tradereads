@@ -22,16 +22,19 @@ export const userStore = defineStore({
       }
     },
     setUserInfo(data) {
+      console.log("login:", data);
       this.token = data.token;
+      console.log(this.token);
       localStorage.setItem("token", this.token);
+      console.log(localStorage.getItem("token"));
       this.right = data.right;
+      console.log(this.right);
       localStorage.setItem("right", this.right);
+      console.log(localStorage.getItem("right"));
     },
     clearUserInfo() {
-      this.token = "";
-      localStorage.removeItem("token");
-      this.right = 0;
-      localStorage.removeItem("right");
+      console.log("logout");
+      localStorage.clear();
     },
   },
   // mutations
@@ -39,15 +42,18 @@ export const userStore = defineStore({
   // getters
   getters: {
     getToken() {
-      return localStorage.getItem("token");
+      console.log(localStorage.getItem("token"));
+      this.token = localStorage.getItem("token");
+      return this.token;
     },
     // 0: 普通用户 1: 管理员
     getRight() {
       console.log(localStorage.getItem("right"));
-      return localStorage.getItem("right");
+      this.right = localStorage.getItem("right");
+      return this.right;
     },
     isLogin() {
-      return localStorage.getItem("token") !== "";
+      return this.token != "";
     },
   },
 });

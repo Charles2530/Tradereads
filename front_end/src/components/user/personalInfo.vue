@@ -197,6 +197,7 @@ export default {
     const createdUserInformation = () => {
       getUser(store.getToken)
         .then((res) => {
+          console.log("token:" + store.getToken);
           console.log(res);
           if (res.success) {
             loginInfo.phone = res.data.phone;
