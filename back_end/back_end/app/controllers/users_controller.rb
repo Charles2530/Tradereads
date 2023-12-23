@@ -263,6 +263,11 @@ class UsersController < ApplicationController
       ) and return
     end
 
+    carts.each do |cart|
+      cart.product.user.wallet.money_sum += cart.product.price * cart.number
+      cart.product.user.wallet.save
+    end
+
     wallet.money_sum -= need_price
 
     order.save
@@ -333,6 +338,11 @@ class UsersController < ApplicationController
         false,
         message: "余额不足"
       ) and return
+    end
+
+    carts.each do |cart|
+      cart.product.user.wallet.money_sum += cart.product.price * cart.number
+      cart.product.user.wallet.save
     end
 
     wallet.money_sum -= need_price
