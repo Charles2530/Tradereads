@@ -7,4 +7,11 @@ export async function showProductTypeTable() {
     method: "get",
   });
 }
+
+export async function showUserRankTable() {
+  return await service({
+    url: "/user_sell_rank",
+    method: "get",
+  });
+}
 //delete

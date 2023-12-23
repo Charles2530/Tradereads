@@ -1,52 +1,41 @@
 <template>
-  <div>
-    <el-row class="following-item">
-      <!-- Left section: Avatar -->
-      <el-col :span="2">
-        <img :src="avatar" alt="Avatar" class="avatar-img mx-4" />
-      </el-col>
-      <el-col :span="1"></el-col>
-
-      <!-- Middle section: Vertical line -->
-      <el-col :span="1">
-        <div class="vertical-line"></div>
-      </el-col>
-
-      <!-- Right section: User information -->
-      <el-col :span="8">
-        <div class="user-info-section">
-          <div class="user-name text-xl">
-            <strong>用户名:</strong>{{ user_name }}
-          </div>
-          <div class="phone-number text-xl">
-            <strong>销售额:</strong>{{ phone }}
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="float-right">
-          <div>
-            <el-button
-              type="success"
-              size="large"
-              class="text-white font-semibold hover:underline my-5"
-              @click="goDetails"
-              plain
-            >
-              <el-icon class="ml-1 mr-4"><Share /></el-icon>
-              查看该用户的主页</el-button
-            >
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+  <div class="seller-info">
+    <div class="rank-display">
+      <p class="rank-text" :class="rankClass">
+        <el-icon class="mr-2"><Position /></el-icon>
+        {{ rank }}
+      </p>
+    </div>
+    <div class="content">
+      <div class="avatar-section">
+        <img :src="merchant.user_avatar" alt="Avatar" class="avatar-img" />
+      </div>
+      <div class="info-section">
+        <p class="user-name text-2xl">{{ merchant.user_name }}</p>
+        <p class="sales text-xl">
+          <strong class="mr-3">总销售额:</strong>
+          <span class="text-yellow-600 font-bold">￥{{ merchant.value }}</span>
+        </p>
+      </div>
+      <div class="action-section">
+        <el-button
+          :type="rankType"
+          size="large"
+          class="details-button"
+          @click="goDetails"
+          plain
+        >
+          <el-icon class="ml-1 mr-4"><Share /></el-icon>
+          查看该商家的主页
+        </el-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { getUser } from "@/api/user.js";
-import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
 export default {
   name: "sellerInfo",
   props: {
@@ -54,60 +43,123 @@ export default {
       type: Object,
       required: true,
     },
+    rank: {
+      type: Number,
+      required: true,
+    },
   },
+  computed: {
+    rankClass() {
+      switch (this.rank) {
+        case 1:
+          return "rank-first";
+        case 2:
+          return "rank-second";
+        case 3:
+          return "rank-third";
+        default:
+          return "rank-other";
+      }
+    },
+  },
+
   setup(props) {
     const router = useRouter();
-    const avatar = ref("");
-    getUser(props.user_id).then((res) => {
-      if (res.success) {
-        avatar.value = res.data.avatar;
-      }
-    });
     const goDetails = () => {
-      console.log(props.user_id);
       router.push({
         name: "FollowDetail",
         params: {
-          user_id: props.user_id,
+          user_id: props.merchant.user_id,
         },
       });
     };
-
+    const rankType = computed(() => {
+      switch (props.rank) {
+        case 1:
+          return "danger";
+        case 2:
+          return "warning";
+        case 3:
+          return "success";
+        default:
+          return "info";
+      }
+    });
     return {
-      avatar,
       goDetails,
+      rankType,
     };
   },
 };
 </script>
 
 <style scoped>
-.vertical-line {
-  height: 100%; /* Adjust height to match the avatar */
-  width: 1px; /* Adjust width as needed */
-  background-color: #000; /* Line color */
+.seller-info {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.rank-display {
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.rank-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.avatar-section {
+  flex-basis: 15%;
+  padding: 0 10px;
 }
 
 .avatar-img {
-  width: inherit; /* Make the image fill the container */
-  height: inherit; /* Make the image fill the container */
-  border-radius: 50%; /* Make it circular */
+  width: 100%;
+  border-radius: 50%;
 }
 
-.user-info-section {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  padding-left: 16px; /* Adjust padding as needed */
+.info-section {
+  flex-basis: 50%;
 }
 
 .user-name,
-.phone-number {
-  font-size: 18px; /* Adjust font size as needed */
-  margin-bottom: 8px; /* Add some spacing between lines */
-  color: #000;
+.sales {
+  margin: 10px 0;
+  margin-left: 80px;
+  color: #555;
 }
 
-/* Additional styling based on your design preferences */
+.action-section {
+  flex-basis: 25%;
+  text-align: right;
+}
+
+.details-button {
+  font-size: 14px;
+}
+
+.rank-first {
+  color: #ef4806;
+}
+
+.rank-second {
+  color: #f5a623;
+}
+
+.rank-third {
+  color: #f8e71c;
+}
+
+.rank-other {
+  color: #555;
+}
 </style>
