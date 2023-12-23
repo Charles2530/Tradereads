@@ -1,5 +1,6 @@
 class NoticesController < ApplicationController
   before_action :set_notice, only: %i[ show update destroy ]
+  before_action :login_only
 
   include ApplicationHelper
 
