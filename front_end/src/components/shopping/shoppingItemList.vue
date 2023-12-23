@@ -40,7 +40,7 @@
                 <img
                   :src="row.product_image"
                   alt="Product Image"
-                  class="w-36 h-36"
+                  class="w-27 h-36"
                 />
               </template>
             </el-table-column>
