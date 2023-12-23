@@ -1,4 +1,5 @@
 # Tradereads
+Tradereads是北航二手书交易平台。
 ## 前端实现
 ### 前端体系结构
 
