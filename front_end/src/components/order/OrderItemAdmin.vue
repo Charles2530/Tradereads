@@ -3,10 +3,17 @@
     <div class="flex flex-col bg-white shadow-md p-6 rounded-lg">
       <div class="pb-4 border-b border-gray-800 mb-4">
         <el-row :gutter="22">
+          <el-row :span="5">
+            <div class="mt-2">
+              <span class="text-gray-600 text-2xl font-bold"
+                >买家ID: {{ buyer_id }}</span
+              >
+            </div>
+          </el-row>
           <el-col :span="5">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
-                >买家: {{ buyer_id }}</span
+                >买家: {{ buyer_name }}</span
               >
             </div>
           </el-col>
@@ -17,10 +24,10 @@
               >
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <div class="mt-2">
               <span class="text-gray-600 text-2xl font-bold"
-                >下单时间: {{ order_time }}</span
+                >下单时间: {{ formatDate(order_time) }}</span
               >
             </div>
           </el-col>
@@ -39,7 +46,7 @@
         </el-row>
       </div>
       <div class="order-container">
-        <el-table :data="items" style="width: 100%">
+        <el-table :data="items" style="width: 100%" border stripe>
           <el-table-column
             prop="product_name"
             label="产品名称"
@@ -57,6 +64,8 @@
 <script>
 import { deleteOrder } from "@/api/order.js";
 import { Delete } from "@element-plus/icons-vue";
+import { getUser } from "@/api/user.js";
+import { ref, onMounted } from "vue";
 export default {
   name: "OrderItemAdmin",
   props: {
@@ -81,7 +90,17 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
+    const formatDate = (dateString) => {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+    const buyer_name = ref("");
+    onMounted(() => {
+      getUser(props.buyer_id).then((res) => {
+        buyer_name.value = res.data.user_name;
+      });
+    });
     const deleteThisOrder = () => {
       deleteOrder(this.order_id)
         .then((res) => {
@@ -106,6 +125,8 @@ export default {
     return {
       deleteThisOrder,
       Delete,
+      formatDate,
+      buyer_name,
     };
   },
 };

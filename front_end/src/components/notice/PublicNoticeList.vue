@@ -15,7 +15,9 @@
         </div>
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-semibold">{{ notice.notice_title }}</h2>
-          <span class="text-gray-500">{{ notice.notice_create_time }}</span>
+          <span class="text-gray-500">{{
+            formatDate(notice.notice_create_time)
+          }}</span>
         </div>
         <p class="text-gray-700 mt-2">{{ notice.notice_content }}</p>
       </el-card>
@@ -31,6 +33,15 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  setup() {
+    const formatDate = (dateString) => {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+    return {
+      formatDate,
+    };
   },
 };
 </script>

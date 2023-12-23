@@ -30,7 +30,7 @@
     <div>
       <el-scrollbar max-height="500px">
         <div class="px-8 py-2">
-          <el-table :data="filteredProducts" style="width: 97%">
+          <el-table :data="filteredProducts" style="width: 97%" border stripe>
             <el-table-column
               label="商品名称"
               prop="product_name"
