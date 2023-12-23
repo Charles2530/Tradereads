@@ -105,6 +105,7 @@ export default {
             message: "充值成功",
             type: "success",
           });
+          location.reload();
         } else {
           ElMessage({
             message: "充值失败",
@@ -125,6 +126,7 @@ export default {
             message: "修改成功",
             type: "success",
           });
+          location.reload();
         } else {
           ElMessage({
             message: "修改失败",

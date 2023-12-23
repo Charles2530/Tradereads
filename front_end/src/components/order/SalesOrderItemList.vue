@@ -150,6 +150,7 @@ export default {
               message: "订单项状态修改成功",
               type: "success",
             });
+            location.reload();
           } else {
             ElMessage({
               message: res.message,
