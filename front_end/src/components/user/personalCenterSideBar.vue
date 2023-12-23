@@ -41,6 +41,12 @@
             >
           </el-menu-item>
           <el-menu-item index="4">
+            <i class="el-icon-style"><TrendCharts /></i>
+            <router-link class="nav-title" to="/rankingList"
+              >排行榜</router-link
+            >
+          </el-menu-item>
+          <el-menu-item index="5">
             <i class="el-icon-style"><Setting /></i>
             <router-link class="nav-title" to="/DeveloperInfo"
               >客服中心</router-link
@@ -55,7 +61,7 @@
             <strong class="nav-title text-md">管理员模式</strong>
           </template>
           <div class="item_container px-5">
-            <el-menu-item index="5">
+            <el-menu-item index="6">
               <i class="el-icon-style">
                 <Document></Document>
               </i>
@@ -63,7 +69,7 @@
                 >订单管理</router-link
               >
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="7">
               <i class="el-icon-style">
                 <Service />
               </i>
@@ -71,7 +77,7 @@
                 >审核商品</router-link
               >
             </el-menu-item>
-            <el-menu-item index="7">
+            <el-menu-item index="8">
               <i class="el-icon-style">
                 <List />
               </i>
@@ -82,7 +88,7 @@
           </div>
         </el-sub-menu>
       </div>
-      <el-menu-item index="8">
+      <el-menu-item index="9">
         <template #title>
           <el-icon class="el-icon-notice">
             <BellFilled />
@@ -92,7 +98,7 @@
           </button>
         </template>
       </el-menu-item>
-      <el-menu-item index="9">
+      <el-menu-item index="10">
         <template #title>
           <el-icon class="el-icon-location"><Location /></el-icon>
           <button @click="Logout" class="nav-title">

@@ -19,6 +19,7 @@ export default {
         "cart-background": "url('/src/assets/img/cart-background.jpg')",
         "developer-background":
           "url('/src/assets/img/developer-background.jpg')",
+        "ranking-background": "url('/src/assets/img/ranking-background.jpg')",
       },
       margin: {
         18: "4.5rem",

@@ -22,15 +22,17 @@ const UsersManagement = () => import("@/views/admin/UsersManagement.vue");
 const Notice = () => import("@/views/notice/index.vue");
 // 关注用户详情页
 const FollowDetail = () => import("@/views/personalCenter/followDetail.vue");
-//购物车页面
+// 购物车页面
 const Shopping = () => import("@/views/shopping/index.vue");
-//商品购买中心
+// 商品购买中心
 const ProductBuy = () => import("@/views/productBuyCenter/index.vue");
-//我的商品
+// 我的商品
 const DeveloperInfo = () => import("@/views/admin/DeveloperInfo.vue");
-//商品详情界面
+// 商品详情界面
 const ProductDetail = () =>
   import("@/views/productBuyCenter/productDetail.vue");
+// 商品排行榜
+const RankingList = () => import("@/views/productBuyCenter/rankingList.vue");
 /* 路由定义 */
 const routes = [
   {
@@ -108,6 +110,11 @@ const routes = [
     name: "ProductDetail",
     component: ProductDetail,
     props: true,
+  },
+  {
+    path: "/rankingList",
+    name: "RankingList",
+    component: RankingList,
   },
 ];
 
