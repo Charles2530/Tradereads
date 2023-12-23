@@ -45,7 +45,7 @@
 
 <script>
 import { getUser } from "@/api/user.js";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 export default {
   name: "userManageItem",
@@ -66,11 +66,27 @@ export default {
   setup(props) {
     const router = useRouter();
     const avatar = ref("");
-    getUser(props.user_id).then((res) => {
-      if (res.success) {
-        avatar.value = res.data.avatar;
-      }
+    onMounted(() => {
+      getUser(props.user_id).then((res) => {
+        if (res.success) {
+          console.log(props.user_id);
+          avatar.value = res.data.avatar;
+        }
+      });
     });
+
+    watch(
+      () => props.user_id,
+      () => {
+        getUser(props.user_id).then((res) => {
+          if (res.success) {
+            console.log(props.user_id);
+            avatar.value = res.data.avatar;
+          }
+        });
+      }
+    );
+
     const goDetails = () => {
       console.log(props.user_id);
       router.push({
