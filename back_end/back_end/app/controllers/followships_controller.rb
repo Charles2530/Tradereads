@@ -1,5 +1,6 @@
 class FollowshipsController < ApplicationController
   before_action :set_followship, only: %i[ show update destroy ]
+  before_action :login_only
 
   # GET /followships
   def index
