@@ -31,7 +31,7 @@
             :key="order.order_id"
             :buyer_id="order.buyer_id"
             :order_id="order.order_id"
-            :total_price="order.total_price"
+            :total_price="parseInt(order.total_price)"
             :order_time="order.order_time"
             :items="order.items"
           ></order-item-admin>

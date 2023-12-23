@@ -20,7 +20,7 @@
         :inactive-action-icon="Hide"
       />
     </div>
-    <el-table :data="filteredProducts" style="width: 100%">
+    <el-table :data="filteredProducts" style="width: 100%" border stripe>
       <el-table-column prop="order_id" label="订单" width="80px" />
       <el-table-column prop="buyer_id" label="买家" min-width="100px" />
       <el-table-column prop="product_name" label="产品名" min-width="100px" />

@@ -37,7 +37,7 @@
       </div>
     </div>
     <div v-if="showApproved && approvedProducts.length > 0">
-      <el-table :data="approvedProducts" style="width: 100%">
+      <el-table :data="approvedProducts" border stripe style="width: 100%">
         <el-table-column label="商品名称" prop="product_name"></el-table-column>
         <el-table-column label="价格" prop="price"></el-table-column>
         <el-table-column
@@ -76,7 +76,7 @@
       ></el-pagination>
     </div>
     <div v-if="!showApproved && pendingProducts.length > 0">
-      <el-table :data="pendingProducts" style="width: 100%">
+      <el-table :data="pendingProducts" border stripe style="width: 100%">
         <el-table-column label="商品名称" prop="product_name"></el-table-column>
         <el-table-column label="价格" prop="price"></el-table-column>
         <el-table-column
