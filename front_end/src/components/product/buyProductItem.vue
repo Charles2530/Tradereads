@@ -6,19 +6,21 @@
           <img
             :src="product.product_image"
             alt="Product Image"
-            class="w-48 h-60"
+            class="w-56 h-56"
           />
         </el-row>
-        <el-row align="middle" class="mx-2">
-          <el-col :span="12">
-            <span class="text-md font-bold text-gray-400">{{
-              product.product_name
-            }}</span>
-          </el-col>
-          <el-col :span="6">
-            <span class="text-md text-red-500 font-bold"
-              >￥{{ product.price }}</span
-            >
+        <el-row align="middle" class="mx-2 h-28">
+          <el-col :span="18">
+            <el-row>
+              <span class="font-bold text-gray-400" style="font-size: 12px">{{
+                product.product_name
+              }}</span>
+            </el-row>
+            <el-row>
+              <span class="text-red-500 font-bold" style="font-size: 12px"
+                >￥{{ product.price }}</span
+              >
+            </el-row>
           </el-col>
           <el-col :span="6">
             <el-button
