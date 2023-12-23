@@ -114,8 +114,8 @@ class UploadController < ApplicationController
         if product.user == user
           sum += order_item.number * order_item.product.price
         end
-        key_value << [user, sum]
       end
+      key_value << [user, sum]
     end
 
     key_value = key_value.sort_by {|ele| -ele[1] }
