@@ -103,6 +103,46 @@ class UploadController < ApplicationController
 
   end
 
+  def user_sell_rank
+    users = User.all
+    key_value = []
+    users.each do |user|
+      sum = 0
+      # sell_orders = OrderItem.select('OrderItem.').joins(:products).where("products.user_id == ?", user.id)
+      OrderItem.all.each do |order_item|
+        product = order_item.product
+        if product.user == user
+          sum += order_item.number * order_item.product.price
+        end
+        key_value << [user, sum]
+      end
+    end
+
+    key_value = key_value.sort_by {|ele| -ele[1] }
+
+    i = 0
+    user_rank_top5 = []
+    key_value.collect do |ele|
+      user_rank_top5 << ele
+      i += 1
+      break if i == 5
+    end
+    render status: 200, json: response_json(
+      true,
+      message: Global::SUCCESS,
+      data: {
+        statistics: user_rank_top5.collect do |ele|
+          {
+            value: ele[1].to_f,
+            user_name: ele[0].user_detail.user_name,
+            user_id: ele[0].id,
+            user_avatar: ele[0].user_detail.avatar
+          }
+        end
+      }
+    )
+  end
+
 
   def post_smms(url, params)
     res = RestClient::Request.execute(
