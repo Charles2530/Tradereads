@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class UploadController < ApplicationController
+  before_action :login_only
 
   include ApplicationHelper
 

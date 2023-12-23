@@ -538,14 +538,13 @@ end
 
   # GET /api/users/1
   def show
-    @user = User.find(params[:id])
-    user = @user
-    unless user
+    unless User.exists?(params[:id])
       render json: response_json(
         false,
         message: ShowError::SHOW_FAIL
       ) and return
     end
+    user = User.find(params[:id])
     user_detail = user.user_detail
     render status: 200, json: response_json(
       true,

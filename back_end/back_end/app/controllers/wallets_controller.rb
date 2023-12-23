@@ -1,5 +1,6 @@
 class WalletsController < ApplicationController
   before_action :set_wallet, only: %i[ show update destroy ]
+  before_action :login_only
 
   include ApplicationHelper
 

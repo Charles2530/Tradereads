@@ -1,6 +1,7 @@
 class UserDetailsController < ApplicationController
   before_action :set_user_detail, only: %i[ show update destroy ]
   before_action :setAdmin
+  before_action :login_only
 
   include ApplicationHelper
 

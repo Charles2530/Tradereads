@@ -24,14 +24,19 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    User.find(ApplicationRecord.current_user_id)
+    if User.exists?(ApplicationRecord.current_user_id)
+      User.find(ApplicationRecord.current_user_id)
+    else
+      nil
+    end
+
   end
 
   def login_only
     if current_user
       true
     else
-      render status: 401, json: response_json(
+      render json: response_json(
         false,
         message: "Please login firstly!"
       )
@@ -43,7 +48,7 @@ class ApplicationController < ActionController::API
     if not current_user
       true
     else
-      render status: 403, json: response_json(
+      render json: response_json(
         false,
         message: "You have logged in!"
       )

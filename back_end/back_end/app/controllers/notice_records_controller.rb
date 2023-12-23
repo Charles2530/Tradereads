@@ -1,5 +1,6 @@
 class NoticeRecordsController < ApplicationController
   before_action :set_notice_record, only: %i[ show update destroy ]
+  before_action :login_only
 
   # GET /notice_records
   # GET /notice_records.json
