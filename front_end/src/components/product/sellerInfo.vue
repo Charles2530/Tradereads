@@ -19,7 +19,7 @@
             <strong>用户名:</strong>{{ user_name }}
           </div>
           <div class="phone-number text-xl">
-            <strong>电话号码:</strong>{{ phone }}
+            <strong>销售额:</strong>{{ phone }}
           </div>
         </div>
       </el-col>
@@ -50,17 +50,9 @@ import { useRouter } from "vue-router";
 export default {
   name: "sellerInfo",
   props: {
-    user_id: {
-      type: Number,
-      require: true,
-    },
-    user_name: {
-      type: String,
-      require: true,
-    },
-    phone: {
-      type: String,
-      require: true,
+    merchant: {
+      type: Object,
+      required: true,
     },
   },
   setup(props) {

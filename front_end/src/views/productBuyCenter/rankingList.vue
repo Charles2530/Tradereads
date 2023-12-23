@@ -10,8 +10,8 @@
         <div class="mb-4 ml-20">
           <h1 class="text-3xl font-semibold mb-2 text-white">排行榜</h1>
           <p class="text-white notice-detail">快来选购你想要的二手书吧!</p>
-          <merchant-ranking />
           <product-ranking :products="RecommendProducts" />
+          <merchant-ranking />
         </div>
       </div>
     </div>
@@ -24,13 +24,11 @@ const RecommendProducts = ref([]);
 onMounted(() => {
   showAllProducts().then((res) => {
     if (res.success) {
-      if (res.data.products.length > 5)
-        RecommendProducts.value = res.data.products.slice(0, 5);
-      else
-        RecommendProducts.value = res.data.products.slice(
-          0,
-          res.data.products.length - 1
-        );
+      const shuffledProducts = res.data.products.sort(
+        () => 0.5 - Math.random()
+      );
+      const maxProducts = Math.min(shuffledProducts.length, 5);
+      RecommendProducts.value = shuffledProducts.slice(0, maxProducts);
     }
   });
 });
