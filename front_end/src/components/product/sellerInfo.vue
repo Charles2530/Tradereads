@@ -95,8 +95,6 @@ export default {
 
 <style scoped>
 .seller-info {
-  display: flex;
-  align-items: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
 }
@@ -107,7 +105,7 @@ export default {
 }
 
 .rank-text {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
 }
 
