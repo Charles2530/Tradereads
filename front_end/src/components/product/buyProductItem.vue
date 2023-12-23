@@ -118,6 +118,7 @@ export default {
               type: "success",
               message: "购买成功",
             });
+            location.reload();
           } else {
             ElMessage({
               showClose: true,
@@ -148,6 +149,7 @@ export default {
               type: "success",
               message: "添加购物车成功",
             });
+            location.reload();
           } else {
             ElMessage({
               showClose: true,
