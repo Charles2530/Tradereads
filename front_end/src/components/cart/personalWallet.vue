@@ -18,6 +18,7 @@
           class="text-white font-semibold hover:underline"
           type="primary"
           @click="showRechargeDialog = true"
+          plain
         >
           <el-icon class="ml-1 mr-4"><ShoppingCart /></el-icon>
           充值</el-button
@@ -26,6 +27,7 @@
           class="text-white font-semibold hover:underline"
           type="success"
           @click="showPaymentMethodDialog = true"
+          plain
         >
           <el-icon class="ml-1 mr-4"><ShoppingBag /></el-icon>
           修改支付方式</el-button
@@ -33,9 +35,9 @@
       </div>
     </el-card>
 
-    <el-dialog title="充值" v-model="showRechargeDialog" width="30%">
+    <el-dialog title="充值" v-model="showRechargeDialog" width="15%">
       <el-input-number
-        class="my-5"
+        class="my-7"
         v-model="rechargeAmount"
         placeholder="充值金额"
         :precision="2"
