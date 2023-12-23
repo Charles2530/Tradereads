@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :orders
     resources :carts
     resources :product_details
-
+    get :user_sell_rank, to: 'upload#user_sell_rank', as: :user_sell_rank
     post :show_products, to: 'products#show_products', as: :show_products
     get :product_type_number, to: 'upload#product_type_number', as: :product_type_number
     scope "products" do
