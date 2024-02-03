@@ -1,18 +1,19 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
 
 # Create your views here.
-def ShowCartAPIView(request):
+class ShowCartAPIView(APIView):
     pass
 
 
-def AddCartAPIView(request):
+class AddCartAPIView(APIView):
     pass
 
 
-def AddCartToOrderAPIView(request):
+class AddCartToOrderAPIView(APIView):
     pass
 
 
-def RemoveFromCartAPIView(request):
+class RemoveFromCartAPIView(APIView):
     pass

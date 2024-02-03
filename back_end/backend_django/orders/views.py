@@ -1,22 +1,23 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
 
 # Create your views here.
-def ShowAllOrdersAPIView(request):
+class ShowAllOrdersAPIView(APIView):
     pass
 
 
-def OrdersAPIView(request):
+class OrdersAPIView(APIView):
     pass
 
 
-def DeleteOrderAPIView(request):
+class DeleteOrderAPIView(APIView):
     pass
 
 
-def ShowSellOrdersAPIView(request):
+class ShowSellOrdersAPIView(APIView):
     pass
 
 
-def ModifyOrderStatusAPIView(request):
+class ModifyOrderStatusAPIView(APIView):
     pass

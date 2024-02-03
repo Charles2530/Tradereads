@@ -1,14 +1,15 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
 
 # Create your views here.
-def NoticeListCreateAPIView(request):
+class NoticeListCreateAPIView(APIView):
     pass
 
 
-def ShowCurrentUserNoticeAPIView(request):
+class ShowCurrentUserNoticeAPIView(APIView):
     pass
 
 
-def HaveNewNoticeAPIView(request):
+class HaveNewNoticeAPIView(APIView):
     pass

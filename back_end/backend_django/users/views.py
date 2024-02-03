@@ -1,67 +1,75 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from users.models import *
+from rest_framework.views import APIView
 
 
 # Create your views here.
 # users
-def RegisterAPIView(request):
+class RegisterAPIView(APIView):
+    def post(self, request):
+        phone = request.data.get('phone')
+        user_name = request.data.get('user_name')
+        gender = request.data.get('gender')
+        password = request.data.get('password')
+        return HttpResponse('ok')
+
     pass
 
 
-def LoginAPIView(request):
+class LoginAPIView(APIView):
     pass
 
 
-def LogoutAPIView(request):
+class LogoutAPIView(APIView):
     pass
 
 
-def GetUserInfoAPIView(request):
+class GetUserInfoAPIView(APIView):
     pass
 
 
-def ModifyPasswordAPIView(request):
+class ModifyPasswordAPIView(APIView):
     pass
 
 
-def ModifyUsernameAPIView(request):
+class ModifyUsernameAPIView(APIView):
     pass
 
 
-def ModifyAddressAPIView(request):
+class ModifyAddressAPIView(APIView):
     pass
 
 
-def UserProfileView(request):
+class UserProfileView(APIView):
     pass
 
 
-def UploadAvatarAPIView(request):
+class UploadAvatarAPIView(APIView):
     pass
 
 
-def ModifyPayTypeAPIView(request):
+class ModifyPayTypeAPIView(APIView):
     pass
 
 
 # follow
-def FollowAPIView(request):
+class FollowAPIView(APIView):
     pass
 
 
-def FollowListAPIView(request):
+class FollowListAPIView(APIView):
     pass
 
 
-def IfFollowAPIView(request):
+class IfFollowAPIView(APIView):
     pass
 
 
 # wallet
-def WalletAPIView(request):
+class WalletAPIView(APIView):
     pass
 
 
-def WalletChargeAPIView(request):
+class WalletChargeAPIView(APIView):
     pass

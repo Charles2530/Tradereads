@@ -1,82 +1,83 @@
 from django.shortcuts import render
+from rest_framework.views import APIView
 
 
 # Create your views here.
 # products
-def ShowAllProductsAPIView(request):
+class ShowAllProductsAPIView(APIView):
     pass
 
 
-def AddProductAPIView(request):
+class AddProductAPIView(APIView):
     pass
 
 
-def ProductDetailAPIView(request):
+class ProductDetailAPIView(APIView):
     pass
 
 
-def UserProductsAPIView(request):
+class UserProductsAPIView(APIView):
     pass
 
 
-def ModifyStoreAPIView(request):
+class ModifyStoreAPIView(APIView):
     pass
 
 
-def ModifyPriceAPIView(request):
+class ModifyPriceAPIView(APIView):
     pass
 
 
-def ModifySellAddressAPIView(request):
+class ModifySellAddressAPIView(APIView):
     pass
 
 
-def AddProductToCartAPIView(request):
+class AddProductToCartAPIView(APIView):
     pass
 
 
-def RemoveProductAPIView(request):
+class RemoveProductAPIView(APIView):
     pass
 
 
-def BuyProductAPIView(request):
+class BuyProductAPIView(APIView):
     pass
 
 
-def ModifyProductNameAPIView(request):
+class ModifyProductNameAPIView(APIView):
     pass
 
 
-def UploadImageAPIView(request):
+class UploadImageAPIView(APIView):
     pass
 
 
 # check
-def CheckProductAPIView(request):
+class CheckProductAPIView(APIView):
     pass
 
 
-def ModifyProductStateAPIView(request):
+class ModifyProductStateAPIView(APIView):
     pass
 
 
 # comments
-def AddCommentAPIView(request):
+class AddCommentAPIView(APIView):
     pass
 
 
-def DeleteCommentAPIView(request):
+class DeleteCommentAPIView(APIView):
     pass
 
 
-def ShowCommentsAPIView(request):
+class ShowCommentsAPIView(APIView):
     pass
 
 
 # statistics
-def ProductTypeNumberAPIView(request):
+class ProductTypeNumberAPIView(APIView):
     pass
 
 
-def UserSellRankAPIView(request):
+class UserSellRankAPIView(APIView):
     pass

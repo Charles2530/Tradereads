@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # 项目根目录
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +31,15 @@ INSTALLED_APPS = [
     'notices',
     'orders',
     'carts',
+
+    # 第三方包
+    'simpleui',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'drf_yasg',
+    'django_extensions',
+    'import_export',
 ]
 
 # 定义中间件
@@ -41,8 +51,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 跨域
 ]
 
+# 媒体文件
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 跨域
+CORS_ORIGIN_ALLOW_ALL = True  # 允许所有的请求源
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',  # 允许前端的请求源
+    'http://127.0.0.1:8080'
+)
 # 根路由
 ROOT_URLCONF = 'backend_django.urls'
 
