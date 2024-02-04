@@ -18,19 +18,6 @@ class ProductsAdmin(admin.ModelAdmin):
     resource_class = ProductsResource
 
 
-class ProductDetailsResource(resources.ModelResource):
-    class Meta:
-        model = ProductDetails
-
-
-@admin.register(ProductDetails)
-class ProductDetailsAdmin(admin.ModelAdmin):
-    list_display = ('product_id', 'product_name', 'product_image', 'product_press', 'product_type')
-    list_filter = ('product_id', 'product_name', 'product_image', 'product_press', 'product_type')
-    search_fields = ('product_id', 'product_name', 'product_image', 'product_press', 'product_type')
-    resource_class = ProductDetailsResource
-
-
 class CommentsResource(resources.ModelResource):
     class Meta:
         model = Comments
