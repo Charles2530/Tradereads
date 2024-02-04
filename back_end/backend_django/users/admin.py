@@ -12,26 +12,13 @@ class UsersResource(resources.ModelResource):
 
 @admin.register(Users)
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ('id', 'phone', 'right')
-    list_filter = ('id', 'phone', 'right')
-    search_fields = ('id', 'phone', 'right')
-    resource_class = UsersResource
-
-
-class UserDetailResource(resources.ModelResource):
-    class Meta:
-        model = UserDetail
-
-
-@admin.register(UserDetail)
-class UserDetailAdmin(admin.ModelAdmin):
-    list_display = ('user_id', 'password', 'user_name', 'buy_address',
+    list_display = ('id', 'phone', 'right', 'password', 'user_name', 'buy_address',
                     'gender', 'pay_type', 'avatar')
-    list_filter = ('user_id', 'password', 'user_name', 'buy_address',
+    list_filter = ('id', 'phone', 'right', 'password', 'user_name', 'buy_address',
                    'gender', 'pay_type', 'avatar')
-    search_fields = ('user_id', 'password', 'user_name', 'buy_address',
+    search_fields = ('id', 'phone', 'right', 'password', 'user_name', 'buy_address',
                      'gender', 'pay_type', 'avatar')
-    resource_class = UserDetailResource
+    resource_class = UsersResource
 
 
 class WalletsResource(resources.ModelResource):

@@ -11,20 +11,9 @@ class Users(models.Model):
         ADMIN = '1', '管理员'
 
     right = models.CharField(max_length=1, choices=UserType.choices, default=UserType.ORDINARY)
-
-    class Meta:
-        verbose_name = '用户'
-        verbose_name_plural = '用户'
-
-    def __str__(self):
-        return self.phone
-
-
-class UserDetail(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     password = models.CharField(max_length=20)
     user_name = models.CharField(max_length=50)
-    buy_address = models.CharField(max_length=100)
+    buy_address = models.CharField(max_length=100, default='')
 
     class Gender(models.TextChoices):
         MAN = '0', '男'
@@ -41,11 +30,11 @@ class UserDetail(models.Model):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, default='avatars/default.jpg')
 
     class Meta:
-        verbose_name = '用户详情'
-        verbose_name_plural = '用户详情'
+        verbose_name = '用户'
+        verbose_name_plural = '用户'
 
     def __str__(self):
-        return self.user_name
+        return self.phone
 
 
 class Wallets(models.Model):
