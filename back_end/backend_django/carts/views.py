@@ -19,7 +19,7 @@ class ShowCartAPIView(APIView):
                 'products': [
                     {
                         'product_id': item.product_id,
-                        'product_name': Products.objects.get(id=item.product_id).name,
+                        'product_name': Products.objects.get(id=item.product_id).product_name,
                         'seller_name': Users.objects.get(
                             id=Products.objects.get(id=item.product_id).seller_id).user_name,
                         'product_number': item.number,

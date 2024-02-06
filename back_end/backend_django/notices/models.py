@@ -6,7 +6,7 @@ from users.models import Users
 class Notices(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
-    content = models.TextField()
+    content = models.TextField(default='')
 
     class NoticeType(models.TextChoices):
         SYSTEM = '1', '系统通知'
@@ -15,7 +15,7 @@ class Notices(models.Model):
 
     notice_type = models.CharField(max_length=1, choices=NoticeType.choices, default=NoticeType.SYSTEM)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
-    create_time = models.DateTimeField(auto_now_add=True)
+    create_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     notice_readed = models.BooleanField(default=False)
 
 

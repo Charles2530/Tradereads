@@ -11,8 +11,8 @@ class Users(models.Model):
         ADMIN = '1', '管理员'
 
     right = models.CharField(max_length=1, choices=UserType.choices, default=UserType.ORDINARY)
-    password = models.CharField(max_length=20)
-    user_name = models.CharField(max_length=50)
+    password = models.CharField(max_length=20, null=True, blank=True)
+    user_name = models.CharField(max_length=50, null=True, blank=True)
     buy_address = models.CharField(max_length=100, default='')
 
     class Gender(models.TextChoices):

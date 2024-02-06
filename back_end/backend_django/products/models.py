@@ -16,10 +16,10 @@ class Products(models.Model):
         PASS = '1', '已审核'
 
     check_state = models.CharField(max_length=1, choices=CheckState.choices, default=CheckState.CHECKING)
-    score_per = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
-    product_name = models.CharField(max_length=50)
+    score_per = models.DecimalField(max_digits=3, decimal_places=2, default=0.0, null=True, blank=True)
+    product_name = models.CharField(max_length=50, null=True, blank=True)
     product_image = models.ImageField(upload_to='products/', null=True, blank=True)
-    product_press = models.CharField(max_length=50)
+    product_press = models.CharField(max_length=50, null=True, blank=True)
 
     class ProductType(models.TextChoices):
         BOOK = '0', '书籍'

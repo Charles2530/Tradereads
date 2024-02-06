@@ -18,7 +18,7 @@ class ShowAllOrdersAPIView(APIView):
                 product = Products.objects.get(id=item.product_id)
                 items.append({
                     'product_image': product.image,
-                    'product_name': product.name,
+                    'product_name': product.product_name,
                     'sell_address': product.sell_address,
                     'buy_num': item.number,
                     'product_price': product.price * item.number,
@@ -57,7 +57,7 @@ class OrdersAPIView(APIView):
                 items.append({
                     'order_item_id': item.id,
                     'product_image': product.image,
-                    'product_name': product.name,
+                    'product_name': product.product_name,
                     'sell_address': product.sell_address,
                     'buy_num': item.number,
                     'product_price': product.price * item.number,
@@ -111,7 +111,7 @@ class ShowSellOrdersAPIView(APIView):
                         'order_item_number': item.number,
                         'order_item_state': item.state,
                         'product_id': product.id,
-                        'product_name': product.name,
+                        'product_name': product.product_name,
                         'product_price': product.price,
                         'buyer_id': order.user_id,
                         'order_item_time': order.create_at,
