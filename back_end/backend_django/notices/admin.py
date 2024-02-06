@@ -11,9 +11,9 @@ class NoticesResource(resources.ModelResource):
 
 
 class NoticesAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'notice_type', 'user_id')
-    list_filter = ('id', 'title', 'notice_type', 'user_id')
-    search_fields = ('id', 'title', 'notice_type', 'user_id')
+    list_display = ('id', 'title', 'content', 'notice_type', 'user_id', 'create_time', 'notice_readed')
+    list_filter = ('id', 'title', 'content', 'notice_type', 'user_id', 'create_time', 'notice_readed')
+    search_fields = ('id', 'title', 'content', 'notice_type', 'user_id', 'create_time', 'notice_readed')
     resource_class = NoticesResource
 
 
